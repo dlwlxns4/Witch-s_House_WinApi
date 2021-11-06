@@ -12,7 +12,7 @@ class TilemapToolScene : public GameEntity
 {
 private:
 	SAMPLE_TILE_INFO sampleTileInfo[SAMPLE_TILE_COUNT_Y][SAMPLE_TILE_COUNT_X] = {};
-	TILE_INFO tileInfo[TILE_COUNT_Y][TILE_COUNT_X] = {};
+	TILE_INFO tileInfo[MAP_SIZE_X][MAP_SIZE_Y] = {};
 	Image* sampleImage = nullptr;
 
 	SAMPLE_TILE_INFO	selectedSampleTile = {};
@@ -21,6 +21,10 @@ private:
 
 	int selectedIdX = 0, selectedIdY = 0;
 	int posX = 0 , posY = 0;
+	
+	int cameraX = 0;
+	int cameraY = 0;
+
 	State state = {};
 	TileType tileType = {};
 
@@ -36,4 +40,5 @@ public:
 
 	void Save(int saveIndex=0);
 	void Load(int loadIndex=0);
+	LRESULT MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 };

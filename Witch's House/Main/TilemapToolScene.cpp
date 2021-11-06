@@ -1,10 +1,16 @@
 #include "TilemapToolScene.h"
 #include "Image.h"
 #include "CommonFunction.h"
+ HWND g_hWndComboBox;
+
+char Items[][15] = { "Apple","Orange","Melon","Graph","Strawberry" };
 
 HRESULT TilemapToolScene::Init()
 {
-
+    g_hWndComboBox = CreateWindow("combobox", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST,
+        700, 400, 100, 200, g_hWnd, (HMENU)ID_COMBOBOX, g_hInstance, NULL);
+    for (int i = 0; i < 5; i++)
+        SendMessage(g_hWndComboBox, CB_ADDSTRING, 0, (LPARAM)Items[i]);
 
     SetWindowSize(20, 20, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y);
 
@@ -19,16 +25,16 @@ HRESULT TilemapToolScene::Init()
     }
 
     // 왼쪽 상단 메인 영역 초기화
-    for (int i = 0; i < TILE_COUNT_Y; i++)    // y축
+    for (int i = 0; i < MAP_SIZE_Y; i++)    // y축
     {
-        for (int j = 0; j < TILE_COUNT_X; j++)    // x축
+        for (int j = 0; j < MAP_SIZE_X; j++)    // x축
         {
             SetRect(&(tileInfo[i][j].rc),
                 j * TILE_SIZE , i * TILE_SIZE,
                 j * TILE_SIZE + TILE_SIZE , i * TILE_SIZE + TILE_SIZE);
 
-            tileInfo[i][j].frameX = 0;
-            tileInfo[i][j].frameY = 0;
+            tileInfo[i][j].frameX = 3;
+            tileInfo[i][j].frameY = 3;
 
 
         }
@@ -92,12 +98,12 @@ void TilemapToolScene::Update()
     }
 
     // 메인영역에서 선택된 샘플 정보로 수정
-    for (int j = 0; j < TILE_COUNT_Y; j++)
+    for (int j = cameraY; j < TILE_COUNT_Y+ cameraY; j++)
     {
-        for (int i = 0; i < TILE_COUNT_X; i++)
+        for (int i = cameraX; i < TILE_COUNT_X + cameraX; i++)
         {
-       
-            if (PtInRect(&(tileInfo[j][i].rc), g_ptMouse))
+            POINT mousePos{ g_ptMouse.x + cameraX * TILE_SIZE ,g_ptMouse.y + cameraY * TILE_SIZE };
+            if (PtInRect(&(tileInfo[j][i].rc), mousePos))
             {
                 if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
                 {
@@ -143,26 +149,61 @@ void TilemapToolScene::Update()
         }
     }
     
+
+    //타일맵 카메라 이동
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
+    {
+        if (cameraX > 0)
+            cameraX--;
+        cout << cameraX << " " << cameraY << endl;
+    }
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
+    {
+        if (cameraX < 100)
+            cameraX++;
+        cout << cameraX << " " << cameraY << endl;
+
+    }
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
+    {
+        if (cameraY > 0)
+            cameraY--;
+        cout << cameraX << " " << cameraY << endl;
+
+    }
+    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+    {
+        if (cameraY < 100)
+            cameraY++;
+        cout << cameraX << " " << cameraY << endl;
+
+    }
+    
 }
 
 void TilemapToolScene::Render(HDC hdc)
 {
 
+    PatBlt(hdc, 0, 0, TILEMAPTOOL_SIZE_X,TILEMAPTOOL_SIZE_Y, WHITENESS);
 
     HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
     HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
     // 메인 영역
-    for (int i = 0; i < TILE_COUNT_Y; i++)
+    for (int i = cameraY; i < TILE_COUNT_Y+cameraY ; i++)
     {
-        for (int j = 0; j < TILE_COUNT_X; j++)
+        for (int j = cameraX; j < TILE_COUNT_X+ cameraX; j++)
         {
-            Rectangle(hdc, tileInfo[i][j].rc.left, tileInfo[i][j].rc.top, tileInfo[i][j].rc.right, tileInfo[i][j].rc.bottom);
+            Rectangle(hdc, 
+                tileInfo[i][j].rc.left -TILE_SIZE * cameraX,
+                tileInfo[i][j].rc.top - TILE_SIZE * cameraY,
+                tileInfo[i][j].rc.right - TILE_SIZE * cameraX,
+                tileInfo[i][j].rc.bottom - TILE_SIZE * cameraY);
 
 
             sampleImage->Render(hdc,
-                tileInfo[i][j].rc.left + TILE_SIZE / 2,
-                tileInfo[i][j].rc.top + TILE_SIZE / 2,
+                tileInfo[i][j].rc.left + TILE_SIZE / 2 -TILE_SIZE *cameraX,
+                tileInfo[i][j].rc.top + TILE_SIZE / 2 -TILE_SIZE * cameraY,
                 tileInfo[i][j].frameX,
                 tileInfo[i][j].frameY);
 
@@ -181,7 +222,6 @@ void TilemapToolScene::Render(HDC hdc)
 
 
 
-    PatBlt(hdc, TILEMAPTOOL_SIZE_X - sampleImage->GetWidth() + sampleImage->GetFrameWidth() / 2 - 32, sampleImage->GetHeight() + sampleImage->GetFrameHeight() / 2 + 148, 112,112, WHITENESS);
     // 선택된 타일
     sampleImage->Render(hdc, TILEMAPTOOL_SIZE_X - sampleImage->GetWidth() + sampleImage->GetFrameWidth() / 2,
         sampleImage->GetHeight() + sampleImage->GetFrameHeight() / 2 + 180,

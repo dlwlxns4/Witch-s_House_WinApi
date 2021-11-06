@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -158,7 +157,6 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />

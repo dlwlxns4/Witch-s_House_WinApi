@@ -43,11 +43,19 @@ enum class TankType { Player, Normal, Speed, Rapid, Defensive };
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
 extern POINT g_ptMouse;
+extern HWND g_hWndComboBox;
+
+
+
+//콤보박스
+#define ID_COMBOBOX 100
 
 //타일 관련
 #define TILE_SIZE	32
 #define TILE_COUNT_X	17
 #define TILE_COUNT_Y	13
+#define MAP_SIZE_X 150
+#define MAP_SIZE_Y 150
 #define SAMPLE_TILE_COUNT_X 5
 #define SAMPLE_TILE_COUNT_Y	2
 

@@ -18,7 +18,7 @@
 POINT		g_ptMouse;
 HINSTANCE	g_hInstance;
 HWND		g_hWnd;
-LPSTR		g_lpszClass = (LPSTR)TEXT("Battle City");
+LPSTR		g_lpszClass = (LPSTR)TEXT("Witch's House");
 MainGame	g_mainGame;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
