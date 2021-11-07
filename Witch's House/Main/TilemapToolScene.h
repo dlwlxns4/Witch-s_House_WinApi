@@ -11,7 +11,7 @@ class ButtonFunction;
 class TilemapToolScene : public GameEntity
 {
 private:
-	SAMPLE_TILE_INFO sampleTileInfo[SAMPLE_TILE_COUNT_Y][SAMPLE_TILE_COUNT_X] = {};
+	SAMPLE_TILE_INFO sampleTileInfo[30][30] = {};
 	TILE_INFO tileInfo[MAP_SIZE_X][MAP_SIZE_Y] = {};
 	Image* sampleImage = nullptr;
 
@@ -33,6 +33,9 @@ private:
 
 	char szText[256] = {};
 	int mapIndex = 0;
+
+	int SAMPLE_TILE_X = 0;
+	int SAMPLE_TILE_Y = 0;
 public:
 	virtual ~TilemapToolScene() = default;
 

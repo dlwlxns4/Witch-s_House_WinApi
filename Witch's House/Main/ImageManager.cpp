@@ -65,6 +65,7 @@ Image* ImageManager::AddImage(const char* fileName, int width, int height,
 	}
 
 	mapImages.insert(make_pair(fileName, img));
+	cout << fileName << "의 이미지가 추가되었습니다." << endl;
 
 	return img;
 }
@@ -74,6 +75,7 @@ Image* ImageManager::FindImage(const char* fileName)
 	map<string, Image*>::iterator it = mapImages.find(fileName);
 	if (it == mapImages.end())
 	{
+		cout << fileName << "을 찾지못하였습니다" << endl;
 		return nullptr;
 	}
 

@@ -15,8 +15,8 @@ using namespace std;
 #define WIN_START_POS_Y	100
 #define WIN_SIZE_X	544
 #define WIN_SIZE_Y	416
-#define TILEMAPTOOL_SIZE_X	1000
-#define TILEMAPTOOL_SIZE_Y	500
+#define TILEMAPTOOL_SIZE_X	1500
+#define TILEMAPTOOL_SIZE_Y	600
 #define PI 3.14159265357989
 
 #define DEGREE_TO_RADIAN(x)		(x * PI / 180.0f)
