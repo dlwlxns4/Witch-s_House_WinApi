@@ -64,9 +64,6 @@ void MainGame::Release()
 
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	int i;
-	TCHAR str[128];
-
 
 	switch (iMessage)
 	{
@@ -74,24 +71,6 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		break;
 	case WM_LBUTTONUP:		
 
-		break;
-
-	case WM_COMMAND:
-		switch (LOWORD(wParam)) {
-		case ID_COMBOBOX:
-			switch (HIWORD(wParam)) {
-			case CBN_SELCHANGE:	// 리스트박스와 구성이 같음
-				i = SendMessage(g_hWndComboBox, CB_GETCURSEL, 0, 0);
-				SendMessage(g_hWndComboBox, CB_GETLBTEXT, i, (LPARAM)str);
-				cout << str << endl;
-				//SetWindowText(hWnd, str);
-				break;
-			case CBN_EDITCHANGE:	// 에디트 박스에 대한 처리
-				GetWindowText(g_hWndComboBox, str, 128);
-				SetWindowText(hWnd, str);
-				break;
-			}
-		}
 		break;
 	case WM_RBUTTONDOWN:
 		break;

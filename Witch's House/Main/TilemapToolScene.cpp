@@ -1,22 +1,28 @@
 #include "TilemapToolScene.h"
 #include "Image.h"
 #include "CommonFunction.h"
- HWND g_hWndComboBox;
+#include <iterator>
+#include <filesystem>
 
-char Items[][15] = { "Apple","Orange","Melon","Graph","Strawberry" };
+vector<string> mapName;
+
+using namespace cv;
 
 HRESULT TilemapToolScene::Init()
 {
-    g_hWndComboBox = CreateWindow("combobox", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST,
-        700, 400, 100, 200, g_hWnd, (HMENU)ID_COMBOBOX, g_hInstance, NULL);
-    for (int i = 0; i < 5; i++)
-        SendMessage(g_hWndComboBox, CB_ADDSTRING, 0, (LPARAM)Items[i]);
+
+    string dir = "C:/Users/ChangMin/project/Witch's House/Main/Image/Graphics/System";
+    int i = 0;
+    for (auto& p : filesystem::directory_iterator(dir))
+    {
+        mapName.push_back(p.path().string().substr(p.path().string().find('\\') + 1, p.path().string().size()));
+
+    }
 
     SetWindowSize(20, 20, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y);
 
     sampleImage = ImageManager::GetSingleton()->AddImage("Image/Tile0.bmp",
         160, 64, 5, 2, true, RGB(255, 255, 255));
-    cout << TILE_SIZE << endl;
 
     if (sampleImage == nullptr)
     {
@@ -33,8 +39,8 @@ HRESULT TilemapToolScene::Init()
                 j * TILE_SIZE , i * TILE_SIZE,
                 j * TILE_SIZE + TILE_SIZE , i * TILE_SIZE + TILE_SIZE);
 
-            tileInfo[i][j].frameX = 3;
-            tileInfo[i][j].frameY = 3;
+            tileInfo[i][j].frameX = -1;
+            tileInfo[i][j].frameY = -1;
 
 
         }
@@ -111,6 +117,12 @@ void TilemapToolScene::Update()
                     tileInfo[j][i].frameY = selectedSampleTile.frameY;
                     break;
                 }
+                else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+                {
+                    tileInfo[j][i].frameX = -1;
+                    tileInfo[j][i].frameY = -1;
+                    break;
+                }
             }
         }
     }
@@ -126,58 +138,74 @@ void TilemapToolScene::Update()
     {
         Load();
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyUp('W'))
-    {
-        if (bShowNoneWalkable)
-        {
-            bShowNoneWalkable = false;
-        }
-        else
-        {
-            bShowNoneWalkable = true;
-        }
-    }
-    if (KeyManager::GetSingleton()->IsOnceKeyUp('E'))
-    {
-        if (bShowBodyCollider)
-        {
-            bShowBodyCollider = false;
-        }
-        else
-        {
-            bShowBodyCollider = true;
-        }
-    }
-    
+    //if (KeyManager::GetSingleton()->IsOnceKeyUp('W'))
+    //{
+    //    if (bShowNoneWalkable)
+    //    {
+    //        bShowNoneWalkable = false;
+    //    }
+    //    else
+    //    {
+    //        bShowNoneWalkable = true;
+    //    }
+    //}
+    //if (KeyManager::GetSingleton()->IsOnceKeyUp('E'))
+    //{
+    //    if (bShowBodyCollider)
+    //    {
+    //        bShowBodyCollider = false;
+    //    }
+    //    else
+    //    {
+    //        bShowBodyCollider = true;
+    //    }
+    //}
+    //
 
     //Å¸ÀÏ¸Ê Ä«¸Þ¶ó ÀÌµ¿
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
+    if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
     {
         if (cameraX > 0)
             cameraX--;
         cout << cameraX << " " << cameraY << endl;
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
+    if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
     {
         if (cameraX < 100)
             cameraX++;
         cout << cameraX << " " << cameraY << endl;
 
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
+    if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
     {
         if (cameraY > 0)
             cameraY--;
         cout << cameraX << " " << cameraY << endl;
 
     }
-    if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+    if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
     {
         if (cameraY < 100)
             cameraY++;
         cout << cameraX << " " << cameraY << endl;
 
     }
+
+    //»ùÇÃ ¸Ê ÀÌµ¿
+    if (KeyManager::GetSingleton()->IsOnceKeyDown('X'))
+    {
+        if (mapIndex < mapName.size()-1)
+            mapIndex++;
+        cout << mapIndex << endl;
+        cout << mapName[mapIndex] << endl;
+    }else if (KeyManager::GetSingleton()->IsOnceKeyDown('Z'))
+    {
+        if (mapIndex > 0)
+            mapIndex--;
+        cout << mapIndex << endl;
+        cout << mapName[mapIndex] << endl;
+    }
+
     
 }
 
@@ -227,7 +255,8 @@ void TilemapToolScene::Render(HDC hdc)
         sampleImage->GetHeight() + sampleImage->GetFrameHeight() / 2 + 180,
         selectedSampleTile.frameX, selectedSampleTile.frameY, 2.5f);
     
-    
+    TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
+    TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y-30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
 
 }
 

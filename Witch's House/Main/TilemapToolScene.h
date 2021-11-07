@@ -1,7 +1,7 @@
 #pragma once
 #include "Config.h"
 #include "GameEntity.h"
-
+#include <filesystem>
 
 enum class State{ NoneWalkable, Walkable  };
 
@@ -30,6 +30,9 @@ private:
 
 	bool bShowNoneWalkable = false;
 	bool bShowBodyCollider = false;
+
+	char szText[256] = {};
+	int mapIndex = 0;
 public:
 	virtual ~TilemapToolScene() = default;
 
