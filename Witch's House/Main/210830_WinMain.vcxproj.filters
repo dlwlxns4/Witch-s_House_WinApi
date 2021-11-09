@@ -28,6 +28,9 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{706cb441-4046-4339-a016-95a5dfe9d76c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2D Framework\Manager\Button">
+      <UniqueIdentifier>{930f6dc6-4f66-4eff-8585-d254f184e8a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>2D Framework\Manager\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonFunction.cpp">
+      <Filter>2D Framework\Manager\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="Tilemap.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>2D Framework\Manager\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonFunction.h">
+      <Filter>2D Framework\Manager\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

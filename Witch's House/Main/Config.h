@@ -46,7 +46,6 @@ extern POINT g_ptMouse;
 
 
 //콤보박스
-extern vector<string> mapName;
 
 //타일 관련
 #define TILE_SIZE	32
@@ -56,6 +55,14 @@ extern vector<string> mapName;
 #define MAP_SIZE_Y 150
 #define SAMPLE_TILE_COUNT_X 5
 #define SAMPLE_TILE_COUNT_Y	2
+
+
+typedef struct ArgumentFuncPtr
+{
+	string sceneName;
+	string loadingSceneName;
+} ARGUMENT_PTR, * LPARGUMENT_PTR;
+
 
 enum class Terrain { Earth, Wall, Water, Grass, BreakableWall, End };
 
