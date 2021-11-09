@@ -3,16 +3,15 @@
 #include "CommonFunction.h"
 #include <iterator>
 #include <filesystem>
-#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
 vector<string> mapName;
+vector<Image*> vecSampleImage;
 
 using namespace cv;
 
 HRESULT TilemapToolScene::Init()
 {
-
 	string dir = "Image/Graphics/Tile/";
 	int i = 0;
 	for (auto& p : filesystem::directory_iterator(dir))
@@ -23,7 +22,7 @@ HRESULT TilemapToolScene::Init()
 		cout << p.path().string().substr() << endl;
 		Mat img = imread(p.path().string());
 		cout << img.rows << " " <<  img.cols << endl;
-		ImageManager::GetSingleton()->AddImage(p.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 255, 255));
+		vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 255, 255)));
 	}
 
 	SetWindowSize(20, 20, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y);
@@ -123,6 +122,7 @@ void TilemapToolScene::Update()
 				{
 					tileInfo[j][i].frameX = selectedSampleTile.frameX;
 					tileInfo[j][i].frameY = selectedSampleTile.frameY;
+					tileInfo[j][i].mapIndex = mapIndex;
 					break;
 				}
 				else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
@@ -218,8 +218,7 @@ void TilemapToolScene::Update()
 						i * TILE_SIZE,
 						TILEMAPTOOL_SIZE_X - sampleImage->GetWidth() + j * TILE_SIZE + TILE_SIZE,
 						i * TILE_SIZE + TILE_SIZE);
-
-
+										
 					sampleTileInfo[i][j].frameX = j;
 					sampleTileInfo[i][j].frameY = i;
 				}
@@ -276,12 +275,17 @@ void TilemapToolScene::Render(HDC hdc)
 				tileInfo[i][j].rc.right - TILE_SIZE * cameraX,
 				tileInfo[i][j].rc.bottom - TILE_SIZE * cameraY);
 
-
-			sampleImage->Render(hdc,
+			vecSampleImage[tileInfo[i][j].mapIndex]->Render(hdc,
 				tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
 				tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
 				tileInfo[i][j].frameX,
 				tileInfo[i][j].frameY);
+
+			//sampleImage->Render(hdc,
+			//	tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
+			//	tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
+			//	tileInfo[i][j].frameX,
+			//	tileInfo[i][j].frameY);
 
 		}
 	}

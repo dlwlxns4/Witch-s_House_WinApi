@@ -31,9 +31,9 @@ void ImageManager::Release()
 
 Image* ImageManager::AddImage(const char* fileName, int width, int height, bool isTrans, COLORREF transColor)
 {
-	if (FindImage(fileName))
+	if (Image* findImage=FindImage(fileName))
 	{
-		return nullptr;
+		return findImage;
 	}
 
 	Image* img = new Image;

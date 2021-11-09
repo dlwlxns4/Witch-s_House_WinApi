@@ -1,6 +1,7 @@
 #pragma once
 #include "Config.h"
 #include "GameEntity.h"
+#include "Tilemap.h"
 #include <filesystem>
 
 enum class State{ NoneWalkable, Walkable  };
