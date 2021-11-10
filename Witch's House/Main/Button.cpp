@@ -7,7 +7,7 @@ HRESULT Button::Init()
 	return E_NOTIMPL;
 }
 
-HRESULT Button::Init(int posX, int posY)
+HRESULT Button::Init(Button_Type type, int posX, int posY)
 {
 	//pF = AddNum;
 
@@ -17,7 +17,7 @@ HRESULT Button::Init(int posX, int posY)
 	//pF = MinusNum;
 	//d = pF(10, 20);
 
-
+	type = type;
 	img = ImageManager::GetSingleton()->FindImage("Image/button.bmp");
 	pos.x = posX;
 	pos.y = posY;
@@ -46,24 +46,22 @@ void Button::Update()
 		{
 			state = Button_State::Up;
 
-			// 버튼 기능 수행 (함수포인터를 활용)
-			funcPtr();
+			//// 버튼 기능 수행 (함수포인터를 활용)
+			//funcPtr();
 
-			if (bf && pFunc)
-				(bf->*pFunc)(arg);
+			//if (bf && pFunc)
+			//	(bf->*pFunc)(arg);
 
-			//switch (type)
-			//{
-			//case Button_Type::GotoBattle:
-			//	SceneManager::GetSingleton()->ChangeScene("전투씬", "로딩씬");
-			//	break;
-			//case Button_Type::GotoResult:
-			//	SceneManager::GetSingleton()->ChangeScene("전투씬", "로딩씬");
-			//	break;
-			//case Button_Type::Close:
-			//	Release();
-			//	break;
-			//}
+			switch (type)
+			{
+			case Button_Type::GotoBattle:
+				break;
+			case Button_Type::GotoResult:
+				break;
+			case Button_Type::Close:
+				Release();
+				break;
+			}
 			return;
 		}
 	}

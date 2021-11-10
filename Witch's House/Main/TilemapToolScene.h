@@ -8,7 +8,6 @@ enum class State{ NoneWalkable, Walkable  };
 
 class Image;
 class Button;
-class ButtonFunction;
 class TilemapToolScene : public GameEntity
 {
 private:
@@ -37,6 +36,8 @@ private:
 
 	int SAMPLE_TILE_X = 0;
 	int SAMPLE_TILE_Y = 0;
+
+	Button* layerBtn;
 public:
 	virtual ~TilemapToolScene() = default;
 

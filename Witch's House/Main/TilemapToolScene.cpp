@@ -4,6 +4,7 @@
 #include <iterator>
 #include <filesystem>
 #include <opencv2/highgui.hpp>
+#include "Button.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -16,7 +17,6 @@ HRESULT TilemapToolScene::Init()
 	int i = 0;
 	for (auto& p : filesystem::directory_iterator(dir))
 	{
-		//mapName.push_back(p.path().string().substr(p.path().string().find('\\') + 1, p.path().string().size()));
 		mapName.push_back(p.path().string().substr());
 
 		cout << p.path().string().substr() << endl;
@@ -77,6 +77,15 @@ HRESULT TilemapToolScene::Init()
 	selectedSampleTile.frameX = 0;
 	selectedSampleTile.frameY = 0;
 
+
+
+	//레이어 버튼 초기화
+	layerBtn = new Button[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE*TILE_COUNT_X+50 + 100*i, 200);
+	}
+
 	return S_OK;
 }
 
@@ -134,8 +143,6 @@ void TilemapToolScene::Update()
 			}
 		}
 	}
-
-
 
 
 	if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
@@ -309,6 +316,11 @@ void TilemapToolScene::Render(HDC hdc)
 	TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
 	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
 
+	//Btn
+	for (int i = 0; i < 3; ++i)
+	{
+		//layerBtn[i].Render(hdc);
+	}
 }
 
 void TilemapToolScene::Release()
