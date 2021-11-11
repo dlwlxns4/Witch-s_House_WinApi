@@ -16,7 +16,7 @@ using namespace cv;
 
 HRESULT TilemapToolScene::Init()
 {
-	
+
 	string dir = "Image/Graphics/Tile/";
 	int i = 0;
 	for (auto& p : filesystem::directory_iterator(dir))
@@ -24,7 +24,7 @@ HRESULT TilemapToolScene::Init()
 		mapName.push_back(p.path().string().substr());
 
 		Mat img = imread(p.path().string());
-		vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 255, 255)));
+		vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 0, 255)));
 	}
 
 	SetWindowSize(20, 20, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y);
@@ -32,7 +32,7 @@ HRESULT TilemapToolScene::Init()
 	sampleImage = ImageManager::GetSingleton()->FindImage("Image/Graphics/Tile/Tile0.bmp");
 	SAMPLE_TILE_X = sampleImage->GetWidth() / TILE_SIZE;
 	SAMPLE_TILE_Y = sampleImage->GetHeight() / TILE_SIZE;
-	
+
 	if (sampleImage == nullptr)
 	{
 		cout << "Image/Tile0.bmp 로드 실패!!" << endl;
@@ -40,18 +40,22 @@ HRESULT TilemapToolScene::Init()
 	}
 
 	// 왼쪽 상단 메인 영역 초기화
-	for (int i = 0; i < MAP_SIZE_Y; i++)    // y축
+	for (int layer_size = 0; layer_size < LAYER_SIZE; layer_size++)
 	{
-		for (int j = 0; j < MAP_SIZE_X; j++)    // x축
+
+		for (int i = 0; i < MAP_SIZE_Y; i++)    // y축
 		{
-			SetRect(&(tileInfo[i][j].rc),
-				j * TILE_SIZE, i * TILE_SIZE,
-				j * TILE_SIZE + TILE_SIZE, i * TILE_SIZE + TILE_SIZE);
+			for (int j = 0; j < MAP_SIZE_X; j++)    // x축
+			{
+				SetRect(&(tileInfo[layer_size][i][j].rc),
+					j * TILE_SIZE, i * TILE_SIZE,
+					j * TILE_SIZE + TILE_SIZE, i * TILE_SIZE + TILE_SIZE);
 
-			tileInfo[i][j].frameX = -1;
-			tileInfo[i][j].frameY = -1;
+				tileInfo[layer_size][i][j].frameX = -1;
+				tileInfo[layer_size][i][j].frameY = -1;
 
 
+			}
 		}
 	}
 
@@ -86,8 +90,11 @@ HRESULT TilemapToolScene::Init()
 	for (int i = 0; i < 3; ++i)
 	{
 		cout << vecLayerBtnImage[0] << endl;
-		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE*TILE_COUNT_X+50 + BTN_SIZE_X*i, 200, vecLayerBtnImage[i]);
+		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 50 + BTN_SIZE_X * i, 200, vecLayerBtnImage[i]);
 	}
+	layerBtn[0].SetAtive(true);
+
+
 
 	return S_OK;
 }
@@ -123,29 +130,31 @@ void TilemapToolScene::Update()
 	}
 
 	// 메인영역에서 선택된 샘플 정보로 수정
+
 	for (int j = cameraY; j < TILE_COUNT_Y + cameraY; j++)
 	{
 		for (int i = cameraX; i < TILE_COUNT_X + cameraX; i++)
 		{
 			POINT mousePos{ g_ptMouse.x + cameraX * TILE_SIZE ,g_ptMouse.y + cameraY * TILE_SIZE };
-			if (PtInRect(&(tileInfo[j][i].rc), mousePos))
+			if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
 			{
 				if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
 				{
-					tileInfo[j][i].frameX = selectedSampleTile.frameX;
-					tileInfo[j][i].frameY = selectedSampleTile.frameY;
-					tileInfo[j][i].mapIndex = mapIndex;
+					tileInfo[currentLayer][j][i].frameX = selectedSampleTile.frameX;
+					tileInfo[currentLayer][j][i].frameY = selectedSampleTile.frameY;
+					tileInfo[currentLayer][j][i].mapIndex = mapIndex;
 					break;
 				}
 				else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 				{
-					tileInfo[j][i].frameX = -1;
-					tileInfo[j][i].frameY = -1;
+					tileInfo[currentLayer][j][i].frameX = -1;
+					tileInfo[currentLayer][j][i].frameY = -1;
 					break;
 				}
 			}
 		}
 	}
+	
 
 
 	if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
@@ -228,7 +237,7 @@ void TilemapToolScene::Update()
 						i * TILE_SIZE,
 						TILEMAPTOOL_SIZE_X - sampleImage->GetWidth() + j * TILE_SIZE + TILE_SIZE,
 						i * TILE_SIZE + TILE_SIZE);
-										
+
 					sampleTileInfo[i][j].frameX = j;
 					sampleTileInfo[i][j].frameY = i;
 				}
@@ -269,6 +278,28 @@ void TilemapToolScene::Update()
 		layerBtn[i].Update();
 	}
 
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('1'))
+	{
+		currentLayer = 0;
+		layerBtn[0].SetAtive(true);
+		layerBtn[1].SetAtive(false);
+		layerBtn[2].SetAtive(false);
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown('2'))
+	{
+		currentLayer = 1;
+		layerBtn[0].SetAtive(false);
+		layerBtn[1].SetAtive(true);
+		layerBtn[2].SetAtive(false);
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown('3'))
+	{
+		currentLayer = 2;
+		layerBtn[0].SetAtive(false);
+		layerBtn[1].SetAtive(false);
+		layerBtn[2].SetAtive(true);
+	}
+
 }
 
 void TilemapToolScene::Render(HDC hdc)
@@ -280,28 +311,27 @@ void TilemapToolScene::Render(HDC hdc)
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
 	// 메인 영역
-	for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
+	for (int layer_size = 0; layer_size < 3; layer_size++)
 	{
-		for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
+		for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
 		{
-			Rectangle(hdc,
-				tileInfo[i][j].rc.left - TILE_SIZE * cameraX,
-				tileInfo[i][j].rc.top - TILE_SIZE * cameraY,
-				tileInfo[i][j].rc.right - TILE_SIZE * cameraX,
-				tileInfo[i][j].rc.bottom - TILE_SIZE * cameraY);
+			for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
+			{
+				
 
-			vecSampleImage[tileInfo[i][j].mapIndex]->Render(hdc,
-				tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
-				tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
-				tileInfo[i][j].frameX,
-				tileInfo[i][j].frameY);
+				vecSampleImage[tileInfo[layer_size][i][j].mapIndex]->Render(hdc,
+					tileInfo[layer_size][i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
+					tileInfo[layer_size][i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
+					tileInfo[layer_size][i][j].frameX,
+					tileInfo[layer_size][i][j].frameY);
 
-			//sampleImage->Render(hdc,
-			//	tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
-			//	tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
-			//	tileInfo[i][j].frameX,
-			//	tileInfo[i][j].frameY);
+				//sampleImage->Render(hdc,
+				//	tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
+				//	tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
+				//	tileInfo[i][j].frameX,
+				//	tileInfo[i][j].frameY);
 
+			}
 		}
 	}
 
@@ -318,7 +348,7 @@ void TilemapToolScene::Render(HDC hdc)
 
 
 	// 선택된 타일
-	sampleImage->Render(hdc,TILE_SIZE*TILE_COUNT_X+50, 100,
+	sampleImage->Render(hdc, TILE_SIZE * TILE_COUNT_X + 50, 100,
 		selectedSampleTile.frameX, selectedSampleTile.frameY, 2.5f);
 
 	TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
@@ -334,7 +364,7 @@ void TilemapToolScene::Render(HDC hdc)
 void TilemapToolScene::Release()
 {
 
-	SAFE_DELETE_ARRAY( layerBtn);
+	SAFE_DELETE_ARRAY(layerBtn);
 
 }
 

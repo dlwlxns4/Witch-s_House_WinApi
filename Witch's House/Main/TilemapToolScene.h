@@ -12,7 +12,7 @@ class TilemapToolScene : public GameEntity
 {
 private:
 	SAMPLE_TILE_INFO sampleTileInfo[30][30] = {};
-	TILE_INFO tileInfo[MAP_SIZE_X][MAP_SIZE_Y] = {};
+	TILE_INFO tileInfo[LAYER_SIZE][MAP_SIZE_X][MAP_SIZE_Y] = {};
 	Image* sampleImage = nullptr;
 
 	SAMPLE_TILE_INFO	selectedSampleTile = {};
@@ -36,6 +36,8 @@ private:
 
 	int SAMPLE_TILE_X = 0;
 	int SAMPLE_TILE_Y = 0;
+
+	int currentLayer = 0;
 
 	Button* layerBtn;
 public:

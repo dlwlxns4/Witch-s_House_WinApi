@@ -79,7 +79,6 @@ void Button::Render(HDC hdc)
 
 	if (isActive == false)
 	{
-
 		switch (state)
 		{
 		case Button_State::None:

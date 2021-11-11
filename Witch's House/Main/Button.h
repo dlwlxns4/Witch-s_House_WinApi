@@ -53,7 +53,7 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-
+	void SetAtive(bool isActive) { this->isActive = isActive; }
 	//void SetNum(int num) { this->num = num; }
 	//void SetFunc(void (*funcPtr)(void)) { this->funcPtr = funcPtr; }
 	//void SetFunc(pF funcPtr) { this->funcPtr = funcPtr; }
