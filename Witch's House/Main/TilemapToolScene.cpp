@@ -93,7 +93,7 @@ HRESULT TilemapToolScene::Init()
 		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 50 + BTN_SIZE_X * i, 200, vecLayerBtnImage[i]);
 	}
 	layerBtn[0].SetAtive(true);
-
+	currentLayer = 0;
 
 
 	return S_OK;
@@ -310,6 +310,23 @@ void TilemapToolScene::Render(HDC hdc)
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
+
+
+	for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
+	{
+		for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
+		{
+			Rectangle(hdc,
+				tileInfo[0][i][j].rc.left - TILE_SIZE * cameraX,
+				tileInfo[0][i][j].rc.top - TILE_SIZE * cameraY,
+				tileInfo[0][i][j].rc.right - TILE_SIZE * cameraX,
+				tileInfo[0][i][j].rc.bottom - TILE_SIZE * cameraY);
+
+		}
+	}
+	
+
+
 	// 메인 영역
 	for (int layer_size = 0; layer_size < 3; layer_size++)
 	{
@@ -318,7 +335,6 @@ void TilemapToolScene::Render(HDC hdc)
 			for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
 			{
 				
-
 				vecSampleImage[tileInfo[layer_size][i][j].mapIndex]->Render(hdc,
 					tileInfo[layer_size][i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
 					tileInfo[layer_size][i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
@@ -330,7 +346,6 @@ void TilemapToolScene::Render(HDC hdc)
 				//	tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
 				//	tileInfo[i][j].frameX,
 				//	tileInfo[i][j].frameY);
-
 			}
 		}
 	}
