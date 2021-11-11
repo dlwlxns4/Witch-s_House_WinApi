@@ -1,9 +1,27 @@
 #include "ImageManager.h"
 #include "Image.h"
+#include "ImageHelper.h"
+#include <filesystem>
+
+vector<Image*> vecLayerBtnImage;
+vector<string> btnName;
 
 void ImageManager::Init()
 {
 	AddImage("Image/mapImage.bmp", WIN_SIZE_X, WIN_SIZE_Y);
+
+	//버튼 초기화
+	string dir = "Image/Graphics/TilemapTool/";
+	int i = 0;
+	for (auto& p : filesystem::directory_iterator(dir))
+	{
+		btnName.push_back(p.path().string().substr());
+
+		cout << p.path().string().substr() << endl;
+		Mat img = imread(p.path().string());
+		cout << img.rows << " " << img.cols << endl;
+		vecLayerBtnImage.push_back(ImageManager::GetSingleton()->AddImage(p.path().string().c_str(), img.cols, img.rows, img.cols / BTN_SIZE_X, img.rows / BTN_SIZE_Y, true, RGB(255, 255, 255)));
+	}
 
 }
 

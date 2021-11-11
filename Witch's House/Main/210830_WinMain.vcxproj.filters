@@ -128,5 +128,8 @@
     <ClInclude Include="ButtonFunction.h">
       <Filter>2D Framework\Manager\Button</Filter>
     </ClInclude>
+    <ClInclude Include="ImageHelper.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

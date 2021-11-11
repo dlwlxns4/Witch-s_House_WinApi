@@ -9,19 +9,21 @@
 vector<string> mapName;
 vector<Image*> vecSampleImage;
 
+//vector<Image*> vecLayerBtnImage;
+//vector<string> btnName;
+
 using namespace cv;
 
 HRESULT TilemapToolScene::Init()
 {
+	
 	string dir = "Image/Graphics/Tile/";
 	int i = 0;
 	for (auto& p : filesystem::directory_iterator(dir))
 	{
 		mapName.push_back(p.path().string().substr());
 
-		cout << p.path().string().substr() << endl;
 		Mat img = imread(p.path().string());
-		cout << img.rows << " " <<  img.cols << endl;
 		vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 255, 255)));
 	}
 
@@ -83,7 +85,8 @@ HRESULT TilemapToolScene::Init()
 	layerBtn = new Button[3];
 	for (int i = 0; i < 3; ++i)
 	{
-		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE*TILE_COUNT_X+50 + 100*i, 200);
+		cout << vecLayerBtnImage[0] << endl;
+		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE*TILE_COUNT_X+50 + BTN_SIZE_X*i, 200, vecLayerBtnImage[i]);
 	}
 
 	return S_OK;
@@ -260,6 +263,11 @@ void TilemapToolScene::Update()
 		}
 	}
 
+	//¹öÆ°
+	for (int i = 0; i < 3; ++i)
+	{
+		layerBtn[i].Update();
+	}
 
 }
 
@@ -319,12 +327,14 @@ void TilemapToolScene::Render(HDC hdc)
 	//Btn
 	for (int i = 0; i < 3; ++i)
 	{
-		//layerBtn[i].Render(hdc);
+		layerBtn[i].Render(hdc);
 	}
 }
 
 void TilemapToolScene::Release()
 {
+
+	SAFE_DELETE_ARRAY( layerBtn);
 
 }
 

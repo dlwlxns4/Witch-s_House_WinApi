@@ -1,13 +1,14 @@
 #include "Button.h"
 #include "Image.h"
 #include "ButtonFunction.h"
+#include "ImageHelper.h"
 
 HRESULT Button::Init()
 {
 	return E_NOTIMPL;
 }
 
-HRESULT Button::Init(Button_Type type, int posX, int posY)
+HRESULT Button::Init(Button_Type type, int posX, int posY, Image* image)
 {
 	//pF = AddNum;
 
@@ -17,8 +18,10 @@ HRESULT Button::Init(Button_Type type, int posX, int posY)
 	//pF = MinusNum;
 	//d = pF(10, 20);
 
+
+
 	type = type;
-	img = ImageManager::GetSingleton()->FindImage("Image/button.bmp");
+	img = image;
 	pos.x = posX;
 	pos.y = posY;
 
@@ -41,17 +44,17 @@ void Button::Update()
 		{
 			state = Button_State::Down;
 		}
-		else if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON)
-			&& state == Button_State::Down)
+		else if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON) && state == Button_State::Down)
 		{
 			state = Button_State::Up;
+
+			isActive = isActive ? false : true;
 
 			//// 버튼 기능 수행 (함수포인터를 활용)
 			//funcPtr();
 
 			//if (bf && pFunc)
 			//	(bf->*pFunc)(arg);
-
 			switch (type)
 			{
 			case Button_Type::GotoBattle:
@@ -74,17 +77,26 @@ void Button::Update()
 void Button::Render(HDC hdc)
 {
 
-	switch (state)
+	if (isActive == false)
 	{
-	case Button_State::None:
-	case Button_State::Up:
+
+		switch (state)
+		{
+		case Button_State::None:
+		case Button_State::Up:
+			if (img)
+				img->Render(hdc, pos.x, pos.y, 0, 0);
+			break;
+		case Button_State::Down:
+			if (img)
+				img->Render(hdc, pos.x, pos.y, 1, 0);
+			break;
+		}
+	}
+	else
+	{
 		if (img)
-			img->Render(hdc, pos.x, pos.y, 0, 0);
-		break;
-	case Button_State::Down:
-		if (img)
-			img->Render(hdc, pos.x, pos.y, 0, 1);
-		break;
+			img->Render(hdc, pos.x, pos.y, 2,0);
 	}
 
 	//Rectangle(hdc, shape.left, shape.top, shape.right, shape.bottom);

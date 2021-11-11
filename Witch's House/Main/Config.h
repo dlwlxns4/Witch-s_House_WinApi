@@ -23,6 +23,7 @@ using namespace std;
 
 #define SAFE_RELEASE(p)	{ if (p) { p->Release(); delete p; p = nullptr; } }
 #define SAFE_DELETE(p)	{ if (p) { delete p; p = nullptr; } }
+#define SAFE_DELETE_ARRAY(p)	{ if (p) { delete[] p; p = nullptr; } }
 
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
@@ -53,8 +54,13 @@ extern POINT g_ptMouse;
 #define TILE_COUNT_Y	13
 #define MAP_SIZE_X 150
 #define MAP_SIZE_Y 150
+#define LAYER_SIZE 3
 #define SAMPLE_TILE_COUNT_X 5
 #define SAMPLE_TILE_COUNT_Y	2
+
+//버튼 관련
+#define BTN_SIZE_X 48
+#define BTN_SIZE_Y 30
 
 
 typedef struct ArgumentFuncPtr
