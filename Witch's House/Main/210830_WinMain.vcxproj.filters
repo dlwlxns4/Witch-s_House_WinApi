@@ -31,6 +31,9 @@
     <Filter Include="2D Framework\Manager\Button">
       <UniqueIdentifier>{930f6dc6-4f66-4eff-8585-d254f184e8a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2D Framework\Manager\GameObejct">
+      <UniqueIdentifier>{ea3499d7-4897-49d2-8bb9-0c456ffa51aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEntity.cpp">
@@ -74,6 +77,15 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +142,15 @@
     </ClInclude>
     <ClInclude Include="ImageHelper.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TileObj.h">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

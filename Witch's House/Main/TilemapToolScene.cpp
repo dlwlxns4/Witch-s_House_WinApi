@@ -300,6 +300,19 @@ void TilemapToolScene::Update()
 		layerBtn[2].SetAtive(true);
 	}
 
+	
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('5'))
+	{
+		currLayer++;
+	}
+	else if(KeyManager::GetSingleton()->IsOnceKeyDown('4'))
+	{
+		if(currLayer>1)
+			currLayer--;
+	}
+
+
+
 }
 
 void TilemapToolScene::Render(HDC hdc)
@@ -321,7 +334,6 @@ void TilemapToolScene::Render(HDC hdc)
 				tileInfo[0][i][j].rc.top - TILE_SIZE * cameraY,
 				tileInfo[0][i][j].rc.right - TILE_SIZE * cameraX,
 				tileInfo[0][i][j].rc.bottom - TILE_SIZE * cameraY);
-
 		}
 	}
 	
@@ -368,6 +380,10 @@ void TilemapToolScene::Render(HDC hdc)
 
 	TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
 	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
+
+	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y -50, to_string(currLayer).c_str(), to_string(currLayer).size());
+
+
 
 	//Btn
 	for (int i = 0; i < 3; ++i)

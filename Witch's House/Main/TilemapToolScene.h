@@ -8,10 +8,24 @@ enum class State{ NoneWalkable, Walkable  };
 
 class Image;
 class Button;
+class Tile;
+class Layer;
 class TilemapToolScene : public GameEntity
 {
 private:
+	
+	//11-18일 벡터 레이어으로 수정할 부분
+	vector<Layer*> vecLayer;
+
+	int currLayer = 1;
+	
+	
+	
+	//Tile tile[MAP_SIZE_X][MAP_SIZE_Y] = {};
+
 	SAMPLE_TILE_INFO sampleTileInfo[30][30] = {};
+
+
 	TILE_INFO tileInfo[LAYER_SIZE][MAP_SIZE_X][MAP_SIZE_Y] = {};
 	Image* sampleImage = nullptr;
 
@@ -50,5 +64,4 @@ public:
 
 	void Save(int saveIndex=0);
 	void Load(int loadIndex=0);
-	LRESULT MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 };
