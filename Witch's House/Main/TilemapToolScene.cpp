@@ -5,6 +5,9 @@
 #include <filesystem>
 #include <opencv2/highgui.hpp>
 #include "Button.h"
+#include "Layer.h"
+#include "TileObj.h"
+#include "Camera.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -13,6 +16,8 @@ vector<Image*> vecSampleImage;
 //vector<string> btnName;
 
 using namespace cv;
+
+
 
 HRESULT TilemapToolScene::Init()
 {
@@ -86,15 +91,18 @@ HRESULT TilemapToolScene::Init()
 
 
 	//레이어 버튼 초기화
-	layerBtn = new Button[3];
-	for (int i = 0; i < 3; ++i)
-	{
-		cout << vecLayerBtnImage[0] << endl;
-		layerBtn[i].Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 50 + BTN_SIZE_X * i, 200, vecLayerBtnImage[i]);
-	}
-	layerBtn[0].SetAtive(true);
+	layerAddBtn = new Button;
+	layerAddBtn->Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 90, 200, vecLayerBtnImage[0]);
+
 	currentLayer = 0;
 
+
+	//타일 오브제
+	tileObj = new TileObj;
+	tileObj->Init();
+	vecTileObj.push_back(tileObj);
+	vecLayer.push_back(new Layer);
+	vecLayer[currLayer]->PushGameObject(vecTileObj[currLayer]);
 
 	return S_OK;
 }
@@ -131,31 +139,50 @@ void TilemapToolScene::Update()
 
 	// 메인영역에서 선택된 샘플 정보로 수정
 
-	for (int j = cameraY; j < TILE_COUNT_Y + cameraY; j++)
+	//for (int j = cameraY; j < TILE_COUNT_Y + cameraY; j++)
+	//{
+	//	for (int i = cameraX; i < TILE_COUNT_X + cameraX; i++)
+	//	{
+	//		POINT mousePos{ g_ptMouse.x + cameraX * TILE_SIZE ,g_ptMouse.y + cameraY * TILE_SIZE };
+	//		if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
+	//		{
+	//			if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
+	//			{
+	//				tileInfo[currentLayer][j][i].frameX = selectedSampleTile.frameX;
+	//				tileInfo[currentLayer][j][i].frameY = selectedSampleTile.frameY;
+	//				tileInfo[currentLayer][j][i].mapIndex = mapIndex;
+	//				break;
+	//			}
+	//			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+	//			{
+	//				tileInfo[currentLayer][j][i].frameX = -1;
+	//				tileInfo[currentLayer][j][i].frameY = -1;
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
+
+	for (int j = g_cameraPosY; j < TILE_COUNT_Y+ g_cameraPosY; j++)
 	{
-		for (int i = cameraX; i < TILE_COUNT_X + cameraX; i++)
+		for (int i = g_cameraPosX; i < TILE_COUNT_X+ g_cameraPosX; i++)
 		{
-			POINT mousePos{ g_ptMouse.x + cameraX * TILE_SIZE ,g_ptMouse.y + cameraY * TILE_SIZE };
+			POINT mousePos{ g_ptMouse.x + g_cameraPosX * TILE_SIZE ,g_ptMouse.y + g_cameraPosY * TILE_SIZE };
 			if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
 			{
 				if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
 				{
-					tileInfo[currentLayer][j][i].frameX = selectedSampleTile.frameX;
-					tileInfo[currentLayer][j][i].frameY = selectedSampleTile.frameY;
-					tileInfo[currentLayer][j][i].mapIndex = mapIndex;
+					vecTileObj[currLayer]->SetTile(i+1, j+1, selectedSampleTile.frameX, selectedSampleTile.frameY, mapIndex);
 					break;
 				}
 				else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 				{
-					tileInfo[currentLayer][j][i].frameX = -1;
-					tileInfo[currentLayer][j][i].frameY = -1;
+					vecTileObj[currLayer]->SetTile(i+1, j+1, -1, -1);
 					break;
 				}
 			}
 		}
 	}
-	
-
 
 	if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
 	{
@@ -192,29 +219,29 @@ void TilemapToolScene::Update()
 	//타일맵 카메라 이동
 	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
 	{
-		if (cameraX > 0)
-			cameraX--;
-		cout << cameraX << " " << cameraY << endl;
+		if (g_cameraPosX > 0)
+			g_cameraPosX--;
+		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 	}
 	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
 	{
-		if (cameraX < 100)
-			cameraX++;
-		cout << cameraX << " " << cameraY << endl;
+		if (g_cameraPosX < 100)
+			g_cameraPosX++;
+		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
 	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
 	{
-		if (cameraY > 0)
-			cameraY--;
-		cout << cameraX << " " << cameraY << endl;
+		if (g_cameraPosY > 0)
+			g_cameraPosY--;
+		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
 	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
 	{
-		if (cameraY < 100)
-			cameraY++;
-		cout << cameraX << " " << cameraY << endl;
+		if (g_cameraPosY < 100)
+			g_cameraPosY++;
+		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
 
@@ -273,41 +300,38 @@ void TilemapToolScene::Update()
 	}
 
 	//버튼
-	for (int i = 0; i < 3; ++i)
-	{
-		layerBtn[i].Update();
-	}
+	layerAddBtn->Update();
+
 
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('1'))
 	{
+		if (currLayer > 0)
+		{
+			currLayer--;
+		}
 		currentLayer = 0;
-		layerBtn[0].SetAtive(true);
-		layerBtn[1].SetAtive(false);
-		layerBtn[2].SetAtive(false);
 	}
 	else if (KeyManager::GetSingleton()->IsOnceKeyDown('2'))
 	{
+		if (currLayer < maxLayer - 1)
+		{
+			currLayer++;
+		}
 		currentLayer = 1;
-		layerBtn[0].SetAtive(false);
-		layerBtn[1].SetAtive(true);
-		layerBtn[2].SetAtive(false);
 	}
 	else if (KeyManager::GetSingleton()->IsOnceKeyDown('3'))
 	{
 		currentLayer = 2;
-		layerBtn[0].SetAtive(false);
-		layerBtn[1].SetAtive(false);
-		layerBtn[2].SetAtive(true);
 	}
 
-	
+
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('5'))
 	{
 		currLayer++;
 	}
-	else if(KeyManager::GetSingleton()->IsOnceKeyDown('4'))
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown('4'))
 	{
-		if(currLayer>1)
+		if (currLayer > 1)
 			currLayer--;
 	}
 
@@ -336,31 +360,38 @@ void TilemapToolScene::Render(HDC hdc)
 				tileInfo[0][i][j].rc.bottom - TILE_SIZE * cameraY);
 		}
 	}
-	
+
+
+	for (int i = 0; i < vecLayer.size(); ++i)
+	{
+		vecLayer[i]->Render(hdc);
+	}
+
+
 
 
 	// 메인 영역
-	for (int layer_size = 0; layer_size < 3; layer_size++)
-	{
-		for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
-		{
-			for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
-			{
-				
-				vecSampleImage[tileInfo[layer_size][i][j].mapIndex]->Render(hdc,
-					tileInfo[layer_size][i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
-					tileInfo[layer_size][i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
-					tileInfo[layer_size][i][j].frameX,
-					tileInfo[layer_size][i][j].frameY);
+	//for (int layer_size = 0; layer_size < 3; layer_size++)
+	//{
+	//	for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
+	//	{
+	//		for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
+	//		{
+	//			
+	//			vecSampleImage[tileInfo[layer_size][i][j].mapIndex]->Render(hdc,
+	//				tileInfo[layer_size][i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
+	//				tileInfo[layer_size][i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
+	//				tileInfo[layer_size][i][j].frameX,
+	//				tileInfo[layer_size][i][j].frameY);
 
-				//sampleImage->Render(hdc,
-				//	tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
-				//	tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
-				//	tileInfo[i][j].frameX,
-				//	tileInfo[i][j].frameY);
-			}
-		}
-	}
+	//			//sampleImage->Render(hdc,
+	//			//	tileInfo[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
+	//			//	tileInfo[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
+	//			//	tileInfo[i][j].frameX,
+	//			//	tileInfo[i][j].frameY);
+	//		}
+	//	}
+	//}
 
 	SelectObject(hdc, oldBrush);
 	DeleteObject(myBrush);
@@ -381,22 +412,30 @@ void TilemapToolScene::Render(HDC hdc)
 	TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
 	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
 
-	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y -50, to_string(currLayer).c_str(), to_string(currLayer).size());
+	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 70, TEXT("Max Layer : "), 12);
+	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 70, to_string(maxLayer).c_str(), to_string(maxLayer).size());
+
+	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 50, TEXT("Current Layer : "), 16);
+	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 50, to_string(currLayer+1).c_str(), to_string(currLayer+1).size());
 
 
 
 	//Btn
-	for (int i = 0; i < 3; ++i)
-	{
-		layerBtn[i].Render(hdc);
-	}
+	layerAddBtn->Render(hdc);
 }
 
 void TilemapToolScene::Release()
 {
+	SAFE_DELETE(tileObj);
 
-	SAFE_DELETE_ARRAY(layerBtn);
 
+	//레이어 메모리 해제
+	for (auto iter : vecLayer)
+	{
+		SAFE_DELETE(iter);
+	}
+
+	SAFE_DELETE(layerAddBtn);
 }
 
 void TilemapToolScene::Save(int saveIndex)

@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Config.h"
+#include <utility>
 //
 //enum class Terrain { Earth, Wall, Water, Grass, BreakableWall, End };
 //enum class TileType { Walkable, NoneWalkable };
@@ -9,21 +10,29 @@ class TileObj : public GameObject
 {
 private:
 
-	TileType tileType;
-	RECT rc;
-	//image
-	// sample tile의 아이디 (프레임 X, 프레임 Y)
-	int frameX, frameY;
-	int mapIndex;
-	//RECT collider;		// Trigger Collider
+	TILE_INFO tile[MAP_SIZE_X][MAP_SIZE_Y] = {};
+
 
 public:
 	TileObj() = default;
 	virtual ~TileObj() = default;
 
-	void SetPrintPos(RECT rc) { this->rc = rc;}
-	void SetMapIndex(int mapIndex) { this->mapIndex = mapIndex; }
-	void SetFramePos(int frameX, int frameY) { this->frameX = frameX; this->frameY = frameY; }
-	void SetTileType(TileType tileType) { this->tileType = tileType; }
+	virtual HRESULT Init();
+	virtual void Render(HDC hdc);
+	virtual void Update();
+
+
+	TILE_INFO GetTile(int posX, int posY) { return tile[posY][posX]; }
+	void SetTile(int posX, int posY, int frameX, int frameY, int mapIndex) 
+	{ 
+		tile[posY][posX].frameX = frameX;
+		tile[posY][posX].frameY = frameY;
+		tile[posY][posX].mapIndex = mapIndex;
+	}
+	void SetTile(int posX, int posY, int frameX, int frameY)
+	{
+		tile[posY][posX].frameX = frameX;
+		tile[posY][posX].frameY = frameY;
+	}
 };
 

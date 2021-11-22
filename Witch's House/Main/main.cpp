@@ -21,6 +21,8 @@ HWND		g_hWnd;
 LPSTR		g_lpszClass = (LPSTR)TEXT("Witch's House");
 MainGame	g_mainGame;
 
+
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 	WPARAM wParam, LPARAM lParam);
 
@@ -35,7 +37,7 @@ int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstanc
 	//_CrtSetBreakAlloc(379);
 	//_CrtSetBreakAlloc(481);
 	//_CrtSetBreakAlloc(417);
-
+	
 
 	// 윈도우를 생성하기 위한 기본 셋팅
 	g_hInstance = _hInstance;

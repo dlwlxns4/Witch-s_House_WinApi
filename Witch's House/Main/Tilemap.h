@@ -10,3 +10,7 @@ extern vector<Image*> vecLayerBtnImage;
 //파일 경로
 extern vector<string> mapName;
 extern vector<string> btnName;
+
+//타일맵 인덱스
+extern bool g_isBtnActive;
+

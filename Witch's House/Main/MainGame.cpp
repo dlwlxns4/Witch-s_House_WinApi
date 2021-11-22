@@ -1,6 +1,10 @@
 #include "MainGame.h"
 #include "Image.h"
 
+#include "Camera.h"
+
+int g_cameraPosX;
+int g_cameraPosY;
 
 HRESULT MainGame::Init()
 {

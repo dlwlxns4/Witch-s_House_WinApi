@@ -2,7 +2,12 @@
 #include "Image.h"
 #include "ButtonFunction.h"
 #include "ImageHelper.h"
+#include "Tilemap.h"
 
+#include "Layer.h"
+#include "TileObj.h"
+
+bool g_isBtnActive;
 HRESULT Button::Init()
 {
 	return E_NOTIMPL;
@@ -37,6 +42,8 @@ HRESULT Button::Init(Button_Type type, int posX, int posY, Image* image)
 
 void Button::Update()
 {
+	g_isBtnActive = false;
+
 	// 마우스 커서가 충돌영역에 들어갔는지
 	if (PtInRect(&shape, g_ptMouse))
 	{
@@ -48,7 +55,6 @@ void Button::Update()
 		{
 			state = Button_State::Up;
 
-			isActive = isActive ? false : true;
 
 			//// 버튼 기능 수행 (함수포인터를 활용)
 			//funcPtr();
@@ -57,7 +63,9 @@ void Button::Update()
 			//	(bf->*pFunc)(arg);
 			switch (type)
 			{
-			case Button_Type::GotoBattle:
+			case Button_Type::LayerButton:
+				g_isBtnActive = true;
+				
 				break;
 			case Button_Type::GotoResult:
 				break;
@@ -77,26 +85,20 @@ void Button::Update()
 void Button::Render(HDC hdc)
 {
 
-	if (isActive == false)
+	switch (state)
 	{
-		switch (state)
-		{
-		case Button_State::None:
-		case Button_State::Up:
-			if (img)
-				img->Render(hdc, pos.x, pos.y, 0, 0);
-			break;
-		case Button_State::Down:
-			if (img)
-				img->Render(hdc, pos.x, pos.y, 1, 0);
-			break;
-		}
-	}
-	else
-	{
+	case Button_State::None:
+	case Button_State::Up:
 		if (img)
-			img->Render(hdc, pos.x, pos.y, 2,0);
+			img->Render(hdc, pos.x, pos.y, 0, 0);
+		break;
+	case Button_State::Down:
+		if (img)
+			img->Render(hdc, pos.x, pos.y, 1, 0);
+		break;
 	}
+
+
 
 	//Rectangle(hdc, shape.left, shape.top, shape.right, shape.bottom);
 }

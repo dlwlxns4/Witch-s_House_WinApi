@@ -59,8 +59,8 @@ extern POINT g_ptMouse;
 #define SAMPLE_TILE_COUNT_Y	2
 
 //버튼 관련
-#define BTN_SIZE_X 48
-#define BTN_SIZE_Y 30
+#define BTN_SIZE_X 144
+#define BTN_SIZE_Y 60
 
 
 typedef struct ArgumentFuncPtr
