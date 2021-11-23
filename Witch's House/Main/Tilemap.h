@@ -2,6 +2,8 @@
 #include "Image.h"
 #include <vector>
 #include <string>
+#include "Layer.h"
+#include "TileObj.h"
 
 //∏  ¿Œµ¶Ω∫
 extern vector<Image*> vecSampleImage;
@@ -14,3 +16,6 @@ extern vector<string> btnName;
 //≈∏¿œ∏  ¿Œµ¶Ω∫
 extern bool g_isBtnActive;
 
+
+extern vector<Layer*> vecLayer;
+extern vector<TileObj*> vecTileObj;

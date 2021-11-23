@@ -16,8 +16,6 @@ class TilemapToolScene : public GameEntity
 private:
 
 	//11-18일 벡터 레이어으로 수정할 부분
-	vector<Layer*> vecLayer;
-	vector<TileObj*> vecTileObj;
 	TileObj* tileObj=nullptr;
 	int currLayer = 0;
 	int maxLayer = 1;

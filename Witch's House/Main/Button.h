@@ -50,6 +50,7 @@ public:
 	virtual HRESULT Init() override;
 	virtual HRESULT Init(Button_Type type, int posX, int posY, Image* image);
 	virtual void Update() override;
+	void AddLayer();
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
 	//void SetNum(int num) { this->num = num; }

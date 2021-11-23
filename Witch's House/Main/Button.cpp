@@ -2,8 +2,8 @@
 #include "Image.h"
 #include "ButtonFunction.h"
 #include "ImageHelper.h"
-#include "Tilemap.h"
 
+#include "Tilemap.h"
 #include "Layer.h"
 #include "TileObj.h"
 
@@ -64,8 +64,8 @@ void Button::Update()
 			switch (type)
 			{
 			case Button_Type::LayerButton:
-				g_isBtnActive = true;
-				
+				AddLayer();
+
 				break;
 			case Button_Type::GotoResult:
 				break;
@@ -82,6 +82,16 @@ void Button::Update()
 	}
 }
 
+void Button::AddLayer()
+{
+	TileObj* tileObject = new TileObj;
+	//TileObj tileObj = new TileObj;
+	tileObject->Init();
+	vecTileObj.push_back(tileObject);
+	vecLayer.push_back(new Layer);
+	vecLayer[vecLayer.size() - 1]->PushGameObject(vecTileObj[vecTileObj.size() - 1]);
+
+}
 void Button::Render(HDC hdc)
 {
 

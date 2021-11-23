@@ -15,6 +15,12 @@ vector<Image*> vecSampleImage;
 //vector<Image*> vecLayerBtnImage;
 //vector<string> btnName;
 
+
+
+vector<Layer*> vecLayer;
+vector<TileObj*> vecTileObj;
+
+
 using namespace cv;
 
 
@@ -313,7 +319,7 @@ void TilemapToolScene::Update()
 	}
 	else if (KeyManager::GetSingleton()->IsOnceKeyDown('2'))
 	{
-		if (currLayer < maxLayer - 1)
+		if (currLayer < vecLayer.size() - 1)
 		{
 			currLayer++;
 		}
@@ -413,7 +419,7 @@ void TilemapToolScene::Render(HDC hdc)
 	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
 
 	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 70, TEXT("Max Layer : "), 12);
-	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 70, to_string(maxLayer).c_str(), to_string(maxLayer).size());
+	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 70, to_string(vecLayer.size()).c_str(), to_string(vecLayer.size()).size());
 
 	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 50, TEXT("Current Layer : "), 16);
 	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 50, to_string(currLayer+1).c_str(), to_string(currLayer+1).size());
