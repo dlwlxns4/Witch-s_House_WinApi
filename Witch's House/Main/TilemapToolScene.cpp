@@ -432,12 +432,11 @@ void TilemapToolScene::Render(HDC hdc)
 
 void TilemapToolScene::Release()
 {
-	SAFE_DELETE(tileObj);
-
 
 	//레이어 메모리 해제
 	for (auto iter : vecLayer)
 	{
+		iter->Release();
 		SAFE_DELETE(iter);
 	}
 

@@ -85,7 +85,6 @@ void Button::Update()
 void Button::AddLayer()
 {
 	TileObj* tileObject = new TileObj;
-	//TileObj tileObj = new TileObj;
 	tileObject->Init();
 	vecTileObj.push_back(tileObject);
 	vecLayer.push_back(new Layer);
@@ -115,4 +114,5 @@ void Button::Render(HDC hdc)
 
 void Button::Release()
 {
+
 }

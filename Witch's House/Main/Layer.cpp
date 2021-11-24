@@ -19,10 +19,11 @@ void Layer::Render(HDC hdc)
 
 void Layer::Release()
 {
-	for (auto iter = vecGameObject.begin(); iter != vecGameObject.end(); ++iter)
+	for (auto iter : vecGameObject)
 	{
-		SAFE_DELETE(*iter);
+		SAFE_DELETE(iter);
 	}
+	
 }
 
 void Layer::PushGameObject(GameObject* gameObject)

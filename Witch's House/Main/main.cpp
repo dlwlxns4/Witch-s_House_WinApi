@@ -36,7 +36,7 @@ int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstanc
 	//_CrtSetBreakAlloc(541);
 	//_CrtSetBreakAlloc(379);
 	//_CrtSetBreakAlloc(481);
-	//_CrtSetBreakAlloc(417);
+	//_CrtSetBreakAlloc(805);
 	
 
 	// 윈도우를 생성하기 위한 기본 셋팅

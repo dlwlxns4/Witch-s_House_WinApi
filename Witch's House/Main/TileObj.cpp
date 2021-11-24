@@ -40,12 +40,14 @@ void TileObj::Render(HDC hdc)
 	{
 		for (int j = g_cameraPosX; j <= TILE_COUNT_X+ g_cameraPosX; j++)
 		{
-			vecSampleImage[tile[i][j].mapIndex]->Render(hdc,
-				tile[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE - TILE_SIZE * g_cameraPosX,
-				tile[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE - TILE_SIZE * g_cameraPosY,
-				tile[i][j].frameX,
-				tile[i][j].frameY);
-
+			if (tile[i][j].frameX != -1)
+			{
+				vecSampleImage[tile[i][j].mapIndex]->Render(hdc,
+					tile[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE - TILE_SIZE * g_cameraPosX,
+					tile[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE - TILE_SIZE * g_cameraPosY,
+					tile[i][j].frameX,
+					tile[i][j].frameY);
+			}
 		}
 	}
 }
