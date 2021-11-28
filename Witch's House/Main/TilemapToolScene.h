@@ -44,8 +44,6 @@ private:
 	int selectedIdX = 0, selectedIdY = 0;
 	int posX = 0 , posY = 0;
 	
-	int cameraX = 0;
-	int cameraY = 0;
 
 	State state = {};
 	TileType tileType = {};

@@ -183,8 +183,8 @@ void TilemapToolScene::Update()
 
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
-			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
-			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX+1;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY+1;
 			cout << startPosX << " " << startPosY << endl;
 
 			int interverX = 0, interverY = 0;
@@ -204,10 +204,10 @@ void TilemapToolScene::Update()
 		else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 		{
 
-			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
-			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX +1;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY+1;
 			cout << startPosX << " " << startPosY << endl;
-			vecTileObj[currLayer]->SetTile(startPosX+1, startPosY+1, -1, -1);
+			vecTileObj[currLayer]->SetTile(startPosX, startPosY, -1, -1);
 		}
 	}
 
@@ -477,15 +477,15 @@ void TilemapToolScene::Render(HDC hdc)
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
-	for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
+	for (int i = g_cameraPosY; i < TILE_COUNT_Y + g_cameraPosY; i++)
 	{
-		for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
+		for (int j = g_cameraPosX; j < TILE_COUNT_X + g_cameraPosX; j++)
 		{
 			Rectangle(hdc,
-				tileInfo[0][i][j].rc.left - TILE_SIZE * cameraX,
-				tileInfo[0][i][j].rc.top - TILE_SIZE * cameraY,
-				tileInfo[0][i][j].rc.right - TILE_SIZE * cameraX,
-				tileInfo[0][i][j].rc.bottom - TILE_SIZE * cameraY);
+				tileInfo[0][i][j].rc.left - TILE_SIZE * g_cameraPosX,
+				tileInfo[0][i][j].rc.top - TILE_SIZE * g_cameraPosY,
+				tileInfo[0][i][j].rc.right - TILE_SIZE * g_cameraPosX,
+				tileInfo[0][i][j].rc.bottom - TILE_SIZE * g_cameraPosY);
 		}
 	}
 
