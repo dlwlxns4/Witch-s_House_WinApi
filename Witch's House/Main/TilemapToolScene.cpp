@@ -115,7 +115,7 @@ HRESULT TilemapToolScene::Init()
 
 	//레이어 버튼 초기화
 	layerAddBtn = new Button;
-	layerAddBtn->Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 90, 200, vecLayerBtnImage[0]);
+	layerAddBtn->Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 90, 30, vecLayerBtnImage[0]);
 
 	currentLayer = 0;
 
@@ -145,83 +145,131 @@ void TilemapToolScene::Update()
 
 	if (PtInRect(&(sampleArea), g_ptMouse))
 	{
+
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+		{
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
+			cout << startPosX << " " << startPosY << endl;
+		}
+
 		if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON))
 		{
+			selectPos.clear();
+
 			int posX = g_ptMouse.x - sampleArea.left;
 			selectedIdX = posX / TILE_SIZE;
 
 			int posY = g_ptMouse.y - sampleArea.top;
 			selectedIdY = posY / TILE_SIZE;
+			selectPos.emplace_back(startPosX, startPosY);
+			selectPos.emplace_back(selectedIdX, selectedIdY);
+
 
 			selectedSampleTile.frameX =
 				sampleTileInfo[selectedIdY][selectedIdX].frameX;
 			selectedSampleTile.frameY =
 				sampleTileInfo[selectedIdY][selectedIdX].frameY;
-
-			cout << selectedIdX << "  " << selectedIdY << endl;
-
 		}
 	}
 
 
-	if (tileState == TileState::Tile)
+	sampleArea.left = 0;
+	sampleArea.right = TILE_SIZE * MAP_SIZE_X;
+	sampleArea.top = 0;
+	sampleArea.bottom = TILE_SIZE * MAP_SIZE_Y;
+	if (PtInRect(&(sampleArea), g_ptMouse))
 	{
-		for (int j = g_cameraPosY; j < TILE_COUNT_Y+ g_cameraPosY; j++)
+
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
-			for (int i = g_cameraPosX; i < TILE_COUNT_X+ g_cameraPosX; i++)
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
+			cout << startPosX << " " << startPosY << endl;
+
+			int interverX = 0, interverY = 0;
+			if (selectPos.empty() == false)
 			{
-				POINT mousePos{ g_ptMouse.x + g_cameraPosX * TILE_SIZE ,g_ptMouse.y + g_cameraPosY * TILE_SIZE };
-				if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
+				for (int i = selectPos[0].second; i <= selectPos[1].second; ++i)
 				{
-					if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
+					for (int j = selectPos[0].first; j <= selectPos[1].first; ++j)
 					{
-						vecTileObj[currLayer]->SetTile(i+1, j+1, selectedSampleTile.frameX, selectedSampleTile.frameY, mapIndex);
-						break;
+						vecTileObj[currLayer]->SetTile(startPosX + interverX++, startPosY + interverY, j, i, mapIndex);
 					}
-					else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
-					{
-						vecTileObj[currLayer]->SetTile(i+1, j+1, -1, -1);
-						break;
-					}
+					interverX = 0;
+					interverY++;
 				}
 			}
 		}
-	}
-	else if (tileState == TileState::Playable)
-	{
-		for (int j = g_cameraPosY; j < TILE_COUNT_Y + g_cameraPosY; j++)
+		else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 		{
-			for (int i = g_cameraPosX; i < TILE_COUNT_X + g_cameraPosX; i++)
-			{
-				POINT mousePos{ g_ptMouse.x + g_cameraPosX * TILE_SIZE ,g_ptMouse.y + g_cameraPosY * TILE_SIZE };
-				if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
-				{
-					if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
-					{
-						PlayerObj* playerObj = new PlayerObj;
-						playerObj->Init();
-						vecLayer[currLayer]->PushGameObject(playerObj);
-						break;
-					}
-					else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
-					{
-						vecTileObj[currLayer]->SetTile(i + 1, j + 1, -1, -1);
-						break;
-					}
-				}
-			}
+
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
+			cout << startPosX << " " << startPosY << endl;
+			vecTileObj[currLayer]->SetTile(startPosX+1, startPosY+1, -1, -1);
 		}
 	}
-	
 
-	if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
-	{
-		Save();
-	}
-	if (KeyManager::GetSingleton()->IsOnceKeyUp('L'))
-	{
-		Load();
-	}
+
+	//if (tileState == TileState::Tile)
+	//{
+	//	for (int j = g_cameraPosY; j < TILE_COUNT_Y+ g_cameraPosY; j++)
+	//	{
+	//		for (int i = g_cameraPosX; i < TILE_COUNT_X+ g_cameraPosX; i++)
+	//		{
+	//			POINT mousePos{ g_ptMouse.x + g_cameraPosX * TILE_SIZE ,g_ptMouse.y + g_cameraPosY * TILE_SIZE };
+	//			if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
+	//			{
+	//				if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
+	//				{
+	//					vecTileObj[currLayer]->SetTile(i+1, j+1, selectedSampleTile.frameX, selectedSampleTile.frameY, mapIndex);
+	//					break;
+	//				}
+	//				else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+	//				{
+	//					vecTileObj[currLayer]->SetTile(i+1, j+1, -1, -1);
+	//					break;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	//else if (tileState == TileState::Playable)
+	//{
+	//	for (int j = g_cameraPosY; j < TILE_COUNT_Y + g_cameraPosY; j++)
+	//	{
+	//		for (int i = g_cameraPosX; i < TILE_COUNT_X + g_cameraPosX; i++)
+	//		{
+	//			POINT mousePos{ g_ptMouse.x + g_cameraPosX * TILE_SIZE ,g_ptMouse.y + g_cameraPosY * TILE_SIZE };
+	//			if (PtInRect(&(tileInfo[currentLayer][j][i].rc), mousePos))
+	//			{
+	//				if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LBUTTON))
+	//				{
+	//					PlayerObj* playerObj = new PlayerObj;
+	//					playerObj->Init();
+	//					vecLayer[currLayer]->PushGameObject(playerObj);
+	//					break;
+	//				}
+	//				else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+	//				{
+	//					vecTileObj[currLayer]->SetTile(i + 1, j + 1, -1, -1);
+	//					break;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+
+
+	//if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
+	//{
+	//	Save();
+	//}
+	//if (KeyManager::GetSingleton()->IsOnceKeyUp('L'))
+	//{
+	//	Load();
+	//}
 
 	//타일맵 카메라 이동
 	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
@@ -429,8 +477,6 @@ void TilemapToolScene::Render(HDC hdc)
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
-
-
 	for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
 	{
 		for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
@@ -442,6 +488,10 @@ void TilemapToolScene::Render(HDC hdc)
 				tileInfo[0][i][j].rc.bottom - TILE_SIZE * cameraY);
 		}
 	}
+
+
+
+
 
 
 	for (int i = 0; i < vecLayer.size(); ++i)
@@ -475,8 +525,7 @@ void TilemapToolScene::Render(HDC hdc)
 	//	}
 	//}
 
-	SelectObject(hdc, oldBrush);
-	DeleteObject(myBrush);
+
 
 
 
@@ -487,9 +536,38 @@ void TilemapToolScene::Render(HDC hdc)
 
 
 
+	for (int i = 0; i < SAMPLE_TILE_Y; i++)    // y축
+	{
+		for (int j = 0; j < SAMPLE_TILE_X; j++)    // x축
+		{
+			Rectangle(hdc,
+				sampleTileInfo[i][j].rc.left,
+				sampleTileInfo[i][j].rc.top,
+				sampleTileInfo[i][j].rc.right,
+				sampleTileInfo[i][j].rc.bottom
+			);
+
+		}
+	}
+	SelectObject(hdc, oldBrush);
+	DeleteObject(myBrush);
+
+
 	// 선택된 타일
-	sampleImage->Render(hdc, TILE_SIZE * TILE_COUNT_X + 50, 100,
-		selectedSampleTile.frameX, selectedSampleTile.frameY, 2.5f);
+	if (selectPos.empty() == false)
+	{
+		int interverX = 0, interverY = 0;
+		for (int i = selectPos[0].second; i <= selectPos[1].second; ++i)
+		{
+			for (int j = selectPos[0].first; j <= selectPos[1].first; ++j)
+			{
+				sampleImage->Render(hdc, TILE_SIZE * TILE_COUNT_X + 50 + (TILE_SIZE * interverX++), 100 + (TILE_SIZE * interverY),
+					j, i, 1.0f);
+			}
+			interverX = 0;
+			interverY++;
+		}
+	}
 
 	TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
 	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
@@ -498,8 +576,8 @@ void TilemapToolScene::Render(HDC hdc)
 	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 70, to_string(vecLayer.size()).c_str(), to_string(vecLayer.size()).size());
 
 	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 50, TEXT("Current Layer : "), 16);
-	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 50, to_string(currLayer+1).c_str(), to_string(currLayer+1).size());
-	
+	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 50, to_string(currLayer + 1).c_str(), to_string(currLayer + 1).size());
+
 	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 90, TEXT("TileState : "), 12);
 
 	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 90, TileStateToString(tileState).c_str(), TileStateToString(tileState).size());

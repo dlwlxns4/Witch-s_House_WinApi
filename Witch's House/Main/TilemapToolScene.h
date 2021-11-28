@@ -23,6 +23,12 @@ private:
 	int maxLayer = 1;
 	
 	
+	//샘플이미지 벡터 (드래그 선택)
+	vector<pair<int, int>> selectPos = {};
+	int startPosX = 0; // 클릭 시작 포스
+	int startPosY = 0;
+
+
 	//Tile tile[MAP_SIZE_X][MAP_SIZE_Y] = {};
 
 	SAMPLE_TILE_INFO sampleTileInfo[30][30] = {};
