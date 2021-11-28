@@ -150,7 +150,6 @@ void TilemapToolScene::Update()
 		{
 			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
-			cout << startPosX << " " << startPosY << endl;
 		}
 
 		if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON))
@@ -175,17 +174,15 @@ void TilemapToolScene::Update()
 
 
 	sampleArea.left = 0;
-	sampleArea.right = TILE_SIZE * MAP_SIZE_X;
 	sampleArea.top = 0;
-	sampleArea.bottom = TILE_SIZE * MAP_SIZE_Y;
+	sampleArea.right = TILE_SIZE * TILE_COUNT_X;
+	sampleArea.bottom = TILE_SIZE * TILE_COUNT_Y;
 	if (PtInRect(&(sampleArea), g_ptMouse))
 	{
-
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 		{
 			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX+1;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY+1;
-			cout << startPosX << " " << startPosY << endl;
 
 			int interverX = 0, interverY = 0;
 			if (selectPos.empty() == false)
@@ -206,7 +203,6 @@ void TilemapToolScene::Update()
 
 			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX +1;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY+1;
-			cout << startPosX << " " << startPosY << endl;
 			vecTileObj[currLayer]->SetTile(startPosX, startPosY, -1, -1);
 		}
 	}
