@@ -161,6 +161,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="PlayerObj.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileObj.cpp" />
     <ClCompile Include="TilemapToolScene.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="PlayerObj.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TileObj.h" />

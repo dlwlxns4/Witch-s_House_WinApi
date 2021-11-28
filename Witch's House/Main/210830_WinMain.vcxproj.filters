@@ -87,6 +87,9 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerObj.cpp">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerObj.h">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

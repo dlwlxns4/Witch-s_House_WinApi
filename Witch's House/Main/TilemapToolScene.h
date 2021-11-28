@@ -6,6 +6,8 @@
 
 enum class State{ NoneWalkable, Walkable  };
 
+enum class TileState{ Tile=0, Playable=1, Trigger=2 };
+
 class Image;
 class Button;
 class Tile;
@@ -54,6 +56,8 @@ private:
 	int currentLayer = 0;
 
 	Button* layerAddBtn;
+
+	TileState tileState;
 public:
 	virtual ~TilemapToolScene() = default;
 
@@ -63,5 +67,6 @@ public:
 	virtual void Release() override;
 
 	void Save(int saveIndex=0);
+	const string TileStateToString(TileState e) throw();
 	void Load(int loadIndex=0);
 };

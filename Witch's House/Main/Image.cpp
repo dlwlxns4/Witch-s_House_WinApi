@@ -148,7 +148,6 @@ void Image::Render(HDC hdc, int destX, int destY)
 			0,					// 원본 비트맵 복사 시작 위치 y
 			SRCCOPY);			// 복사 옵션
 	}
-
 }
 
 void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float scale/* = 1.0f*/)
