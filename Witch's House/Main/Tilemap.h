@@ -4,6 +4,8 @@
 #include <string>
 #include "Layer.h"
 #include "TileObj.h"
+#include "PlayerObj.h"
+
 
 //∏  ¿Œµ¶Ω∫
 extern vector<Image*> vecSampleImage;
@@ -19,3 +21,4 @@ extern bool g_isBtnActive;
 
 extern vector<Layer*> vecLayer;
 extern vector<TileObj*> vecTileObj;
+extern PlayerObj* playerObj;

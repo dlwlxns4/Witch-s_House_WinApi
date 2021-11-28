@@ -90,6 +90,9 @@
     <ClCompile Include="PlayerObj.cpp">
       <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClCompile>
+    <ClCompile Include="ParallaxObj.cpp">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -159,6 +162,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="PlayerObj.h">
+      <Filter>2D Framework\Manager\GameObejct</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallaxObj.h">
       <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClInclude>
   </ItemGroup>

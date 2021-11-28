@@ -62,6 +62,10 @@ extern POINT g_ptMouse;
 #define BTN_SIZE_X 144
 #define BTN_SIZE_Y 60
 
+//캐릭터 사이즈
+#define PLAYER_SIZE_X 32
+#define PLAYER_SIZE_Y 48
+
 
 typedef struct ArgumentFuncPtr
 {
