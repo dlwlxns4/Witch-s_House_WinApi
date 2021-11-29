@@ -3,32 +3,6 @@
 #include "Config.h"
 #include "GameObject.h"
 
-/* 함수 포인터
-
-	포인터 (변수 포인터)
-
-	int a = 10;
-	int* pA = &a;
-
-	(*pA) = 20;
-
-
-	void Func(void);		// 함수의 원형
-	void (*pF)(void);	// 리턴타입과 매개변수가 동일한 함수의 주소를 담을 수 있는 함수포인터
-*/
-
-//int AddNum(int a, int b)
-//{
-//	return a + b;
-//}
-////
-//int MinusNum(int a, int b)
-//{
-//	return a - b;
-//}
-////
-//int (*pF)(int, int);
-
 
 typedef void (*pVoidFunc)(void);
 typedef int (*pIntFunc)(int, int);

@@ -6,7 +6,7 @@
 
 enum class State{ NoneWalkable, Walkable  };
 
-enum class TileState{ Tile=0, Playable=1, Trigger=2 };
+enum class TileState{ Tile=0, Playable=1, Trigger=2, Parallax=3, End=4 };
 
 class Image;
 class Button;

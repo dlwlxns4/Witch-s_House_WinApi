@@ -1,5 +1,9 @@
 #include "Image.h"
 
+#pragma comment(lib, "msimg32.lib")
+
+
+
 HRESULT Image::Init(int width, int height)
 {
 	HDC hdc = GetDC(g_hWnd);		// 권한이 굉장히 많은 총지배인
@@ -166,8 +170,8 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float 
 			(int)(imageInfo->frameWidth * scale),
 			(int)(imageInfo->frameHeight * scale),	// 전체 프레임 수
 			imageInfo->hMemDc,
-			imageInfo->frameWidth* frameX,
-			imageInfo->frameHeight * frameY ,
+			imageInfo->frameWidth * frameX,
+			imageInfo->frameHeight * frameY,
 			imageInfo->frameWidth, imageInfo->frameHeight,
 			transColor
 		);
@@ -186,6 +190,27 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float 
 	}
 }
 
+void Image::Render(HDC hdc, int destX, int destY, int startPosX, int startPosY, BLENDFUNCTION ftn)
+{
+
+	AlphaBlend(
+		hdc,										
+		0,				//이미지를 출력할 위치
+		0,
+		(int)(imageInfo->frameWidth)/2,						//출력할 이미지의 너비 높이
+		(int)(imageInfo->frameHeight)/2,
+		imageInfo->hMemDc,
+		startPosX, //										//가져올 이미지의 시작지점
+		startPosY, //
+		TILE_SIZE * TILE_COUNT_X,							// 원본 이미지로부터 해당크기만큼 잘라낼 이미지의 너비 높이
+		TILE_SIZE * TILE_COUNT_Y,
+		ftn
+	);
+}
+
+
+
+
 void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, int leftHit, int rightHit, int topHit, int bottomHit)
 {
 	// frameX : 0, frameY : 0 => 시작 (68 * 0, 0) 얼마나 복사할건가 (68, 104)
@@ -197,16 +222,16 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, int le
 	{
 		GdiTransparentBlt(
 			hdc,
-			destX - (imageInfo->frameWidth / 2) + 8*leftHit ,
-			destY - (imageInfo->frameHeight / 2) + 8 * topHit ,
+			destX - (imageInfo->frameWidth / 2) + 8 * leftHit,
+			destY - (imageInfo->frameHeight / 2) + 8 * topHit,
 			(imageInfo->frameWidth) * (2 - rightHit) / 2 - 8 * leftHit,
-			(imageInfo->frameHeight) * (2 - topHit) / 2 - 8*(bottomHit),
+			(imageInfo->frameHeight) * (2 - topHit) / 2 - 8 * (bottomHit),
 
 			imageInfo->hMemDc,
-			imageInfo->frameWidth * frameX + 8*leftHit,
+			imageInfo->frameWidth * frameX + 8 * leftHit,
 			imageInfo->frameHeight * frameY + 8 * topHit,
-			imageInfo->frameWidth* (2 - rightHit) / 2 - 8 * leftHit,
-			imageInfo->frameHeight * (2-topHit) / 2 - 8 * (bottomHit),
+			imageInfo->frameWidth * (2 - rightHit) / 2 - 8 * leftHit,
+			imageInfo->frameHeight * (2 - topHit) / 2 - 8 * (bottomHit),
 			transColor
 		);
 	}

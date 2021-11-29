@@ -9,6 +9,7 @@
 #include "TileObj.h"
 #include "Camera.h"
 #include "PlayerObj.h"
+#include "ParallaxObj.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -21,6 +22,7 @@ vector<Image*> vecSampleImage;
 vector<Layer*> vecLayer;
 vector<TileObj*> vecTileObj;
 PlayerObj* playerObj = nullptr;
+ParallaxObj* parallaxObj = nullptr;
 
 using namespace cv;
 
@@ -238,7 +240,31 @@ void TilemapToolScene::Update()
 			}
 		}
 	}
+	else if (tileState == TileState::Parallax)
+	{
+		if (PtInRect(&(sampleArea), g_ptMouse))
+		{
 
+			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+			{
+				if (parallaxObj == nullptr)
+				{
+					parallaxObj = new ParallaxObj;
+					parallaxObj->Init("Image/Parallax/001-Fog01.bmp");
+					vecLayer[currLayer]->PushGameObject(parallaxObj);
+				}
+				else
+				{
+				}
+			}
+			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+			{
+
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+			}
+		}
+	}
 
 	//if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
 	//{
@@ -334,24 +360,20 @@ void TilemapToolScene::Update()
 
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('T'))
 	{
-		if (tileState == TileState::Trigger)
+		int state = (int)tileState;
+		state--;
+		if (tileState != TileState::Tile)
 		{
-			tileState = TileState::Playable;
-		}
-		else if (tileState == TileState::Playable)
-		{
-			tileState = TileState::Tile;
+			tileState = (TileState)state;
 		}
 	}
 	else if (KeyManager::GetSingleton()->IsOnceKeyDown('Y'))
 	{
-		if (tileState == TileState::Tile)
+		int state = (int)tileState;
+		state++;
+		if (tileState != TileState::Parallax)
 		{
-			tileState = TileState::Playable;
-		}
-		else if (tileState == TileState::Playable)
-		{
-			tileState = TileState::Trigger;
+			tileState = (TileState)state;
 		}
 	}
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('V'))
@@ -443,6 +465,10 @@ void TilemapToolScene::Update()
 			currLayer--;
 	}
 
+	for (int i = 0; i < vecLayer.size(); ++i)
+	{
+		vecLayer[i]->Update();
+	}
 
 
 }
@@ -616,6 +642,8 @@ const string TilemapToolScene::TileStateToString(TileState e) throw()
 		return "Playable";
 	case TileState::Trigger:
 		return "Trigger";
+	case TileState::Parallax:
+		return "Parallax";
 	default: throw std::invalid_argument("Unimplemented item");
 	}
 }

@@ -12,7 +12,6 @@ private:
 
 	TILE_INFO tile[MAP_SIZE_X][MAP_SIZE_Y] = {};
 
-	int referenceID = 0;
 
 public:
 	TileObj() = default;

@@ -7,6 +7,10 @@ HRESULT Layer::Init()
 
 void Layer::Update()
 {
+	for (auto iter = vecGameObject.begin(); iter != vecGameObject.end(); ++iter)
+	{
+		(*iter)->Update();
+	}
 }
 
 void Layer::Render(HDC hdc)
