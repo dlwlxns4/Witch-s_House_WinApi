@@ -13,6 +13,7 @@ class Button;
 class Tile;
 class Layer;
 class TileObj;
+class TriggerObj;
 class TilemapToolScene : public GameEntity
 {
 private:
@@ -57,11 +58,14 @@ private:
 	int SAMPLE_TILE_X = 0;
 	int SAMPLE_TILE_Y = 0;
 
-	int currentLayer = 0;
 
 	Button* layerAddBtn;
 
 	TileState tileState;
+
+	//referenceID를 변경하기위한 포인터
+	TriggerObj* TriggerObjForId;
+	
 public:
 	virtual ~TilemapToolScene() = default;
 
@@ -73,4 +77,5 @@ public:
 	void Save(int saveIndex=0);
 	const string TileStateToString(TileState e) throw();
 	void Load(int loadIndex=0);
+	TriggerObj* FindTriggerObj(int mousePosX, int mousePosY);
 };

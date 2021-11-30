@@ -75,7 +75,7 @@
     <ClCompile Include="ButtonFunction.cpp">
       <Filter>2D Framework\Manager\Button</Filter>
     </ClCompile>
-    <ClCompile Include="Trigger.cpp">
+    <ClCompile Include="TriggerObj.cpp">
       <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
@@ -152,7 +152,7 @@
     <ClInclude Include="TileObj.h">
       <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClInclude>
-    <ClInclude Include="Trigger.h">
+    <ClInclude Include="TriggerObj.h">
       <Filter>2D Framework\Manager\GameObejct</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">

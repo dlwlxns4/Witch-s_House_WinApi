@@ -169,7 +169,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="Trigger.cpp" />
+    <ClCompile Include="TriggerObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -195,7 +195,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="Trigger.h" />
+    <ClInclude Include="TriggerObj.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

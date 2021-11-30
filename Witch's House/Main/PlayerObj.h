@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Config.h"
 
+enum class Direction{Left=0, Right=1, Top=2, Bottom=3};
+
 class Image;
 class PlayerObj : public GameObject
 {
@@ -11,6 +13,8 @@ private:
 
 	int tilePosX = 0;
 	int tilePosY = 0;
+
+	Direction direction;
 public:
 	PlayerObj() = default;
 	virtual ~PlayerObj() = default;

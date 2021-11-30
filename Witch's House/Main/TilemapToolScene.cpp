@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "PlayerObj.h"
 #include "ParallaxObj.h"
+#include "TriggerObj.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -23,6 +24,8 @@ vector<Layer*> vecLayer;
 vector<TileObj*> vecTileObj;
 PlayerObj* playerObj = nullptr;
 ParallaxObj* parallaxObj = nullptr;
+TriggerObj* triggerObj = nullptr;
+vector<TriggerObj*> vecTriggerObj;
 
 using namespace cv;
 
@@ -118,9 +121,6 @@ HRESULT TilemapToolScene::Init()
 	layerAddBtn = new Button;
 	layerAddBtn->Init(Button_Type::LayerButton, TILE_SIZE * TILE_COUNT_X + 90, 30, vecLayerBtnImage[0]);
 
-	currentLayer = 0;
-
-
 	//타일 오브제
 	tileObj = new TileObj;
 	tileObj->Init();
@@ -136,7 +136,7 @@ HRESULT TilemapToolScene::Init()
 
 void TilemapToolScene::Update()
 {
-	// 샘플영역에서 샘플을 선택
+	// 우측상단 샘플영역에서 샘플을 선택
 	RECT sampleArea;
 	sampleArea.left = TILEMAPTOOL_SIZE_X - sampleImage->GetWidth();
 	sampleArea.right = TILEMAPTOOL_SIZE_X;
@@ -173,11 +173,13 @@ void TilemapToolScene::Update()
 		}
 	}
 
-
+	//왼쪽 메인 타일
 	sampleArea.left = 0;
 	sampleArea.top = 0;
 	sampleArea.right = TILE_SIZE * TILE_COUNT_X;
 	sampleArea.bottom = TILE_SIZE * TILE_COUNT_Y;
+
+
 	if (tileState == TileState::Tile)
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
@@ -256,6 +258,30 @@ void TilemapToolScene::Update()
 				else
 				{
 				}
+			}
+			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+			{
+
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+			}
+		}
+	}
+	else if (tileState == TileState::Trigger)
+	{
+		if (PtInRect(&(sampleArea), g_ptMouse))
+		{
+			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+			{
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				TriggerObj* trigger = new TriggerObj;
+				
+				
+				trigger->SetTile(startPosX, startPosY, selectedIdX, selectedIdY, mapIndex);
+				vecTriggerObj.push_back(trigger);
+				vecLayer[currLayer]->PushGameObject(trigger);
+
 			}
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
@@ -432,14 +458,13 @@ void TilemapToolScene::Update()
 	//버튼
 	layerAddBtn->Update();
 
-
+	//레이어 이동
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('1'))
 	{
 		if (currLayer > 0)
 		{
 			currLayer--;
 		}
-		currentLayer = 0;
 	}
 	else if (KeyManager::GetSingleton()->IsOnceKeyDown('2'))
 	{
@@ -447,22 +472,47 @@ void TilemapToolScene::Update()
 		{
 			currLayer++;
 		}
-		currentLayer = 1;
-	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown('3'))
-	{
-		currentLayer = 2;
 	}
 
-
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('5'))
+	// Find TriggerTile
+	if (KeyManager::GetSingleton()->IsOnceKeyUp('P'))
 	{
-		currLayer++;
+		if (PtInRect(&(sampleArea), g_ptMouse))
+		{
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+			TriggerObjForId = FindTriggerObj(startPosX, startPosY);
+		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown('4'))
+
+	// Give Reference
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('M'))
 	{
-		if (currLayer > 1)
-			currLayer--;
+		if (TriggerObjForId != nullptr)
+		{
+			TriggerObjForId->addReferenceID_1();
+		}
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_OEM_COMMA))
+	{
+		if (TriggerObjForId != nullptr)
+		{
+			TriggerObjForId->addReferenceID_10();
+		}
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_OEM_PERIOD))
+	{
+		if (TriggerObjForId != nullptr)
+		{
+			TriggerObjForId->addReferenceID_100();
+		}
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_OEM_2))
+	{
+		if (TriggerObjForId != nullptr)
+		{
+			TriggerObjForId->addReferenceID_1000();
+		}
 	}
 
 	for (int i = 0; i < vecLayer.size(); ++i)
@@ -586,6 +636,12 @@ void TilemapToolScene::Render(HDC hdc)
 
 	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 90, TileStateToString(tileState).c_str(), TileStateToString(tileState).size());
 
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 170, TEXT("CurrLayerMove : 1(-) 2(+)"), 22);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 150, TEXT("SampleImageMove : z(-) x(+) c(-) v(+)"), 37);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 130, TEXT("TileState : t(-) y(+)"), 21);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 130, TEXT("SelectTriggerObj : p"), 20);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 110, TEXT("Add ReferenceId : m(1) ,(10) .(100) /(1000)"), 43);
+
 
 
 
@@ -668,4 +724,18 @@ void TilemapToolScene::Load(int loadIndex)
 	}
 
 	CloseHandle(hFile);
+}
+
+TriggerObj* TilemapToolScene::FindTriggerObj(int mousePosX, int mousePosY /*int *renderPosX, int *renderPosY*/)//뒤의 두개는 아웃파라미터
+{
+	for (auto trigger : vecTriggerObj)
+	{
+		if (trigger->ComparePos(mousePosX, mousePosY) == true)
+		{
+			cout << " 찾았다 " << endl;
+			return trigger;
+		}
+	}
+
+	return nullptr;
 }
