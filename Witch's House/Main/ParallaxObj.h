@@ -4,7 +4,7 @@
 #pragma once
 class ParallaxObj : public GameObject
 {
-	BLENDFUNCTION ftn;
+	BLENDFUNCTION ftn = {};
 
 
 	int renderPosX = 0;

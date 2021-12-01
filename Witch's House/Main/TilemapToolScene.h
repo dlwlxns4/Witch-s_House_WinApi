@@ -75,7 +75,7 @@ public:
 	virtual void Release() override;
 
 	void Save(int saveIndex=0);
-	const string TileStateToString(TileState e) throw();
+	const string TileStateToString(TileState e);
 	void Load(int loadIndex=0);
 	TriggerObj* FindTriggerObj(int mousePosX, int mousePosY);
 };

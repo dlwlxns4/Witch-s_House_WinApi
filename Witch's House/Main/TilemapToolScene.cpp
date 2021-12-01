@@ -186,8 +186,8 @@ void TilemapToolScene::Update()
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 			{
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 
 				int interverX = 0, interverY = 0;
 				if (selectPos.empty() == false)
@@ -206,8 +206,8 @@ void TilemapToolScene::Update()
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 				vecTileObj[currLayer]->SetTile(startPosX, startPosY, -1, -1);
 			}
 		}
@@ -216,8 +216,8 @@ void TilemapToolScene::Update()
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
-			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 
 			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 			{
@@ -237,8 +237,8 @@ void TilemapToolScene::Update()
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 			}
 		}
 	}
@@ -262,8 +262,8 @@ void TilemapToolScene::Update()
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 			}
 		}
 	}
@@ -273,11 +273,11 @@ void TilemapToolScene::Update()
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
 			{
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 				TriggerObj* trigger = new TriggerObj;
-				
-				
+
+
 				trigger->SetTile(startPosX, startPosY, selectedIdX, selectedIdY, mapIndex);
 				vecTriggerObj.push_back(trigger);
 				vecLayer[currLayer]->PushGameObject(trigger);
@@ -286,8 +286,8 @@ void TilemapToolScene::Update()
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 			}
 		}
 	}
@@ -479,8 +479,8 @@ void TilemapToolScene::Update()
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
-			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + g_cameraPosX + 1;
-			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + g_cameraPosY + 1;
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
+			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
 			TriggerObjForId = FindTriggerObj(startPosX, startPosY);
 		}
 	}
@@ -531,15 +531,15 @@ void TilemapToolScene::Render(HDC hdc)
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
-	for (int i = g_cameraPosY; i < TILE_COUNT_Y + g_cameraPosY; i++)
+	for (int i = (int)g_cameraPosY; i < TILE_COUNT_Y + g_cameraPosY; i++)
 	{
-		for (int j = g_cameraPosX; j < TILE_COUNT_X + g_cameraPosX; j++)
+		for (int j = (int)g_cameraPosX; j < TILE_COUNT_X + g_cameraPosX; j++)
 		{
 			Rectangle(hdc,
-				tileInfo[i][j].rc.left - TILE_SIZE * g_cameraPosX,
-				tileInfo[i][j].rc.top - TILE_SIZE * g_cameraPosY,
-				tileInfo[i][j].rc.right - TILE_SIZE * g_cameraPosX,
-				tileInfo[i][j].rc.bottom - TILE_SIZE * g_cameraPosY);
+				tileInfo[i][j].rc.left - TILE_SIZE * (int)g_cameraPosX,
+				tileInfo[i][j].rc.top - TILE_SIZE * (int)g_cameraPosY,
+				tileInfo[i][j].rc.right - TILE_SIZE * (int)g_cameraPosX,
+				tileInfo[i][j].rc.bottom - TILE_SIZE * (int)g_cameraPosY);
 		}
 	}
 
@@ -624,7 +624,7 @@ void TilemapToolScene::Render(HDC hdc)
 	}
 
 	TextOut(hdc, 50, TILEMAPTOOL_SIZE_Y - 30, TEXT("Current SampleTile : "), 20);
-	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), mapName[mapIndex].size());
+	TextOut(hdc, 250, TILEMAPTOOL_SIZE_Y - 30, mapName[mapIndex].c_str(), (int)mapName[mapIndex].size());
 
 	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 70, TEXT("Max Layer : "), 12);
 	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 70, to_string(vecLayer.size()).c_str(), (int)to_string(vecLayer.size()).size());
@@ -634,7 +634,7 @@ void TilemapToolScene::Render(HDC hdc)
 
 	TextOut(hdc, 200, TILEMAPTOOL_SIZE_Y - 90, TEXT("TileState : "), 12);
 
-	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 90, TileStateToString(tileState).c_str(), TileStateToString(tileState).size());
+	TextOut(hdc, 400, TILEMAPTOOL_SIZE_Y - 90, TileStateToString(tileState).c_str(), (int)(TileStateToString(tileState).size()));
 
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 170, TEXT("CurrLayerMove : 1(-) 2(+)"), 22);
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 150, TEXT("SampleImageMove : z(-) x(+) c(-) v(+)"), 37);
@@ -688,7 +688,7 @@ void TilemapToolScene::Save(int saveIndex)
 	CloseHandle(hFile);
 }
 
-const string TilemapToolScene::TileStateToString(TileState e) throw()
+const string TilemapToolScene::TileStateToString(TileState e)
 {
 	switch (e)
 	{
@@ -700,7 +700,8 @@ const string TilemapToolScene::TileStateToString(TileState e) throw()
 		return "Trigger";
 	case TileState::Parallax:
 		return "Parallax";
-	default: throw std::invalid_argument("Unimplemented item");
+	default:
+		return "null";
 	}
 }
 

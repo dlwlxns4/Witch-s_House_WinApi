@@ -27,13 +27,13 @@ HRESULT Button::Init(Button_Type type, int posX, int posY, Image* image)
 
 	type = type;
 	img = image;
-	pos.x = posX;
-	pos.y = posY;
+	pos.x = (float)posX;
+	pos.y = (float)posY;
 
-	shape.left = pos.x - img->GetFrameWidth() / 2;
-	shape.right = pos.x + img->GetFrameWidth() / 2;
-	shape.top = pos.y - img->GetFrameHeight() / 2;
-	shape.bottom = pos.y + img->GetFrameHeight() / 2;
+	shape.left = (LONG)pos.x - img->GetFrameWidth() / 2;
+	shape.right = (LONG)pos.x + img->GetFrameWidth() / 2;
+	shape.top = (LONG)pos.y - img->GetFrameHeight() / 2;
+	shape.bottom = (LONG)pos.y + img->GetFrameHeight() / 2;
 
 	state = Button_State::None;
 
@@ -99,11 +99,11 @@ void Button::Render(HDC hdc)
 	case Button_State::None:
 	case Button_State::Up:
 		if (img)
-			img->Render(hdc, pos.x, pos.y, 0, 0);
+			img->Render(hdc, (int)pos.x, (int)pos.y, 0, 0);
 		break;
 	case Button_State::Down:
 		if (img)
-			img->Render(hdc, pos.x, pos.y, 1, 0);
+			img->Render(hdc, (int)pos.x, (int)pos.y, 1, 0);
 		break;
 	}
 

@@ -12,8 +12,8 @@ HRESULT PlayerObj::Init(int posX, int posY)
 {
 	Mat charImg = imread("Image/Character/$vivi.bmp");
 	this->img = ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
-	tilePosX = posX;
-	tilePosY = posY;
+	tilePosX = (float)posX;
+	tilePosY = (float) posY;
 
 	direction = Direction::Down;
 	state = PlayerState::None;
@@ -32,8 +32,8 @@ void PlayerObj::Render(HDC hdc)
 	{
 
 		this->img->Render(hdc
-			, TILE_SIZE * tilePosX - PLAYER_SIZE_X / 2 - TILE_SIZE * g_cameraPosX
-			, TILE_SIZE * tilePosY - PLAYER_SIZE_Y / 2 - TILE_SIZE * g_cameraPosY
+			, (int)(TILE_SIZE * tilePosX - PLAYER_SIZE_X / 2 - (int)TILE_SIZE * g_cameraPosX)
+			, (int)(TILE_SIZE * tilePosY - PLAYER_SIZE_Y / 2 - (int)TILE_SIZE * g_cameraPosY)
 			, walkImage
 			, int(direction)
 		);
@@ -46,7 +46,7 @@ void PlayerObj::Release()
 
 void PlayerObj::Move()
 {
-	
+
 	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
 	{
 		state = PlayerState::Move;
@@ -77,76 +77,83 @@ void PlayerObj::Move()
 		if (moveDelay >= 2)
 		{
 			moveDelay = 0;
-			if (direction == Direction::Left)
-			{
-				moveDistance += 4;
-				tilePosX -= 0.125;
-				g_cameraPosX -= 0.125;
-				if (moveDistance == TILE_SIZE / 2)
-				{
-					walkImage++;
-				}
-				if (moveDistance >= TILE_SIZE)
-				{
-					walkImage = 0;
-					moveDistance = 0;
-					state = PlayerState::None;
-				}
-			}
-			else if (direction == Direction::Right)
-			{
-				moveDistance += 4;
-				tilePosX += 0.125;
-
-				g_cameraPosX += 0.125;
-				if (moveDistance == TILE_SIZE / 2)
-				{
-					walkImage++;
-				}
-				if (moveDistance >= TILE_SIZE)
-				{
-					walkImage = 0;
-					moveDistance = 0;
-					state = PlayerState::None;
-				}
-			}
-
-			if (direction == Direction::Up)
-			{
-				moveDistance += 4;
-				tilePosY -= 0.125;
-				g_cameraPosY -= 0.125;
-				if (moveDistance == TILE_SIZE / 2)
-				{
-					walkImage++;
-				}
-				if (moveDistance >= TILE_SIZE)
-				{
-					walkImage = 0;
-					moveDistance = 0;
-					state = PlayerState::None;
-				}
-			}
-			if (direction == Direction::Down)
-			{
-				moveDistance += 4;
-				tilePosY += 0.125;
-				g_cameraPosY += 0.125;
-				if (moveDistance == TILE_SIZE / 2)
-				{
-					walkImage++;
-				}
-				if (moveDistance >= TILE_SIZE)
-				{
-					walkImage = 0;
-					moveDistance = 0;
-					state = PlayerState::None;
-				}
-			}
+			MoveHelper();
 		}
 	}
 }
 
 void PlayerObj::MoveHelper()
 {
+	switch (direction)
+	{
+	case Direction::Left:
+		moveDistance += 4;
+		tilePosX -= 0.125;
+		g_cameraPosX -= 0.125;
+		if (moveDistance == TILE_SIZE / 2)
+		{
+			isRightFoot = isRightFoot == true ? false : true;
+
+			walkImage = isRightFoot == true ? 2 : 1;
+		}
+		if (moveDistance >= TILE_SIZE)
+		{
+			walkImage = 0;
+			moveDistance = 0;
+			state = PlayerState::None;
+		}
+		break;
+	case Direction::Right:
+		moveDistance += 4;
+		tilePosX += 0.125;
+
+		g_cameraPosX += 0.125;
+		if (moveDistance == TILE_SIZE / 2)
+		{
+			isRightFoot = isRightFoot == true ? false : true;
+
+			walkImage = isRightFoot == true ? 2 : 1;
+		}
+		if (moveDistance >= TILE_SIZE)
+		{
+			walkImage = 0;
+			moveDistance = 0;
+			state = PlayerState::None;
+		}
+		break;
+	case Direction::Up:
+		moveDistance += 4;
+		tilePosY -= 0.125;
+		g_cameraPosY -= 0.125;
+		if (moveDistance == TILE_SIZE / 2)
+		{
+			isRightFoot = isRightFoot == true ? false : true;
+
+			walkImage = isRightFoot == true ? 2 : 1;
+		}
+		if (moveDistance >= TILE_SIZE)
+		{
+			walkImage = 0;
+			moveDistance = 0;
+			state = PlayerState::None;
+		}
+		break;
+	case Direction::Down:
+		moveDistance += 4;
+		tilePosY += 0.125;
+		g_cameraPosY += 0.125;
+		if (moveDistance == TILE_SIZE / 2)
+		{
+			isRightFoot = isRightFoot == true ? false : true;
+
+			walkImage = isRightFoot == true ? 2 : 1;
+		}
+		if (moveDistance >= TILE_SIZE)
+		{
+			walkImage = 0;
+			moveDistance = 0;
+			state = PlayerState::None;
+		}
+		break;
+	}
 }

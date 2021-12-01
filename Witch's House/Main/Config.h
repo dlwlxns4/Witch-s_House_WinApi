@@ -52,8 +52,8 @@ extern POINT g_ptMouse;
 #define TILE_SIZE	32
 #define TILE_COUNT_X	17
 #define TILE_COUNT_Y	13
-#define MAP_SIZE_X 150
-#define MAP_SIZE_Y 150
+#define MAP_SIZE_X 100
+#define MAP_SIZE_Y 100
 #define LAYER_SIZE 3
 #define SAMPLE_TILE_COUNT_X 5
 #define SAMPLE_TILE_COUNT_Y	2

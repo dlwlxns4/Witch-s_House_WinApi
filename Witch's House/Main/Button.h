@@ -13,8 +13,8 @@ enum class Button_State { None, Down, Up };		// FSM : Finite State Machine À¯ÇÑ 
 class Button : public GameObject
 {
 private:
-	Button_Type type;
-	Button_State state;
+	Button_Type type = {};
+	Button_State state = {};
 
 	//void (*funcPtr)(void);
 
@@ -27,8 +27,5 @@ public:
 	void AddLayer();
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-	//void SetNum(int num) { this->num = num; }
-	//void SetFunc(void (*funcPtr)(void)) { this->funcPtr = funcPtr; }
-	//void SetFunc(pF funcPtr) { this->funcPtr = funcPtr; }
 };
 

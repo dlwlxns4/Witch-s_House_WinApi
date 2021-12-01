@@ -15,12 +15,13 @@ private:
 	float tilePosX = 0;
 	float tilePosY = 0;
 
-	Direction direction;
-	PlayerState state;
+	Direction direction = {};
+	PlayerState state = {};
 
 	int moveDelay = 0;
 	int moveDistance = 0;
 	int walkImage = 0;
+	bool isRightFoot = false;
 public:
 	PlayerObj() = default;
 	virtual ~PlayerObj() = default;
@@ -33,6 +34,6 @@ public:
 
 	void Move();
 	void MoveHelper();
-	void SetTilePos(int posX, int posY) { tilePosX = posX; tilePosY = posY; }
+	void SetTilePos(int posX, int posY) { tilePosX = (float)posX; tilePosY = (float)posY; }
 };
 
