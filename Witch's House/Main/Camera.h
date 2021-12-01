@@ -1,4 +1,4 @@
 #pragma once
 
-extern int g_cameraPosX;
-extern int g_cameraPosY;
+extern float g_cameraPosX;
+extern float g_cameraPosY;

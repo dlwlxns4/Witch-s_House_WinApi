@@ -12,10 +12,11 @@ HRESULT ParallaxObj::Init(const char* filePath)
 	Mat parallaxImage = imread(filePath);
 	cout << TILE_SIZE * (TILE_COUNT_X + 1) + 1 << endl;
 	this->img = ImageManager::GetSingleton()->AddImage(filePath, TILE_SIZE * (TILE_COUNT_X)*2, TILE_SIZE * (TILE_COUNT_Y)*2, 1, 1, true, RGB(255, 0, 255));
+	
 	ftn.AlphaFormat = 0;
 	ftn.BlendFlags = 0;
 	ftn.BlendOp = AC_SRC_OVER;
-	ftn.SourceConstantAlpha = 50;
+	ftn.SourceConstantAlpha = 30;
 
 	return S_OK;
 }
@@ -28,6 +29,8 @@ void ParallaxObj::Update()
 		renderDelayTime = 0;
 		renderPosX++;
 		renderPosY++;
+
+		//무한루프
 		if (renderPosX == TILE_SIZE * (TILE_COUNT_X))
 			renderPosX = 0;
 		if (renderPosY == TILE_SIZE * (TILE_COUNT_Y))

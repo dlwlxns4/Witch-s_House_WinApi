@@ -32,6 +32,7 @@ public:
 	virtual void Release();
 
 	void Move();
+	void MoveHelper();
 	void SetTilePos(int posX, int posY) { tilePosX = posX; tilePosY = posY; }
 };
 

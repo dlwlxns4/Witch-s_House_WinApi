@@ -3,8 +3,8 @@
 
 #include "Camera.h"
 
-int g_cameraPosX;
-int g_cameraPosY;
+float g_cameraPosX;
+float g_cameraPosY;
 
 HRESULT MainGame::Init()
 {

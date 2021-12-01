@@ -47,27 +47,28 @@ void PlayerObj::Release()
 void PlayerObj::Move()
 {
 	
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
-		{
-			state = PlayerState::Move;
-			direction = Direction::Left;
-		}
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
-		{
-			state = PlayerState::Move;
-			direction = Direction::Right;
-		}
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_UP))
-		{
-			state = PlayerState::Move;
-			direction = Direction::Up;
-		}
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
-		{
-			state = PlayerState::Move;
-			direction = Direction::Down;
-		}
-	
+	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
+	{
+		state = PlayerState::Move;
+		direction = Direction::Left;
+	}
+	else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+	{
+		state = PlayerState::Move;
+		direction = Direction::Right;
+	}
+
+	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_UP))
+	{
+		state = PlayerState::Move;
+		direction = Direction::Up;
+	}
+	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
+	{
+		state = PlayerState::Move;
+		direction = Direction::Down;
+	}
+
 
 
 	if (state == PlayerState::Move)
@@ -80,6 +81,7 @@ void PlayerObj::Move()
 			{
 				moveDistance += 4;
 				tilePosX -= 0.125;
+				g_cameraPosX -= 0.125;
 				if (moveDistance == TILE_SIZE / 2)
 				{
 					walkImage++;
@@ -95,32 +97,56 @@ void PlayerObj::Move()
 			{
 				moveDistance += 4;
 				tilePosX += 0.125;
+
+				g_cameraPosX += 0.125;
+				if (moveDistance == TILE_SIZE / 2)
+				{
+					walkImage++;
+				}
 				if (moveDistance >= TILE_SIZE)
 				{
+					walkImage = 0;
 					moveDistance = 0;
 					state = PlayerState::None;
 				}
 			}
-			else if (direction == Direction::Up)
+
+			if (direction == Direction::Up)
 			{
 				moveDistance += 4;
 				tilePosY -= 0.125;
+				g_cameraPosY -= 0.125;
+				if (moveDistance == TILE_SIZE / 2)
+				{
+					walkImage++;
+				}
 				if (moveDistance >= TILE_SIZE)
 				{
+					walkImage = 0;
 					moveDistance = 0;
 					state = PlayerState::None;
 				}
 			}
-			else if (direction == Direction::Down)
+			if (direction == Direction::Down)
 			{
 				moveDistance += 4;
 				tilePosY += 0.125;
+				g_cameraPosY += 0.125;
+				if (moveDistance == TILE_SIZE / 2)
+				{
+					walkImage++;
+				}
 				if (moveDistance >= TILE_SIZE)
 				{
+					walkImage = 0;
 					moveDistance = 0;
 					state = PlayerState::None;
 				}
 			}
 		}
 	}
+}
+
+void PlayerObj::MoveHelper()
+{
 }
