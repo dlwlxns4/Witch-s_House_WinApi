@@ -22,20 +22,6 @@ HRESULT TileObj::Init()
 
 void TileObj::Render(HDC hdc)
 {
-
-	//for (int i = cameraY; i < TILE_COUNT_Y + cameraY; i++)
-	//{
-	//	for (int j = cameraX; j < TILE_COUNT_X + cameraX; j++)
-	//	{
-
-	//		vecSampleImage[tileInfo[layer_size][i][j].mapIndex]->Render(hdc,
-	//			tileInfo[layer_size][i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE * cameraX,
-	//			tileInfo[layer_size][i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE * cameraY,
-	//			tileInfo[layer_size][i][j].frameX,
-	//			tileInfo[layer_size][i][j].frameY);
-
-	//	}
-	//}
 	for (int i = g_cameraPosY; i <= TILE_COUNT_Y+ g_cameraPosY; i++)
 	{
 		for (int j = g_cameraPosX; j <= TILE_COUNT_X+ g_cameraPosX; j++)
