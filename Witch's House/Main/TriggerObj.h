@@ -22,7 +22,7 @@ public:
 		SetRect(&(tile.rc),
 			posX * TILE_SIZE,
 			posY * TILE_SIZE,
-			posX * TILE_SIZE + TILE_SIZE, 
+			posX * TILE_SIZE + TILE_SIZE,
 			posY * TILE_SIZE + TILE_SIZE
 		);
 		tile.frameX = frameX;
@@ -30,6 +30,7 @@ public:
 		tile.mapIndex = mapIndex;
 
 		PhysicsManager::GetSingleton()->AddCollider(&(tile.rc), posX, posY);
+		PhysicsManager::GetSingleton()->SetOwner(this, posX, posY);
 	}
 	bool ComparePos(int mousePosX, int mousePosY)
 	{
@@ -44,5 +45,7 @@ public:
 	void addReferenceID_10() { referenceID += 10; }
 	void addReferenceID_100() { referenceID += 100; }
 	void addReferenceID_1000() { referenceID += 1000; }
+
+	int GetReferenceID() { return referenceID; }
 };
 

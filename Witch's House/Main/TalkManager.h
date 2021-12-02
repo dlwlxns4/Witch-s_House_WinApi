@@ -15,6 +15,7 @@ public:
 	TalkManager() = default;
 	virtual ~TalkManager() = default;
 
-	void GenerateData();
+	void Init();
+	void FindChat(int referenceId);
 };
 

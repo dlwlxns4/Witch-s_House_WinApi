@@ -3,10 +3,12 @@
 #include "Singleton.h"
 #include "Config.h"
 
+class GameObject;
 class PhysicsManager : public Singleton<PhysicsManager>
 {
 private:
 	RECT* collider[MAP_SIZE_X][MAP_SIZE_Y] = { nullptr, };
+	GameObject* owners[MAP_SIZE_X][MAP_SIZE_Y] = { nullptr, };
 
 	bool showCollider = false;
 public:
@@ -31,6 +33,14 @@ public:
 		collider[posY][posX] = nullptr; 
 	}
 	void Render(HDC hdc);
+	void SetOwner(GameObject* owner, int posX, int posY)
+	{
+		owners[posY][posX] = owner;
+	}
+	GameObject* GetOwner(int posX, int posY)
+	{
+		return owners[posY][posX];
+	}
 
 };
 

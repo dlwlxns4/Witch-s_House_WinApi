@@ -9,17 +9,17 @@ void PhysicsManager::Render(HDC hdc)
 
 	if (showCollider)
 	{
-		for (int i = g_cameraPosY; i < g_cameraPosY + TILE_COUNT_Y; ++i)
+		for (int i = (int)g_cameraPosY; i < (int)g_cameraPosY + TILE_COUNT_Y; ++i)
 		{
-			for (int j = g_cameraPosX; j < g_cameraPosX + TILE_COUNT_X; ++j)
+			for (int j = (int)g_cameraPosX; j < (int)g_cameraPosX + TILE_COUNT_X; ++j)
 			{
 				if (collider[i][j] != nullptr)
 				{
 					Rectangle(hdc,
-						collider[i][j]->left - TILE_SIZE * (g_cameraPosX),
-						collider[i][j]->top - TILE_SIZE * (g_cameraPosY),
-						collider[i][j]->right - TILE_SIZE * (g_cameraPosX),
-						collider[i][j]->bottom - TILE_SIZE * (g_cameraPosY)
+						collider[i][j]->left - TILE_SIZE * (int)(g_cameraPosX),
+						collider[i][j]->top - TILE_SIZE * (int)(g_cameraPosY),
+						collider[i][j]->right - TILE_SIZE * (int)(g_cameraPosX),
+						collider[i][j]->bottom - TILE_SIZE * (int)(g_cameraPosY)
 					);
 				}
 			}

@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "ImageHelper.h"
 #include "Camera.h"
+#include "TriggerObj.h"
 
 HRESULT PlayerObj::Init()
 {
@@ -24,6 +25,7 @@ HRESULT PlayerObj::Init(int posX, int posY)
 void PlayerObj::Update()
 {
 	Move();
+	Action();
 }
 
 void PlayerObj::Render(HDC hdc)
@@ -207,6 +209,20 @@ void PlayerObj::MoveHelper()
 			pastPosY = (int)tilePosY;
 		}
 		break;
+	}
+}
+
+void PlayerObj::Action()
+{
+
+	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LSHIFT))
+	{
+		GameObject* trigger = PhysicsManager::GetSingleton()->GetOwner(rayCast.first, rayCast.second);
+		if (trigger != nullptr)
+		{
+			cout << ((TriggerObj*)trigger)->GetReferenceID() << endl;
+			TalkManager::GetSingleton()->FindChat(((TriggerObj*)trigger)->GetReferenceID());
+		}
 	}
 }
 

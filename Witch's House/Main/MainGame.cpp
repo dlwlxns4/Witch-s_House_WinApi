@@ -12,6 +12,7 @@ HRESULT MainGame::Init()
 	ImageManager::GetSingleton()->Init();
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
+	TalkManager::GetSingleton()->Init();
 
 	SceneManager::GetSingleton()->ChangeScene("TilemapToolScene");
 
