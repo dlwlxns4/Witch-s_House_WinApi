@@ -15,7 +15,6 @@ void PhysicsManager::Render(HDC hdc)
 			{
 				if (collider[i][j] != nullptr)
 				{
-					cout << i << " " << j << " asdasd" << endl;
 					Rectangle(hdc,
 						collider[i][j]->left - TILE_SIZE * (g_cameraPosX),
 						collider[i][j]->top - TILE_SIZE * (g_cameraPosY),

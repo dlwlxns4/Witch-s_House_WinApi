@@ -53,30 +53,30 @@ void PlayerObj::Move()
 		{
 			state = PlayerState::Move;
 			direction = Direction::Left;
-			rayCast.first = tilePosX - 1;
-			rayCast.second = tilePosY;
+			rayCast.first = (int)tilePosX - 1;
+			rayCast.second = (int)tilePosY;
 		}
 		else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
 		{
 			state = PlayerState::Move;
 			direction = Direction::Right;
-			rayCast.first = tilePosX + 1;
-			rayCast.second = tilePosY;
+			rayCast.first = (int)tilePosX + 1;
+			rayCast.second = (int)tilePosY;
 		}
 
 		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_UP))
 		{
 			state = PlayerState::Move;
 			direction = Direction::Up;
-			rayCast.first = tilePosX;
-			rayCast.second = tilePosY - 1;
+			rayCast.first = (int)tilePosX;
+			rayCast.second = (int)tilePosY - 1;
 		}
 		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
 		{
 			state = PlayerState::Move;
 			direction = Direction::Down;
-			rayCast.first = tilePosX;
-			rayCast.second = tilePosY + 1;
+			rayCast.first = (int)tilePosX;
+			rayCast.second = (int)tilePosY + 1;
 		}
 
 	}
@@ -125,16 +125,19 @@ void PlayerObj::MoveHelper()
 			state = PlayerState::None;
 			ReposRect();
 			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
-			pastPosX = tilePosX;
-			pastPosY = tilePosY;
+			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
+			pastPosX = (int)tilePosX;
+			pastPosY = (int)tilePosY;
 		}
 		break;
 	case Direction::Right:
 		moveDistance += 4;
 		tilePosX += 0.125;
 
-		g_cameraPosX += 0.125;
+		if (tilePosX > 8)
+		{
+			g_cameraPosX += 0.125;
+		}
 		if (moveDistance == TILE_SIZE / 2)
 		{
 			isRightFoot = isRightFoot == true ? false : true;
@@ -148,9 +151,9 @@ void PlayerObj::MoveHelper()
 			state = PlayerState::None;
 			ReposRect();
 			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
-			pastPosX = tilePosX;
-			pastPosY = tilePosY;
+			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
+			pastPosX = (int)tilePosX;
+			pastPosY = (int)tilePosY;
 		}
 		break;
 	case Direction::Up:
@@ -174,15 +177,18 @@ void PlayerObj::MoveHelper()
 			state = PlayerState::None;
 			ReposRect();
 			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
-			pastPosX = tilePosX;
-			pastPosY = tilePosY;
+			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
+			pastPosX = (int)tilePosX;
+			pastPosY = (int)tilePosY;
 		}
 		break;
 	case Direction::Down:
 		moveDistance += 4;
 		tilePosY += 0.125;
-		g_cameraPosY += 0.125;
+		if (tilePosY > 6)
+		{
+			g_cameraPosY += 0.125;
+		}
 		if (moveDistance == TILE_SIZE / 2)
 		{
 			isRightFoot = isRightFoot == true ? false : true;
@@ -196,9 +202,9 @@ void PlayerObj::MoveHelper()
 			state = PlayerState::None;
 			ReposRect();
 			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
-			pastPosX = tilePosX;
-			pastPosY = tilePosY;
+			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
+			pastPosX = (int)tilePosX;
+			pastPosY = (int)tilePosY;
 		}
 		break;
 	}

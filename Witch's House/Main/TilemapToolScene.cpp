@@ -530,6 +530,7 @@ void TilemapToolScene::Render(HDC hdc)
 	{
 		for (int j = (int)g_cameraPosX; j < TILE_COUNT_X + g_cameraPosX; j++)
 		{
+
 			Rectangle(hdc,
 				tileInfo[i][j].rc.left - TILE_SIZE * (int)g_cameraPosX,
 				tileInfo[i][j].rc.top - TILE_SIZE * (int)g_cameraPosY,

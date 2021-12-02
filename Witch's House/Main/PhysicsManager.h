@@ -12,7 +12,6 @@ private:
 public:
 	void AddCollider(RECT* rect, int posX, int posY) 
 	{
-		cout << posX << " " << posY << endl;
 		collider[posY][posX] = rect; 
 	}
 	RECT* GetRect(int posX, int posY) { return collider[posY][posX]; }

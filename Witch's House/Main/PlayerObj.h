@@ -58,16 +58,15 @@ public:
 			(posY + 1) * TILE_SIZE
 		);
 
-		cout << "¸ô?·ç" << endl;
 		PhysicsManager::GetSingleton()->AddCollider(&(shape), posX, posY);
 	}
 	void ReposRect()
 	{
 		SetRect(&(shape),
-			tilePosX * TILE_SIZE,
-			tilePosY * TILE_SIZE,
-			(tilePosX + 1) * TILE_SIZE,
-			(tilePosY + 1) * TILE_SIZE
+			(int)tilePosX * TILE_SIZE,
+			(int)tilePosY * TILE_SIZE,
+			(int)(tilePosX + 1) * TILE_SIZE,
+			(int)(tilePosY + 1) * TILE_SIZE
 		);
 	}
 	void CameraMove();
