@@ -40,6 +40,7 @@ enum class TankType { Player, Normal, Speed, Rapid, Defensive };
 #include "ImageManager.h"
 #include "KeyManager.h"
 #include "SceneManager.h"
+#include "TalkManager.h"
 
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
@@ -66,12 +67,6 @@ extern POINT g_ptMouse;
 #define PLAYER_SIZE_X 32
 #define PLAYER_SIZE_Y 48
 
-
-typedef struct ArgumentFuncPtr
-{
-	string sceneName;
-	string loadingSceneName;
-} ARGUMENT_PTR, * LPARGUMENT_PTR;
 
 
 enum class Terrain { Earth, Wall, Water, Grass, BreakableWall, End };

@@ -13,7 +13,7 @@ HRESULT PlayerObj::Init(int posX, int posY)
 	Mat charImg = imread("Image/Character/$vivi.bmp");
 	this->img = ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
 	tilePosX = (float)posX;
-	tilePosY = (float) posY;
+	tilePosY = (float)posY;
 
 	direction = Direction::Down;
 	state = PlayerState::None;
@@ -32,8 +32,8 @@ void PlayerObj::Render(HDC hdc)
 	{
 
 		this->img->Render(hdc
-			, (int)(TILE_SIZE * tilePosX - PLAYER_SIZE_X / 2 - (int)TILE_SIZE * g_cameraPosX)
-			, (int)(TILE_SIZE * tilePosY - PLAYER_SIZE_Y / 2 - (int)TILE_SIZE * g_cameraPosY)
+			, (int)(TILE_SIZE * (tilePosX + 1) - PLAYER_SIZE_X / 2 - (int)TILE_SIZE * g_cameraPosX)
+			, (int)(TILE_SIZE * (tilePosY + 1) - PLAYER_SIZE_Y / 2 - (int)TILE_SIZE * g_cameraPosY)
 			, walkImage
 			, int(direction)
 		);
@@ -47,38 +47,57 @@ void PlayerObj::Release()
 void PlayerObj::Move()
 {
 
-	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
+	if (state == PlayerState::None)
 	{
-		state = PlayerState::Move;
-		direction = Direction::Left;
-	}
-	else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
-	{
-		state = PlayerState::Move;
-		direction = Direction::Right;
-	}
-
-	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_UP))
-	{
-		state = PlayerState::Move;
-		direction = Direction::Up;
-	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
-	{
-		state = PlayerState::Move;
-		direction = Direction::Down;
-	}
-
-
-
-	if (state == PlayerState::Move)
-	{
-		moveDelay++;
-		if (moveDelay >= 2)
+		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
 		{
-			moveDelay = 0;
-			MoveHelper();
+			state = PlayerState::Move;
+			direction = Direction::Left;
+			rayCast.first = tilePosX - 1;
+			rayCast.second = tilePosY;
 		}
+		else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+		{
+			state = PlayerState::Move;
+			direction = Direction::Right;
+			rayCast.first = tilePosX + 1;
+			rayCast.second = tilePosY;
+		}
+
+		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_UP))
+		{
+			state = PlayerState::Move;
+			direction = Direction::Up;
+			rayCast.first = tilePosX;
+			rayCast.second = tilePosY - 1;
+		}
+		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
+		{
+			state = PlayerState::Move;
+			direction = Direction::Down;
+			rayCast.first = tilePosX;
+			rayCast.second = tilePosY + 1;
+		}
+
+	}
+
+
+	//충돌 안했을 때만 이동
+	if (PhysicsManager::GetSingleton()->CheckCollider(rayCast.first, rayCast.second) == false)
+	{
+		if (state == PlayerState::Move)
+		{
+			moveDelay++;
+			if (moveDelay >= 2)
+			{
+				moveDelay = 0;
+				MoveHelper();
+			}
+		}
+	}
+	else
+	{
+		state = PlayerState::None;
 	}
 }
 
@@ -89,7 +108,10 @@ void PlayerObj::MoveHelper()
 	case Direction::Left:
 		moveDistance += 4;
 		tilePosX -= 0.125;
-		g_cameraPosX -= 0.125;
+		if (g_cameraPosX > 0)
+		{
+			g_cameraPosX -= 0.125;
+		}
 		if (moveDistance == TILE_SIZE / 2)
 		{
 			isRightFoot = isRightFoot == true ? false : true;
@@ -101,6 +123,11 @@ void PlayerObj::MoveHelper()
 			walkImage = 0;
 			moveDistance = 0;
 			state = PlayerState::None;
+			ReposRect();
+			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
+			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
+			pastPosX = tilePosX;
+			pastPosY = tilePosY;
 		}
 		break;
 	case Direction::Right:
@@ -119,12 +146,21 @@ void PlayerObj::MoveHelper()
 			walkImage = 0;
 			moveDistance = 0;
 			state = PlayerState::None;
+			ReposRect();
+			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
+			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
+			pastPosX = tilePosX;
+			pastPosY = tilePosY;
 		}
 		break;
 	case Direction::Up:
 		moveDistance += 4;
 		tilePosY -= 0.125;
-		g_cameraPosY -= 0.125;
+
+		if (g_cameraPosY > 0)
+		{
+			g_cameraPosY -= 0.125;
+		}
 		if (moveDistance == TILE_SIZE / 2)
 		{
 			isRightFoot = isRightFoot == true ? false : true;
@@ -136,6 +172,11 @@ void PlayerObj::MoveHelper()
 			walkImage = 0;
 			moveDistance = 0;
 			state = PlayerState::None;
+			ReposRect();
+			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
+			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
+			pastPosX = tilePosX;
+			pastPosY = tilePosY;
 		}
 		break;
 	case Direction::Down:
@@ -153,7 +194,20 @@ void PlayerObj::MoveHelper()
 			walkImage = 0;
 			moveDistance = 0;
 			state = PlayerState::None;
+			ReposRect();
+			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
+			PhysicsManager::GetSingleton()->AddCollider(&shape, tilePosX, tilePosY);
+			pastPosX = tilePosX;
+			pastPosY = tilePosY;
 		}
 		break;
 	}
+}
+
+void PlayerObj::CameraMove()
+{
+	//if (g_cameraPosX < 0)
+	//	g_cameraPosX-=0.125;
+	//else if (g_cameraPosY < 0)
+	//	g_cameraPosY -= 0.125;
 }

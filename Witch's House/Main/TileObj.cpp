@@ -22,15 +22,15 @@ HRESULT TileObj::Init()
 
 void TileObj::Render(HDC hdc)
 {
-	for (int i = (int)g_cameraPosY; i <= TILE_COUNT_Y+ g_cameraPosY; i++)
+	for (int i = (int)g_cameraPosY; i < TILE_COUNT_Y+ g_cameraPosY; i++)
 	{
-		for (int j = (int)g_cameraPosX; j <= TILE_COUNT_X+ g_cameraPosX; j++)
+		for (int j = (int)g_cameraPosX; j < TILE_COUNT_X+ g_cameraPosX; j++)
 		{
 			if (tile[i][j].frameX != -1)
 			{
 				vecSampleImage[tile[i][j].mapIndex]->Render(hdc,
-					tile[i][j].rc.left + TILE_SIZE / 2 - TILE_SIZE - (int)TILE_SIZE * g_cameraPosX,
-					tile[i][j].rc.top + TILE_SIZE / 2 - TILE_SIZE - (int)TILE_SIZE * g_cameraPosY,
+					tile[i][j].rc.left + TILE_SIZE / 2  - TILE_SIZE * g_cameraPosX,
+					tile[i][j].rc.top + TILE_SIZE / 2  - TILE_SIZE * g_cameraPosY,
 					tile[i][j].frameX,
 					tile[i][j].frameY);
 			}

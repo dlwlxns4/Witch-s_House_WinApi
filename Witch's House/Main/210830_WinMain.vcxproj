@@ -152,7 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ButtonFunction.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -162,8 +161,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="ParallaxObj.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PlayerObj.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="TalkManager.cpp" />
     <ClCompile Include="TileObj.cpp" />
     <ClCompile Include="TilemapToolScene.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -173,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
-    <ClInclude Include="ButtonFunction.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="Config.h" />
@@ -186,9 +186,11 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="ParallaxObj.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PlayerObj.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="TalkManager.h" />
     <ClInclude Include="TileObj.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="TilemapToolScene.h" />

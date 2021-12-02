@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Config.h"
+#include "PhysicsManager.h"
 
 enum class Direction{Down=0, Left=1, Right=2, Up=3};
 enum class PlayerState{None=0, Move=1, Run=2, Chat=3, Die=4};
@@ -22,6 +23,14 @@ private:
 	int moveDistance = 0;
 	int walkImage = 0;
 	bool isRightFoot = false;
+
+
+	//레이캐스트
+	pair<int, int> rayCast{0,0};
+	int pastPosX = 0;
+	int pastPosY = 0;
+
+	//할 일 레이캐스트 갱신
 public:
 	PlayerObj() = default;
 	virtual ~PlayerObj() = default;
@@ -34,6 +43,33 @@ public:
 
 	void Move();
 	void MoveHelper();
-	void SetTilePos(int posX, int posY) { tilePosX = (float)posX; tilePosY = (float)posY; }
+	void Action();
+	void SetTilePos(int posX, int posY) 
+	{ 
+		//위치
+		tilePosX = (float)posX; tilePosY = (float)posY; 
+		pastPosX = posX, pastPosY = posY;
+		
+		//콜라이더
+		SetRect(&(shape), 
+			posX * TILE_SIZE, 
+			posY * TILE_SIZE, 
+			(posX + 1) * TILE_SIZE, 
+			(posY + 1) * TILE_SIZE
+		);
+
+		cout << "몰?루" << endl;
+		PhysicsManager::GetSingleton()->AddCollider(&(shape), posX, posY);
+	}
+	void ReposRect()
+	{
+		SetRect(&(shape),
+			tilePosX * TILE_SIZE,
+			tilePosY * TILE_SIZE,
+			(tilePosX + 1) * TILE_SIZE,
+			(tilePosY + 1) * TILE_SIZE
+		);
+	}
+	void CameraMove();
 };
 

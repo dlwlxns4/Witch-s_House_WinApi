@@ -1,6 +1,5 @@
 #include "Button.h"
 #include "Image.h"
-#include "ButtonFunction.h"
 #include "ImageHelper.h"
 
 #include "Tilemap.h"
