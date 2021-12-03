@@ -46,7 +46,7 @@ HRESULT TilemapToolScene::Init()
 			mapName.push_back(p2.path().string());
 			cout << p2.path().string() << endl;
 
-			Mat img = READ_IMAGE(p2.path().string());
+			Mat img = OpencvHelper::ReadImage(p2.path().string(), 1); 
 			vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p2.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 0, 255)));
 		}
 	}

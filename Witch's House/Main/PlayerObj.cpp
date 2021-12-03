@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "TriggerObj.h"
 
+
 #define LEFTFOOT 1
 #define RIGHTFOOT 2
 #define MOVEATONCE 4
@@ -16,7 +17,7 @@ HRESULT PlayerObj::Init()
 
 HRESULT PlayerObj::Init(int posX, int posY)
 {
-	Mat charImg = READ_IMAGE("Image/Character/$vivi.bmp");
+	Mat charImg = OpencvHelper::ReadImage("Image/Character/$vivi.bmp");
 	this->img = ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
 	tilePosX = (float)posX;
 	tilePosY = (float)posY;
