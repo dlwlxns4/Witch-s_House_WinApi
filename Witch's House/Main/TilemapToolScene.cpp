@@ -207,8 +207,8 @@ void TilemapToolScene::Update()
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
 				vecTileObj[currLayer]->SetTile(startPosX, startPosY, -1, -1);
 			}
 		}
@@ -262,8 +262,8 @@ void TilemapToolScene::Update()
 			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
-				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY + 1;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX ;
+				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
 			}
 		}
 	}

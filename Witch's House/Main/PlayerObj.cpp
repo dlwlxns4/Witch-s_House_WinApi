@@ -7,7 +7,7 @@
 
 #define LEFTFOOT 1
 #define RIGHTFOOT 2
-#define MOVEATONCE 4
+#define MOVE_AT_ONCE 4
 #define HALFQUARTER 0.125
 
 HRESULT PlayerObj::Init()
@@ -110,52 +110,33 @@ void PlayerObj::Move()
 
 void PlayerObj::MoveHelper()
 {
-	int dx[] = { -1,1,0,0 };
-	int dy[] = { 0,0,-1,1 };
+	int dx[] = { 0,-1,1,0 };
+	int dy[] = { 1,0,0,-1 };
 
+	moveDistance += MOVE_AT_ONCE;
+	tilePosX += HALFQUARTER * dx[(int)direction];
+	tilePosY += HALFQUARTER * dy[(int)direction];
 
-	switch (direction)
+	//카메라 이동
+	if (dx[(int)direction] == -1 && g_cameraPosX > 0)
 	{
-	case Direction::Left:
-		moveDistance += MOVEATONCE;
-		tilePosX -= HALFQUARTER;
-		if (g_cameraPosX > 0)
-		{
-			g_cameraPosX -= HALFQUARTER;
-		}
-		MoveInit();
-		break;
-	case Direction::Right:
-		moveDistance += MOVEATONCE;
-		tilePosX += HALFQUARTER;
-
-		if (tilePosX > TILE_COUNT_X/2)
-		{
-			g_cameraPosX += HALFQUARTER;
-		}
-		MoveInit();
-		break;
-	case Direction::Up:
-		moveDistance += MOVEATONCE;
-		tilePosY -= HALFQUARTER;
-
-		if (g_cameraPosY > 0)
-		{
-			g_cameraPosY -= HALFQUARTER;
-		}
-		MoveInit();
-		break;
-	case Direction::Down:
-		moveDistance += MOVEATONCE;
-		tilePosY += HALFQUARTER;
-		if (tilePosY > TILE_COUNT_Y/2)
-		{
-			g_cameraPosY += HALFQUARTER;
-		}
-		
-		MoveInit();
-		break;
+		g_cameraPosX -= HALFQUARTER;
 	}
+	else if (dx[(int)direction] == 1)
+	{
+		g_cameraPosX += HALFQUARTER;
+	}
+
+	if (dy[(int)direction] == -1 && g_cameraPosY > 0)
+	{
+		g_cameraPosY -= HALFQUARTER;
+	}
+	else if (dy[(int)direction] == 1)
+	{
+		g_cameraPosY += HALFQUARTER;
+	}
+
+	MoveInit();
 }
 
 void PlayerObj::Action()

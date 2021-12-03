@@ -34,9 +34,6 @@
     <Filter Include="2D Framework\Manager\GameObejct">
       <UniqueIdentifier>{ea3499d7-4897-49d2-8bb9-0c456ffa51aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2D Framework\ImageHelper">
-      <UniqueIdentifier>{827923b7-3159-445a-bf50-a34009a685df}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEntity.cpp">
