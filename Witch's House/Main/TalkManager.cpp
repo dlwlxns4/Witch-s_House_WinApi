@@ -1,8 +1,10 @@
 #include "TalkManager.h"
+#include "ReferenceId.h"
 
 void TalkManager::Init()
 {
-	talkData.emplace(0, vector<string>{"썩은 통나무가 벌레의 집이 되어있다."});
+	talkData.emplace(TALK_LOG_ID, vector<string>{"썩은 통나무가 벌레의 집이 되어있다."});
+	talkData.emplace(10, vector<string>{"."});
 }
 
 void TalkManager::FindChat(int referenceId)
@@ -11,7 +13,6 @@ void TalkManager::FindChat(int referenceId)
 
 	if (vecChat != talkData.end())
 	{
-		cout << "@" << endl;
 		for (auto str : vecChat->second)
 		{
 			cout << str << endl;
@@ -22,3 +23,4 @@ void TalkManager::FindChat(int referenceId)
 		cout << "몰?루" << endl;
 	}
 }
+

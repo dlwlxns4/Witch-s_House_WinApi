@@ -41,6 +41,8 @@ void MainGame::Render(HDC hdc)
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
 
+	// PatBlt
+
 	SceneManager::GetSingleton()->Render(hBackBufferDC);
 
 	//fps Ç¥½Ã.
@@ -64,25 +66,4 @@ void MainGame::Release()
 	SceneManager::GetSingleton()->Release();
 
 	KillTimer(g_hWnd, 0);
-}
-
-
-LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (iMessage)
-	{
-	case WM_LBUTTONDOWN:
-		break;
-	case WM_LBUTTONUP:		
-
-		break;
-	case WM_RBUTTONDOWN:
-		break;
-	case WM_MOUSEMOVE:
-		g_ptMouse.x = LOWORD(lParam);
-		g_ptMouse.y = HIWORD(lParam);
-		break;
-	}
-	return DefWindowProc(hWnd, iMessage, wParam, lParam);
 }

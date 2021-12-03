@@ -3,7 +3,9 @@
 #include "CommonFunction.h"
 #include <iterator>
 #include <filesystem>
-#include <opencv2/highgui.hpp>
+
+#include "ImageHelper.h"
+
 #include "Button.h"
 #include "Layer.h"
 #include "TileObj.h"
@@ -44,7 +46,7 @@ HRESULT TilemapToolScene::Init()
 			mapName.push_back(p2.path().string());
 			cout << p2.path().string() << endl;
 
-			Mat img = imread(p2.path().string());
+			Mat img = READ_IMAGE(p2.path().string());
 			vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p2.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 0, 255)));
 		}
 	}

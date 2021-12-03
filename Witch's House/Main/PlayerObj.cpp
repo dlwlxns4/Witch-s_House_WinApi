@@ -4,6 +4,11 @@
 #include "Camera.h"
 #include "TriggerObj.h"
 
+#define LEFTFOOT 1
+#define RIGHTFOOT 2
+#define MOVEATONCE 4
+#define HALFQUARTER 0.125
+
 HRESULT PlayerObj::Init()
 {
 	return E_NOTIMPL;
@@ -11,7 +16,7 @@ HRESULT PlayerObj::Init()
 
 HRESULT PlayerObj::Init(int posX, int posY)
 {
-	Mat charImg = imread("Image/Character/$vivi.bmp");
+	Mat charImg = READ_IMAGE("Image/Character/$vivi.bmp");
 	this->img = ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
 	tilePosX = (float)posX;
 	tilePosY = (float)posY;
@@ -32,7 +37,6 @@ void PlayerObj::Render(HDC hdc)
 {
 	if (this->img != nullptr)
 	{
-
 		this->img->Render(hdc
 			, (int)(TILE_SIZE * (tilePosX + 1) - PLAYER_SIZE_X / 2 - (int)TILE_SIZE * g_cameraPosX)
 			, (int)(TILE_SIZE * (tilePosY + 1) - PLAYER_SIZE_Y / 2 - (int)TILE_SIZE * g_cameraPosY)
@@ -105,109 +109,50 @@ void PlayerObj::Move()
 
 void PlayerObj::MoveHelper()
 {
+	int dx[] = { -1,1,0,0 };
+	int dy[] = { 0,0,-1,1 };
+
+
 	switch (direction)
 	{
 	case Direction::Left:
-		moveDistance += 4;
-		tilePosX -= 0.125;
+		moveDistance += MOVEATONCE;
+		tilePosX -= HALFQUARTER;
 		if (g_cameraPosX > 0)
 		{
-			g_cameraPosX -= 0.125;
+			g_cameraPosX -= HALFQUARTER;
 		}
-		if (moveDistance == TILE_SIZE / 2)
-		{
-			isRightFoot = isRightFoot == true ? false : true;
-
-			walkImage = isRightFoot == true ? 2 : 1;
-		}
-		if (moveDistance >= TILE_SIZE)
-		{
-			walkImage = 0;
-			moveDistance = 0;
-			state = PlayerState::None;
-			ReposRect();
-			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
-			pastPosX = (int)tilePosX;
-			pastPosY = (int)tilePosY;
-		}
+		MoveInit();
 		break;
 	case Direction::Right:
-		moveDistance += 4;
-		tilePosX += 0.125;
+		moveDistance += MOVEATONCE;
+		tilePosX += HALFQUARTER;
 
-		if (tilePosX > 8)
+		if (tilePosX > TILE_COUNT_X/2)
 		{
-			g_cameraPosX += 0.125;
+			g_cameraPosX += HALFQUARTER;
 		}
-		if (moveDistance == TILE_SIZE / 2)
-		{
-			isRightFoot = isRightFoot == true ? false : true;
-
-			walkImage = isRightFoot == true ? 2 : 1;
-		}
-		if (moveDistance >= TILE_SIZE)
-		{
-			walkImage = 0;
-			moveDistance = 0;
-			state = PlayerState::None;
-			ReposRect();
-			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
-			pastPosX = (int)tilePosX;
-			pastPosY = (int)tilePosY;
-		}
+		MoveInit();
 		break;
 	case Direction::Up:
-		moveDistance += 4;
-		tilePosY -= 0.125;
+		moveDistance += MOVEATONCE;
+		tilePosY -= HALFQUARTER;
 
 		if (g_cameraPosY > 0)
 		{
-			g_cameraPosY -= 0.125;
+			g_cameraPosY -= HALFQUARTER;
 		}
-		if (moveDistance == TILE_SIZE / 2)
-		{
-			isRightFoot = isRightFoot == true ? false : true;
-
-			walkImage = isRightFoot == true ? 2 : 1;
-		}
-		if (moveDistance >= TILE_SIZE)
-		{
-			walkImage = 0;
-			moveDistance = 0;
-			state = PlayerState::None;
-			ReposRect();
-			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
-			pastPosX = (int)tilePosX;
-			pastPosY = (int)tilePosY;
-		}
+		MoveInit();
 		break;
 	case Direction::Down:
-		moveDistance += 4;
-		tilePosY += 0.125;
-		if (tilePosY > 6)
+		moveDistance += MOVEATONCE;
+		tilePosY += HALFQUARTER;
+		if (tilePosY > TILE_COUNT_Y/2)
 		{
-			g_cameraPosY += 0.125;
+			g_cameraPosY += HALFQUARTER;
 		}
-		if (moveDistance == TILE_SIZE / 2)
-		{
-			isRightFoot = isRightFoot == true ? false : true;
-
-			walkImage = isRightFoot == true ? 2 : 1;
-		}
-		if (moveDistance >= TILE_SIZE)
-		{
-			walkImage = 0;
-			moveDistance = 0;
-			state = PlayerState::None;
-			ReposRect();
-			PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
-			PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
-			pastPosX = (int)tilePosX;
-			pastPosY = (int)tilePosY;
-		}
+		
+		MoveInit();
 		break;
 	}
 }
@@ -232,4 +177,26 @@ void PlayerObj::CameraMove()
 	//	g_cameraPosX-=0.125;
 	//else if (g_cameraPosY < 0)
 	//	g_cameraPosY -= 0.125;
+}
+
+void PlayerObj::MoveInit()
+{
+	if (moveDistance == TILE_SIZE / 2)
+	{
+		isRightFoot = isRightFoot == true ? false : true;
+
+		walkImage = isRightFoot == true ? LEFTFOOT : RIGHTFOOT;
+	}
+
+	if (moveDistance >= TILE_SIZE)
+	{
+		walkImage = 0;
+		moveDistance = 0;
+		state = PlayerState::None;
+		ReposRect();
+		PhysicsManager::GetSingleton()->SetColliderNullptr(pastPosX, pastPosY);
+		PhysicsManager::GetSingleton()->AddCollider(&shape, (int)tilePosX, (int)tilePosY);
+		pastPosX = (int)tilePosX;
+		pastPosY = (int)tilePosY;
+	}
 }

@@ -70,5 +70,6 @@ public:
 		);
 	}
 	void CameraMove();
+	void MoveInit();
 };
 

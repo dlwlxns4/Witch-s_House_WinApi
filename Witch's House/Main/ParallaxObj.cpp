@@ -9,8 +9,7 @@ HRESULT ParallaxObj::Init()
 
 HRESULT ParallaxObj::Init(const char* filePath)
 {
-	Mat parallaxImage = imread(filePath);
-	cout << TILE_SIZE * (TILE_COUNT_X + 1) + 1 << endl;
+	Mat parallaxImage = READ_IMAGE(filePath);
 	this->img = ImageManager::GetSingleton()->AddImage(filePath, TILE_SIZE * (TILE_COUNT_X)*2, TILE_SIZE * (TILE_COUNT_Y)*2, 1, 1, true, RGB(255, 0, 255));
 	
 	ftn.AlphaFormat = 0;
