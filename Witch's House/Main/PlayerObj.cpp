@@ -122,16 +122,15 @@ void PlayerObj::MoveHelper()
 	{
 		g_cameraPosX -= HALFQUARTER;
 	}
-	else if (dx[(int)direction] == 1)
+	else if (dx[(int)direction] == 1 && tilePosX > TILE_COUNT_X/2)
 	{
 		g_cameraPosX += HALFQUARTER;
 	}
-
-	if (dy[(int)direction] == -1 && g_cameraPosY > 0)
+	else if (dy[(int)direction] == -1 && g_cameraPosY > 0)
 	{
 		g_cameraPosY -= HALFQUARTER;
 	}
-	else if (dy[(int)direction] == 1)
+	else if (dy[(int)direction] == 1 && tilePosY > TILE_COUNT_Y/2)
 	{
 		g_cameraPosY += HALFQUARTER;
 	}

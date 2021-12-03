@@ -10,10 +10,7 @@
 #include "Layer.h"
 #include "TileObj.h"
 #include "Camera.h"
-#include "PlayerObj.h"
-#include "ParallaxObj.h"
-#include "TriggerObj.h"
-#include "PhysicsManager.h"
+#include "AllTypeObj.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -523,7 +520,6 @@ void TilemapToolScene::Update()
 void TilemapToolScene::Render(HDC hdc)
 {
 
-	PatBlt(hdc, 0, 0, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y, WHITENESS);
 
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);

@@ -173,6 +173,7 @@
     <ClCompile Include="TriggerObj.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllTypeObj.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonFunction.h" />

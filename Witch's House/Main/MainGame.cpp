@@ -39,7 +39,9 @@ void MainGame::Update()
 
 void MainGame::Render(HDC hdc)
 {
+
 	HDC hBackBufferDC = backBuffer->GetMemDC();
+	PatBlt(hBackBufferDC, 0, 0, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y, WHITENESS);
 
 	// PatBlt
 
