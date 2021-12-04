@@ -487,6 +487,7 @@ void TilemapToolScene::Update()
 	{
 		UserInterface* UI = new UserInterface;
 		UI->Init();
+		TalkManager::GetSingleton()->SetUI(UI);
 		vecLayer[vecLayer.size() - 1]->PushGameObject(UI);
 	}
 

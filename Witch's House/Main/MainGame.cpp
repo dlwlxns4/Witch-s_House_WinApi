@@ -16,6 +16,8 @@ HRESULT MainGame::Init()
 
 	SceneManager::GetSingleton()->ChangeScene("TilemapToolScene");
 
+
+
 	srand((unsigned int)time(nullptr));
 
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);

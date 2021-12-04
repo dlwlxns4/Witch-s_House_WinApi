@@ -31,6 +31,13 @@ void UserInterface::Update()
 
 void UserInterface::Render(HDC hdc)
 {
+	HFONT hFont = CreateFont(
+		20,
+		0, 0, 0, 0, 0, 0, 0,
+		HANGEUL_CHARSET, 0, 0, 0,
+		VARIABLE_PITCH | FF_ROMAN, TEXT("ÈÞ¸Õ³ª¹«")
+	);
+	HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
 
 	//ChatUi ---------------------------------------------------------------------------
 	chatUI->Render(hdc,
@@ -51,9 +58,18 @@ void UserInterface::Render(HDC hdc)
 		ftn
 	);
 
-	TextOut(hdc, 30, TILE_SIZE*CHAT_UI_POS_Y, TEXT(chat).c_str(), (int)chat.size());
+	if (!chat.empty())
+	{
+		SetTextColor(hdc, RGB(255, 255, 255));
+		SetBkMode(hdc, TRANSPARENT);
+		TextOut(hdc, 30, TILE_SIZE*CHAT_UI_POS_Y-40, TEXT(chat).c_str(), (int)chat.size());
+		SetTextColor(hdc, RGB(0, 0, 0));
+	}
 
 	//----------------------------------------------------------------------------------
+
+	SelectObject(hdc, oldFont);
+	DeleteObject(hFont);
 }
 
 void UserInterface::Release()

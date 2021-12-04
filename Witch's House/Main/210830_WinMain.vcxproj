@@ -160,6 +160,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MapScene.cpp" />
     <ClCompile Include="ParallaxObj.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PlayerObj.cpp" />
@@ -187,11 +188,11 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MapScene.h" />
     <ClInclude Include="ParallaxObj.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PlayerObj.h" />
     <ClInclude Include="ReferenceId.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TalkManager.h" />
