@@ -27,6 +27,6 @@ public:
 	virtual void Release();
 
 	void ShowChatUI();
-	void SetChat(string otherChat) { chat = otherChat; }
+	void SetChat(string otherChat) { chatEffet.clear(); chat = otherChat; index = 0; }
 };
 
