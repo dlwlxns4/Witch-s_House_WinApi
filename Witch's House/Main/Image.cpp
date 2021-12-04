@@ -190,24 +190,41 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float 
 	}
 }
 
-void Image::Render(HDC hdc, int destX, int destY, int startPosX, int startPosY, BLENDFUNCTION ftn)
+void Image::Render(HDC hdc, int destX, int destY, int startPosX, int startPosY, int sizeX, int sizeY, BLENDFUNCTION ftn)
 {
 
 	AlphaBlend(
 		hdc,										
-		0,				//이미지를 출력할 위치
-		0,
-		(int)(imageInfo->frameWidth)/2,						//출력할 이미지의 너비 높이
-		(int)(imageInfo->frameHeight)/2,
+		destX,				//이미지를 출력할 위치
+		destY,
+		(int)(imageInfo->frameWidth),						//출력할 이미지의 너비 높이
+		(int)(imageInfo->frameHeight),
 		imageInfo->hMemDc,
 		startPosX, //										//가져올 이미지의 시작지점
 		startPosY, //
-		TILE_SIZE * TILE_COUNT_X,							// 원본 이미지로부터 해당크기만큼 잘라낼 이미지의 너비 높이
-		TILE_SIZE * TILE_COUNT_Y,
+		sizeX,							// 원본 이미지로부터 해당크기만큼 잘라낼 이미지의 너비 높이
+		sizeY,
 		ftn
 	);
 }
 
+void Image::Render(HDC hdc, int destX, int destY, int startPosX, int startPosY, int imageSizeX, int imageSizeY, int sizeX, int sizeY, BLENDFUNCTION ftn)
+{
+
+	AlphaBlend(
+		hdc,
+		destX,				//이미지를 출력할 위치
+		destY,
+		imageSizeX,						//출력할 이미지의 너비 높이
+		imageSizeY,
+		imageInfo->hMemDc,
+		startPosX, //										//가져올 이미지의 시작지점
+		startPosY, //
+		sizeX,							// 원본 이미지로부터 해당크기만큼 잘라낼 이미지의 너비 높이
+		sizeY,
+		ftn
+	);
+}
 
 
 

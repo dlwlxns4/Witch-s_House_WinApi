@@ -15,6 +15,11 @@ void TalkManager::FindChat(int referenceId)
 	{
 		for (auto str : vecChat->second)
 		{
+			if (uiChatString != nullptr)
+			{
+				*uiChatString = str;
+			}
+
 			cout << str << endl;
 		}
 	}

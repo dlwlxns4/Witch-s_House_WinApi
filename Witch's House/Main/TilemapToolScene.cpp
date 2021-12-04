@@ -8,9 +8,11 @@
 
 #include "Button.h"
 #include "Layer.h"
-#include "TileObj.h"
 #include "Camera.h"
+
+//InLayer
 #include "AllTypeObj.h"
+#include "UserInterface.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -479,6 +481,15 @@ void TilemapToolScene::Update()
 		}
 	}
 
+
+	//Insert UI
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
+	{
+		UserInterface* UI = new UserInterface;
+		UI->Init();
+		vecLayer[vecLayer.size() - 1]->PushGameObject(UI);
+	}
+
 	// Give Reference
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('M'))
 	{
@@ -609,6 +620,7 @@ void TilemapToolScene::Render(HDC hdc)
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 130, TEXT("TileState : t(-) y(+)"), 21);
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 130, TEXT("SelectTriggerObj : p"), 20);
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 110, TEXT("Add ReferenceId : m(1) ,(10) .(100) /(1000)"), 43);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 90, TEXT("Add UI : U"), 10);
 
 
 

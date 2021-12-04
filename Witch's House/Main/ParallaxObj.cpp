@@ -10,12 +10,12 @@ HRESULT ParallaxObj::Init()
 HRESULT ParallaxObj::Init(const char* filePath)
 {
 	Mat parallaxImage = OpencvHelper::ReadImage(filePath, 1);
-	this->img = ImageManager::GetSingleton()->AddImage(filePath, TILE_SIZE * (TILE_COUNT_X)*2, TILE_SIZE * (TILE_COUNT_Y)*2, 1, 1, true, RGB(255, 0, 255));
-	
+	this->img = ImageManager::GetSingleton()->AddImage(filePath, TILE_SIZE * (TILE_COUNT_X) * 2, TILE_SIZE * (TILE_COUNT_Y) * 2, 1, 1, true, RGB(255, 0, 255));
+
 	ftn.AlphaFormat = 0;
 	ftn.BlendFlags = 0;
 	ftn.BlendOp = AC_SRC_OVER;
-	ftn.SourceConstantAlpha = 30;
+	ftn.SourceConstantAlpha = 80;
 
 	return S_OK;
 }
@@ -42,17 +42,25 @@ void ParallaxObj::Render(HDC hdc)
 	if (this->img != nullptr)
 	{
 		this->img->Render(hdc
-			, TILE_SIZE * (TILE_COUNT_X ) / 2
-			, TILE_SIZE * (TILE_COUNT_Y ) / 2
+			, 0
+			, 0
 			, renderPosX
 			, renderPosY
+			, img->GetWidth() / 2
+			, img->GetHeight() / 2
+			, TILE_SIZE * TILE_COUNT_X
+			, TILE_SIZE * TILE_COUNT_Y
 			, ftn
 		);
 		this->img->Render(hdc
-			, TILE_SIZE * (TILE_COUNT_X + 1) / 2
-			, TILE_SIZE * (TILE_COUNT_Y + 1) / 2
+			, 0
+			, 0
 			, renderPosX
 			, 0
+			, img->GetWidth()/2
+			, img->GetHeight()/2
+			, TILE_SIZE * TILE_COUNT_X
+			, TILE_SIZE * TILE_COUNT_Y
 			, ftn
 		);
 	}

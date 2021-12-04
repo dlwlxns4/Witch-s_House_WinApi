@@ -9,7 +9,7 @@ class TalkManager : public Singleton<TalkManager>
 
 private:
 	unordered_map<int, vector<string>> talkData = {};
-
+	string* uiChatString = nullptr;
 
 public:
 	TalkManager() = default;
