@@ -15,7 +15,7 @@ HRESULT ParallaxObj::Init(const char* filePath)
 	ftn.AlphaFormat = 0;
 	ftn.BlendFlags = 0;
 	ftn.BlendOp = AC_SRC_OVER;
-	ftn.SourceConstantAlpha = 80;
+	ftn.SourceConstantAlpha = 50;
 
 	return S_OK;
 }

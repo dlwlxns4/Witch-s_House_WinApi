@@ -21,7 +21,7 @@ HRESULT UserInterface::Init()
 	ftn.AlphaFormat = 0;
 	ftn.BlendFlags = 0;
 	ftn.BlendOp = AC_SRC_OVER;
-	ftn.SourceConstantAlpha = 70;
+	ftn.SourceConstantAlpha = 100;
 
 	return S_OK;
 }
@@ -65,13 +65,11 @@ void UserInterface::Render(HDC hdc)
 		SetTextColor(hdc, RGB(255, 255, 255));
 		SetBkMode(hdc, TRANSPARENT);
 
-
 		if (chat != chatEffet)
 		{
 			chatEffet += chat[index++];
 			cout << chatEffet << endl;
 		}
-
 	}
 
 	TextOut(hdc, 30, TILE_SIZE * CHAT_UI_POS_Y - 40, TEXT(chatEffet).c_str(), (int)chatEffet.size());
