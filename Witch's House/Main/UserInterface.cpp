@@ -3,6 +3,8 @@
 
 #define CHAT_UI_POS_Y 11
 
+using namespace std;
+
 HRESULT UserInterface::Init()
 {
 
@@ -48,7 +50,7 @@ void UserInterface::Render(HDC hdc)
 	);
 	opacityPaenl->Render(hdc,
 		6,
-		TILE_SIZE * CHAT_UI_POS_Y - opacityPaenl->GetHeight()/2,
+		TILE_SIZE * CHAT_UI_POS_Y - opacityPaenl->GetHeight() / 2,
 		0,
 		0,
 		opacityPaenl->GetWidth(),
@@ -62,10 +64,19 @@ void UserInterface::Render(HDC hdc)
 	{
 		SetTextColor(hdc, RGB(255, 255, 255));
 		SetBkMode(hdc, TRANSPARENT);
-		TextOut(hdc, 30, TILE_SIZE*CHAT_UI_POS_Y-40, TEXT(chat).c_str(), (int)chat.size());
-		SetTextColor(hdc, RGB(0, 0, 0));
+
+
+		if (chat != chatEffet)
+		{
+			chatEffet += chat[index++];
+			cout << chatEffet << endl;
+		}
+
 	}
 
+	TextOut(hdc, 30, TILE_SIZE * CHAT_UI_POS_Y - 40, TEXT(chatEffet).c_str(), (int)chatEffet.size());
+
+	SetTextColor(hdc, RGB(0, 0, 0));
 	//----------------------------------------------------------------------------------
 
 	SelectObject(hdc, oldFont);

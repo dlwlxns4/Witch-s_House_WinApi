@@ -13,6 +13,9 @@ private:
 	BLENDFUNCTION ftn = {};
 
 	string chat = {};
+	string chatEffet = "";
+	int chatEffetDelay = 0;
+	int index = 0;
 
 public:
 	UserInterface() = default;
