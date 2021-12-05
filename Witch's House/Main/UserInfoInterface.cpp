@@ -21,8 +21,12 @@
 #define STR_AGE_13_POSX 324
 #define STR_AGE_POSY 358	
 
-#define STR_HEALTH_POSX 392
-#define STR_HEALTH_POSY 358  
+#define STR_HEALTH_POSX 380
+#define STR_HEALTH_POSY 346  
+#define HELTHBAR_POSY 370
+
+#define STR_HP_POSX 424
+#define STR_HP_POSY 346
 
 #define PORTRAIT_SIZE 96
 
@@ -43,6 +47,10 @@ HRESULT UserInfoInterface::Init()
 	callSize = OpencvHelper::ReadImage("Image/UI/OpacityPanel.bmp");
 	ImageManager::GetSingleton()->AddImage("Image/UI/OpacityPanel.bmp", callSize.cols, callSize.rows, callSize.cols / PORTRAIT_SIZE, callSize.rows / PORTRAIT_SIZE, true, RGB(255, 0, 255));
 	opacityPanel = ImageManager::GetSingleton()->FindImage("Image/UI/OpacityPanel.bmp");
+
+	callSize = OpencvHelper::ReadImage("Image/UI/HealthBar.bmp");
+	ImageManager::GetSingleton()->AddImage("Image/UI/HealthBar.bmp", callSize.cols, callSize.rows, 1, 1, true, RGB(255, 0, 255));
+	healthBar = ImageManager::GetSingleton()->FindImage("Image/UI/HealthBar.bmp");
 
 
 	ftn.AlphaFormat = 0;
@@ -141,6 +149,18 @@ void UserInfoInterface::ShowInfoPanel(HDC hdc)
 		, 0
 		, 0
 	);
+
+	healthBar->Render(hdc
+		, STR_HEALTH_POSX
+		, HELTHBAR_POSY
+		, healthBar->GetWidth()
+		, healthBar->GetHeight()
+		, 0
+		, 0
+		, healthBar->GetWidth()
+		, healthBar->GetHeight()
+	);
+
 	SetTextColor(hdc, RGB(255, 255, 255));
 	string output = "소지품";
 	TextOut(hdc, TILE_SIZE, STR_INVENTORY_POSY, output.c_str(), (int)output.size());
@@ -150,6 +170,10 @@ void UserInfoInterface::ShowInfoPanel(HDC hdc)
 	TextOut(hdc, STR_NAME_POSX, STR_NAME_POSY, output.c_str(), (int)output.size());
 	output = "13";
 	TextOut(hdc, STR_AGE_13_POSX, STR_AGE_POSY, output.c_str(), (int)output.size());
+	output = "10/   10";
+	TextOut(hdc, STR_HP_POSX, STR_HP_POSY, output.c_str(), (int)output.size());
+
+
 	SetTextColor(hdc, RGB(132, 172, 255));
 	output = "나이";
 	TextOut(hdc, STR_AGE_POSX, STR_AGE_POSY, output.c_str(), (int)output.size());

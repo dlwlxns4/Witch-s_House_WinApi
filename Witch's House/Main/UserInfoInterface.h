@@ -13,6 +13,8 @@ private:
 	Image* opacityPanel = nullptr;
 	Image* portrait = nullptr;
 
+	Image* healthBar = nullptr;
+
 	bool isShow = false;
 
 	string name = "ºñ¿Ã¶ó";
