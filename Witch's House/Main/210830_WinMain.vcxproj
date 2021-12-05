@@ -173,7 +173,9 @@
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TriggerObj.cpp" />
-    <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UserInfoInterface.cpp" />
+    <ClCompile Include="ChatInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllTypeObj.h" />
@@ -205,7 +207,9 @@
     <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TriggerObj.h" />
-    <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UserInfoInterface.h" />
+    <ClInclude Include="ChatInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -34,6 +34,9 @@
     <Filter Include="2D Framework\Manager\GameObejct">
       <UniqueIdentifier>{ea3499d7-4897-49d2-8bb9-0c456ffa51aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2D Framework\Manager\GameObejct\UI">
+      <UniqueIdentifier>{29475def-fce7-4032-bc45-915d3b8d6c3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEntity.cpp">
@@ -96,14 +99,20 @@
     <ClCompile Include="PhysicsManager.cpp">
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClCompile>
     <ClCompile Include="MapScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>2D Framework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatInterface.cpp">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInfoInterface.cpp">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,14 +197,20 @@
     <ClInclude Include="AllTypeObj.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="UserInterface.h">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClInclude>
     <ClInclude Include="MapScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>2D Framework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatInterface.h">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInfoInterface.h">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

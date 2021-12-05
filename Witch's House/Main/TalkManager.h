@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include "Singleton.h"
 
-class UserInterface;
+class ChatInterface;
 class TalkManager : public Singleton<TalkManager>
 {
 
@@ -12,7 +12,7 @@ private:
 	unordered_map<int, vector<string>> talkData = {};
 	string* uiChatString = nullptr;
 
-	UserInterface* userInterface;
+	ChatInterface* userInterface;
 
 public:
 	TalkManager() = default;
@@ -20,7 +20,7 @@ public:
 
 	void Init();
 	void FindChat(int referenceId);
-	void SetUI(UserInterface* UI);
+	void SetUI(ChatInterface* UI);
 	void SetChat(string chat);
 };
 

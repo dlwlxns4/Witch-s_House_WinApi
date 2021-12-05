@@ -13,6 +13,8 @@ HRESULT MainGame::Init()
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
 	TalkManager::GetSingleton()->Init();
+	UIManager::GetSingleton()->Init();
+
 
 	SceneManager::GetSingleton()->ChangeScene("TilemapToolScene");
 
@@ -41,20 +43,31 @@ void MainGame::Update()
 
 void MainGame::Render(HDC hdc)
 {
-
+	HFONT hFont = CreateFont(
+		20,
+		0, 0, 0, 0, 0, 0, 0,
+		HANGEUL_CHARSET, 0, 0, 0,
+		VARIABLE_PITCH | FF_ROMAN, TEXT("휴먼나무")
+	);
 	HDC hBackBufferDC = backBuffer->GetMemDC();
-	PatBlt(hBackBufferDC, 0, 0, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y, WHITENESS);
+	HFONT oldFont = (HFONT)SelectObject(hBackBufferDC, hFont);
+	SetBkMode(hBackBufferDC, TRANSPARENT);
 
 	// PatBlt
+	PatBlt(hBackBufferDC, 0, 0, TILEMAPTOOL_SIZE_X, TILEMAPTOOL_SIZE_Y, WHITENESS);
+
 
 	SceneManager::GetSingleton()->Render(hBackBufferDC);
-
 	//fps 표시.
 #ifdef _DEBUG
 	TimerManager::GetSingleton()->Render(hBackBufferDC);
 #endif
 
 	backBuffer->Render(hdc);
+
+
+	SelectObject(hdc, oldFont);
+	DeleteObject(hFont);
 }
 
 void MainGame::Release()

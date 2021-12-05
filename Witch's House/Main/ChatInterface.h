@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "ImageHelper.h"
 
-class UserInterface : public GameObject
+class ChatInterface : public GameObject
 {
 private:
 	Image* chatUI = nullptr;
@@ -23,8 +23,8 @@ private:
 	int slateUnderPos = 0;
 
 public:
-	UserInterface() = default;
-	virtual ~UserInterface() = default;
+	ChatInterface() = default;
+	virtual ~ChatInterface() = default;
 	
 	virtual HRESULT Init();
 	virtual void Update();

@@ -1,6 +1,6 @@
 #include "TalkManager.h"
 #include "ReferenceId.h"
-#include "UserInterface.h"
+#include "ChatInterface.h"
 
 void TalkManager::Init()
 {
@@ -21,7 +21,6 @@ void TalkManager::FindChat(int referenceId)
 				*uiChatString = str;
 			}
 
-			cout << str << endl;
 			userInterface->SetChat(str);
 			userInterface->SetIsTalking();
 		}
@@ -32,7 +31,7 @@ void TalkManager::FindChat(int referenceId)
 	}
 }
 
-void TalkManager::SetUI(UserInterface* UI)
+void TalkManager::SetUI(ChatInterface* UI)
 {
 	userInterface = UI;
 }

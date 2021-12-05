@@ -1,11 +1,11 @@
-#include "UserInterface.h"
+#include "ChatInterface.h"
 #include "Image.h"
 
 #define CHAT_UI_POS_Y 11
 
 using namespace std;
 
-HRESULT UserInterface::Init()
+HRESULT ChatInterface::Init()
 {
 
 	//ChatUI
@@ -26,23 +26,20 @@ HRESULT UserInterface::Init()
 	return S_OK;
 }
 
-void UserInterface::Update()
+void ChatInterface::Update()
 {
 	if (isTalking && slatePos<= opacityPaenl->GetHeight()/2)
 	{
 		slatePos+=8;
 	}
+	else if (isTalking == false && slatePos >= 0)
+	{
+		slatePos -= 8;
+	}
 }
 
-void UserInterface::Render(HDC hdc)
+void ChatInterface::Render(HDC hdc)
 {
-	HFONT hFont = CreateFont(
-		20,
-		0, 0, 0, 0, 0, 0, 0,
-		HANGEUL_CHARSET, 0, 0, 0,
-		VARIABLE_PITCH | FF_ROMAN, TEXT("ÈÞ¸Õ³ª¹«")
-	);
-	HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
 
 	//ChatUi ---------------------------------------------------------------------------
 	if (isTalking)
@@ -97,7 +94,6 @@ void UserInterface::Render(HDC hdc)
 		if (!chat.empty())
 		{
 			SetTextColor(hdc, RGB(255, 255, 255));
-			SetBkMode(hdc, TRANSPARENT);
 
 			if (chat != chatEffet)
 			{
@@ -111,10 +107,8 @@ void UserInterface::Render(HDC hdc)
 	SetTextColor(hdc, RGB(0, 0, 0));
 	//----------------------------------------------------------------------------------
 
-	SelectObject(hdc, oldFont);
-	DeleteObject(hFont);
 }
 
-void UserInterface::Release()
+void ChatInterface::Release()
 {
 }

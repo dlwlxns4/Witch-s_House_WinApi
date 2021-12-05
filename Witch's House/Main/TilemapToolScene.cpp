@@ -12,7 +12,7 @@
 
 //InLayer
 #include "AllTypeObj.h"
-#include "UserInterface.h"
+#include "ChatInterface.h"
 
 vector<string> mapName;
 vector<Image*> vecSampleImage;
@@ -485,10 +485,11 @@ void TilemapToolScene::Update()
 	//Insert UI
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
 	{
-		UserInterface* UI = new UserInterface;
+		ChatInterface* UI = new ChatInterface;
 		UI->Init();
 		TalkManager::GetSingleton()->SetUI(UI);
 		vecLayer[vecLayer.size() - 1]->PushGameObject(UI);
+		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetUserInfoInterface());
 	}
 
 	// Give Reference
