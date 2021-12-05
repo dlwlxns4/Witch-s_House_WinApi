@@ -23,6 +23,7 @@ void TalkManager::FindChat(int referenceId)
 
 			cout << str << endl;
 			userInterface->SetChat(str);
+			userInterface->SetIsTalking();
 		}
 	}
 	else

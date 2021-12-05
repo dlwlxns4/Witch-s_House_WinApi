@@ -28,7 +28,10 @@ HRESULT UserInterface::Init()
 
 void UserInterface::Update()
 {
-
+	if (isTalking && slatePos<= opacityPaenl->GetHeight()/2)
+	{
+		slatePos+=8;
+	}
 }
 
 void UserInterface::Render(HDC hdc)
@@ -42,38 +45,69 @@ void UserInterface::Render(HDC hdc)
 	HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
 
 	//ChatUi ---------------------------------------------------------------------------
-	chatUI->Render(hdc,
-		chatUI->GetWidth() / 2,
-		TILE_SIZE * CHAT_UI_POS_Y,
-		0,
-		0
-	);
-	opacityPaenl->Render(hdc,
-		6,
-		TILE_SIZE * CHAT_UI_POS_Y - opacityPaenl->GetHeight() / 2,
-		0,
-		0,
-		opacityPaenl->GetWidth(),
-		opacityPaenl->GetHeight(),
-		opacityPaenl->GetWidth(),
-		opacityPaenl->GetHeight(),
-		ftn
-	);
-
-	if (!chat.empty())
+	if (isTalking)
 	{
-		SetTextColor(hdc, RGB(255, 255, 255));
-		SetBkMode(hdc, TRANSPARENT);
+		chatUI->Render(hdc,
+			0,
+			TILE_SIZE * CHAT_UI_POS_Y-slatePos,
+			chatUI->GetWidth(),
+			slatePos,
+			0,
+			0,
+			chatUI->GetWidth(),
+			chatUI->GetHeight()/2
+		);
 
-		if (chat != chatEffet)
+		chatUI->Render(hdc,
+			0,
+			TILE_SIZE * CHAT_UI_POS_Y,
+			chatUI->GetWidth(),
+			slatePos,
+			0,
+			chatUI->GetHeight()-slatePos,
+			chatUI->GetWidth(),
+			slatePos
+		);
+		
+
+		opacityPaenl->Render(hdc,
+			8,
+			TILE_SIZE * CHAT_UI_POS_Y ,
+			0,
+			0,
+			opacityPaenl->GetWidth(),
+			slatePos-8,
+			opacityPaenl->GetWidth(),
+			opacityPaenl->GetHeight(),
+			ftn
+		);
+		opacityPaenl->Render(hdc,
+			8,
+			TILE_SIZE * CHAT_UI_POS_Y-slatePos+8,
+			0,
+			0,
+			opacityPaenl->GetWidth(),
+			slatePos-8,
+			opacityPaenl->GetWidth(),
+			opacityPaenl->GetHeight(),
+			ftn
+		);
+
+
+		if (!chat.empty())
 		{
-			chatEffet += chat[index++];
-			cout << chatEffet << endl;
+			SetTextColor(hdc, RGB(255, 255, 255));
+			SetBkMode(hdc, TRANSPARENT);
+
+			if (chat != chatEffet)
+			{
+				chatEffet += chat[index++];
+				cout << chatEffet << endl;
+			}
 		}
+
+		TextOut(hdc, 30, TILE_SIZE * CHAT_UI_POS_Y - 40, TEXT(chatEffet).c_str(), (int)chatEffet.size());
 	}
-
-	TextOut(hdc, 30, TILE_SIZE * CHAT_UI_POS_Y - 40, TEXT(chatEffet).c_str(), (int)chatEffet.size());
-
 	SetTextColor(hdc, RGB(0, 0, 0));
 	//----------------------------------------------------------------------------------
 

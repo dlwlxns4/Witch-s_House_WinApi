@@ -190,6 +190,39 @@ void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, float 
 	}
 }
 
+void Image::Render(HDC hdc, int destX, int destY,int imageSizeX, int imageSizeY, int startPosX, int startPosY, int sizeX, int sizeY)
+{
+
+	if (isTransparent)
+	{
+		GdiTransparentBlt(
+			hdc,
+			destX,				//이미지를 출력할 위치
+			destY,
+			imageSizeX,						//출력할 이미지의 너비 높이
+			imageSizeY,
+			imageInfo->hMemDc,
+			startPosX, //										//가져올 이미지의 시작지점
+			startPosY, //
+			sizeX,							// 원본 이미지로부터 해당크기만큼 잘라낼 이미지의 너비 높이
+			sizeY,
+			transColor
+		);
+	}
+	else
+	{
+		BitBlt(hdc,				// 복사 목적지 DC
+			destX - (imageInfo->frameWidth / 2),		// 복사될 비트맵의 시작 위치 x
+			destY - (imageInfo->frameHeight / 2),		// 복사될 비트맵의 시작 위치 y
+			imageInfo->frameWidth,	// 원본 복사할 가로 크기
+			imageInfo->frameHeight,	// 원본 복사할 세로 크기
+			imageInfo->hMemDc,	// 원본 DC
+			imageInfo->frameWidth,				// 원본 비트맵 복사 시작 위치 x
+			imageInfo->frameHeight,			// 원본 비트맵 복사 시작 위치 y
+			SRCCOPY);			// 복사 옵션
+	}
+}
+
 void Image::Render(HDC hdc, int destX, int destY, int startPosX, int startPosY, int sizeX, int sizeY, BLENDFUNCTION ftn)
 {
 
@@ -228,40 +261,3 @@ void Image::Render(HDC hdc, int destX, int destY, int startPosX, int startPosY, 
 
 
 
-void Image::Render(HDC hdc, int destX, int destY, int frameX, int frameY, int leftHit, int rightHit, int topHit, int bottomHit)
-{
-	// frameX : 0, frameY : 0 => 시작 (68 * 0, 0) 얼마나 복사할건가 (68, 104)
-	// frameX : 1, frameY : 0 => 시작 (68 * 1, 0)  (68, 104)
-	// frameX : 2, frameY : 0 => 시작 (68 * 2, 0)  (68, 104)
-	// frameX : 3, frameY : 0 => 시작 (68 * 3, 0)  (68, 104)
-
-	if (isTransparent)
-	{
-		GdiTransparentBlt(
-			hdc,
-			destX - (imageInfo->frameWidth / 2) + 8 * leftHit,
-			destY - (imageInfo->frameHeight / 2) + 8 * topHit,
-			(imageInfo->frameWidth) * (2 - rightHit) / 2 - 8 * leftHit,
-			(imageInfo->frameHeight) * (2 - topHit) / 2 - 8 * (bottomHit),
-
-			imageInfo->hMemDc,
-			imageInfo->frameWidth * frameX + 8 * leftHit,
-			imageInfo->frameHeight * frameY + 8 * topHit,
-			imageInfo->frameWidth * (2 - rightHit) / 2 - 8 * leftHit,
-			imageInfo->frameHeight * (2 - topHit) / 2 - 8 * (bottomHit),
-			transColor
-		);
-	}
-	else
-	{
-		BitBlt(hdc,				// 복사 목적지 DC
-			destX - (imageInfo->frameWidth / 2),		// 복사될 비트맵의 시작 위치 x
-			destY - (imageInfo->frameHeight / 2),		// 복사될 비트맵의 시작 위치 y
-			imageInfo->frameWidth,	// 원본 복사할 가로 크기
-			imageInfo->frameHeight,	// 원본 복사할 세로 크기
-			imageInfo->hMemDc,	// 원본 DC
-			imageInfo->frameWidth * frameX,				// 원본 비트맵 복사 시작 위치 x
-			imageInfo->frameHeight * frameY,			// 원본 비트맵 복사 시작 위치 y
-			SRCCOPY);			// 복사 옵션
-	}
-}

@@ -17,6 +17,11 @@ private:
 	int chatEffetDelay = 0;
 	int index = 0;
 
+
+	bool isTalking = false;
+	int slatePos = 0;
+	int slateUnderPos = 0;
+
 public:
 	UserInterface() = default;
 	virtual ~UserInterface() = default;
@@ -27,6 +32,7 @@ public:
 	virtual void Release();
 
 	void ShowChatUI();
-	void SetChat(string otherChat) { chatEffet.clear(); chat = otherChat; index = 0; }
+	void SetChat(string otherChat) { chatEffet.clear(); chat = otherChat; index = 0; slatePos = 0; }
+	void SetIsTalking() { isTalking = isTalking == false ? true : false; }
 };
 
