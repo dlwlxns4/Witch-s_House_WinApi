@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Singleton.h"
 
-enum class PlayerState{ None, Walk, Run, Chat};
+enum class PlayerState{ None, ShowUI, Walk, Run, Chat};
 
-class GameManager
+class GameManager : public Singleton<GameManager>
 {
 private:
 	PlayerState playerState = PlayerState::None;
@@ -11,6 +12,6 @@ private:
 
 public:
 	PlayerState GetPlayerState() { return playerState; }
-
+	void SetPlayerState(PlayerState state) { playerState = state; }
 };
 

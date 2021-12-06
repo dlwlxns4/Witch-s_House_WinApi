@@ -82,7 +82,7 @@ void SaveLoadInterface::Update()
 		else
 		{
 			selectFtn.SourceConstantAlpha += 4;
-			if (selectFtn.SourceConstantAlpha >= 120)
+			if (selectFtn.SourceConstantAlpha >= 100)
 			{
 				isTransparency = true;
 			}

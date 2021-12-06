@@ -76,9 +76,19 @@ void UserInfoInterface::Update()
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_CONTROL))
 		{
-			UIManager::GetSingleton()->SetIsShowUserInfo(
-				UIManager::GetSingleton()->GetIsShowUserInfo() == TRUE ? false : true
-			);
+			if (UIManager::GetSingleton()->GetIsShowUserInfo() == false)
+			{
+				UIManager::GetSingleton()->SetIsShowUserInfo(true);
+				GameManager::GetSingleton()->SetPlayerState(PlayerState::ShowUI);
+			}
+			else
+			{
+				UIManager::GetSingleton()->SetIsShowUserInfo(false);
+				GameManager::GetSingleton()->SetPlayerState(PlayerState::None);
+			}
+
+			
+
 			ftn.SourceConstantAlpha = 0;
 		}
 	}
@@ -136,6 +146,8 @@ void UserInfoInterface::Update()
 				UIManager::GetSingleton()->SetIsShowUserInfo(false);
 			}
 		}
+
+		
 	}
 }
 

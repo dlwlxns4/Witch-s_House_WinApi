@@ -4,7 +4,7 @@
 #include "PhysicsManager.h"
 
 enum class Direction{Down=0, Left=1, Right=2, Up=3};
-enum class PlayerState{None=0, Move=1, Run=2, Chat=3, Die=4};
+enum class PlayerActionState{None=0, Move=1, Run=2, Chat=3, Die=4};
 
 class Image;
 class PlayerObj : public GameObject
@@ -17,7 +17,7 @@ private:
 	float tilePosY = 0;
 
 	Direction direction = {};
-	PlayerState state = {};
+	PlayerActionState state = {};
 
 	int moveDelay = 0;
 	int moveDistance = 0;
