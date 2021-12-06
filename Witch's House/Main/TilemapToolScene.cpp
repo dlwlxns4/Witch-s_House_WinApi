@@ -485,11 +485,10 @@ void TilemapToolScene::Update()
 	//Insert UI
 	if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
 	{
-		ChatInterface* UI = new ChatInterface;
-		UI->Init();
-		TalkManager::GetSingleton()->SetUI(UI);
-		vecLayer[vecLayer.size() - 1]->PushGameObject(UI);
+		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetChatInterface());
 		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetUserInfoInterface());
+		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetInventoryInterface());
+		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetSaveLoadInterface());
 	}
 
 	// Give Reference

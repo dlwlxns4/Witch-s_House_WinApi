@@ -10,9 +10,6 @@ class TalkManager : public Singleton<TalkManager>
 
 private:
 	unordered_map<int, vector<string>> talkData = {};
-	string* uiChatString = nullptr;
-
-	ChatInterface* userInterface;
 
 public:
 	TalkManager() = default;
@@ -20,7 +17,5 @@ public:
 
 	void Init();
 	void FindChat(int referenceId);
-	void SetUI(ChatInterface* UI);
-	void SetChat(string chat);
 };
 

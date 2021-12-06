@@ -52,32 +52,96 @@ HRESULT UserInfoInterface::Init()
 	ImageManager::GetSingleton()->AddImage("Image/UI/HealthBar.bmp", callSize.cols, callSize.rows, 1, 1, true, RGB(255, 0, 255));
 	healthBar = ImageManager::GetSingleton()->FindImage("Image/UI/HealthBar.bmp");
 
+	callSize = OpencvHelper::ReadImage("Image/UI/SelectPaenl.bmp");
+	ImageManager::GetSingleton()->AddImage("Image/UI/SelectPaenl.bmp", callSize.cols, callSize.rows, 1, 1, true, RGB(255, 0, 255));
+	selectPaenl = ImageManager::GetSingleton()->FindImage("Image/UI/SelectPaenl.bmp");
+
 
 	ftn.AlphaFormat = 0;
 	ftn.BlendFlags = 0;
 	ftn.BlendOp = AC_SRC_OVER;
 	ftn.SourceConstantAlpha = 0;
 
+	selectFtn.AlphaFormat = 0;
+	selectFtn.BlendFlags = 0;
+	selectFtn.BlendOp = AC_SRC_OVER;
+	selectFtn.SourceConstantAlpha = 100;
+
 	return S_OK;
 }
 
 void UserInfoInterface::Update()
 {
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_CONTROL))
+	if (UIManager::GetSingleton()->GetIsShowInventory() == false && UIManager::GetSingleton()->GetIsShowSaveLoad() == false)
 	{
-		isShow = isShow == true ? false : true;
-		ftn.SourceConstantAlpha = 0;
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_CONTROL))
+		{
+			UIManager::GetSingleton()->SetIsShowUserInfo(
+				UIManager::GetSingleton()->GetIsShowUserInfo() == TRUE ? false : true
+			);
+			ftn.SourceConstantAlpha = 0;
+		}
 	}
 
-	if (isShow && ftn.SourceConstantAlpha < 100)
+	if (UIManager::GetSingleton()->GetIsShowUserInfo() && ftn.SourceConstantAlpha < 100)
 	{
 		ftn.SourceConstantAlpha += 10;
+	}
+
+
+	if (UIManager::GetSingleton()->GetIsShowUserInfo() && isTransparency)
+	{
+		selectFtn.SourceConstantAlpha -= 4;
+		if (selectFtn.SourceConstantAlpha <= 10)
+		{
+			isTransparency = false;
+		}
+	}
+	else
+	{
+		selectFtn.SourceConstantAlpha += 4;
+		if (selectFtn.SourceConstantAlpha >= 100)
+		{
+			isTransparency = true;
+		}
+	}
+
+	if (UIManager::GetSingleton()->GetIsShowUserInfo())
+	{
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+		{
+			if (selectState == SelectState::Inventory)
+			{
+				selectState = SelectState::Load;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
+		{
+			if (selectState == SelectState::Load)
+			{
+				selectState = SelectState::Inventory;
+			}
+		}
+
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LSHIFT))
+		{
+			if (selectState == SelectState::Inventory)
+			{
+				UIManager::GetSingleton()->SetIsShowInventory(true);
+				UIManager::GetSingleton()->SetIsShowUserInfo(false);
+			}
+			else if (selectState == SelectState::Load)
+			{
+				UIManager::GetSingleton()->SetIsShowSaveLoad(true);
+				UIManager::GetSingleton()->SetIsShowUserInfo(false);
+			}
+		}
 	}
 }
 
 void UserInfoInterface::Render(HDC hdc)
 {
-	if (isShow)
+	if (UIManager::GetSingleton()->GetIsShowUserInfo())
 	{
 		ShowInfoPanel(hdc);
 	}
@@ -161,11 +225,24 @@ void UserInfoInterface::ShowInfoPanel(HDC hdc)
 		, healthBar->GetHeight()
 	);
 
+	//-----------------------------------------------------selectPaenl
+	selectPaenl->Render(hdc
+		, TILE_SIZE + 4
+		, STR_LOAD_POSY - 40 + TILE_SIZE * ((int)selectState)
+		, 0
+		, 0
+		, selectPaenl->GetWidth()
+		, selectPaenl->GetHeight()
+		, selectPaenl->GetWidth()
+		, selectPaenl->GetHeight()
+		, selectFtn
+	);
+	//----------------------------------------------------------------
 	SetTextColor(hdc, RGB(255, 255, 255));
 	string output = "소지품";
-	TextOut(hdc, TILE_SIZE, STR_INVENTORY_POSY, output.c_str(), (int)output.size());
+	TextOut(hdc, TILE_SIZE + 8, STR_INVENTORY_POSY, output.c_str(), (int)output.size());
 	output = "불러오기";
-	TextOut(hdc, TILE_SIZE, STR_LOAD_POSY, output.c_str(), (int)output.size());
+	TextOut(hdc, TILE_SIZE + 8, STR_LOAD_POSY, output.c_str(), (int)output.size());
 	output = name;
 	TextOut(hdc, STR_NAME_POSX, STR_NAME_POSY, output.c_str(), (int)output.size());
 	output = "13";

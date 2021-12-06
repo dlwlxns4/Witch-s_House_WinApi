@@ -114,6 +114,12 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>2D Framework\Manager\GameObejct\UI</Filter>
     </ClCompile>
+    <ClCompile Include="InventoryInterface.cpp">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadInterface.cpp">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -210,6 +216,12 @@
       <Filter>2D Framework\Manager\GameObejct\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryInterface.h">
+      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoadInterface.h">
       <Filter>2D Framework\Manager\GameObejct\UI</Filter>
     </ClInclude>
   </ItemGroup>

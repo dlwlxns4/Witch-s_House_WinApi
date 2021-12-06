@@ -2,6 +2,8 @@
 #include "Config.h"
 #include "GameObject.h"
 
+enum class SelectState { Inventory = 0, Load = 1 };
+
 class Image;
 class UserInfoInterface : public GameObject
 {
@@ -15,11 +17,19 @@ private:
 
 	Image* healthBar = nullptr;
 
-	bool isShow = false;
+	//------------------------
+	Image* selectPaenl = nullptr;
+	bool isTransparency = true;
+
+	//--------------------------
 
 	string name = "ºñ¿Ã¶ó";
 
 	BLENDFUNCTION ftn = {};
+	BLENDFUNCTION selectFtn = {};
+
+	SelectState selectState = SelectState::Inventory;
+
 public:
 	UserInfoInterface() = default;
 	virtual ~UserInfoInterface() = default;

@@ -157,6 +157,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="InventoryInterface.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="ParallaxObj.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PlayerObj.cpp" />
+    <ClCompile Include="SaveLoadInterface.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TalkManager.cpp" />
     <ClCompile Include="TileObj.cpp" />
@@ -189,6 +191,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageHelper.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="InventoryInterface.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MainGame.h" />
@@ -197,6 +200,7 @@
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PlayerObj.h" />
     <ClInclude Include="ReferenceId.h" />
+    <ClInclude Include="SaveLoadInterface.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TalkManager.h" />

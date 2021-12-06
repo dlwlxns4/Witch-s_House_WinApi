@@ -22,6 +22,7 @@ private:
 	int slatePos = 0;
 	int slateUnderPos = 0;
 
+
 public:
 	ChatInterface() = default;
 	virtual ~ChatInterface() = default;

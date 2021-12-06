@@ -16,13 +16,10 @@ void TalkManager::FindChat(int referenceId)
 	{
 		for (auto str : vecChat->second)
 		{
-			if (uiChatString != nullptr)
-			{
-				*uiChatString = str;
-			}
+			
+			((ChatInterface*)UIManager::GetSingleton()->GetChatInterface())->SetChat(str);
+			((ChatInterface*)UIManager::GetSingleton()->GetChatInterface())->SetIsTalking();
 
-			userInterface->SetChat(str);
-			userInterface->SetIsTalking();
 		}
 	}
 	else
@@ -31,13 +28,4 @@ void TalkManager::FindChat(int referenceId)
 	}
 }
 
-void TalkManager::SetUI(ChatInterface* UI)
-{
-	userInterface = UI;
-}
-
-void TalkManager::SetChat(string chat)
-{
-	userInterface->SetChat(chat);
-}
 
