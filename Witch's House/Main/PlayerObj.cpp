@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "TriggerObj.h"
 
+#include "Input.h"
 
 #define LEFTFOOT 1
 #define RIGHTFOOT 2
@@ -59,14 +60,14 @@ void PlayerObj::Move()
 
 	if (state == PlayerActionState::None)
 	{
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
+		if (Input::GetButton(VK_LEFT))
 		{
 			state = PlayerActionState::Move;
 			direction = Direction::Left;
 			rayCast.first = (int)tilePosX - 1;
 			rayCast.second = (int)tilePosY;
 		}
-		else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+		else if (Input::GetButton(VK_RIGHT))
 		{
 			state = PlayerActionState::Move;
 			direction = Direction::Right;
@@ -74,14 +75,14 @@ void PlayerObj::Move()
 			rayCast.second = (int)tilePosY;
 		}
 
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_UP))
+		if (Input::GetButton(VK_UP))
 		{
 			state = PlayerActionState::Move;
 			direction = Direction::Up;
 			rayCast.first = (int)tilePosX;
 			rayCast.second = (int)tilePosY - 1;
 		}
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_DOWN))
+		if (Input::GetButton(VK_DOWN))
 		{
 			state = PlayerActionState::Move;
 			direction = Direction::Down;
@@ -144,7 +145,7 @@ void PlayerObj::MoveHelper()
 void PlayerObj::Action()
 {
 
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LSHIFT))
+	if (Input::GetButtonDown(VK_LSHIFT))
 	{
 		GameObject* trigger = PhysicsManager::GetSingleton()->GetOwner(rayCast.first, rayCast.second);
 		if (trigger != nullptr)
@@ -154,7 +155,7 @@ void PlayerObj::Action()
 
 			if (GameManager::GetSingleton()->GetPlayerState() == PlayerState::None)
 			{
-				GameManager::GetSingleton()->SetPlayerState(PlayerState::ShowUI);
+				GameManager::GetSingleton()->SetPlayerState(PlayerState::Chat);
 			}
 			else if (GameManager::GetSingleton()->GetPlayerState() == PlayerState::ShowUI)
 			{

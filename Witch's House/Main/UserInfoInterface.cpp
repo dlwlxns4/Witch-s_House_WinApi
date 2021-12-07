@@ -2,6 +2,8 @@
 #include "Image.h"
 #include "ImageHelper.h"
 
+#include "Input.h"
+
 #define LEFT_PANEL_START_POSY 9
 #define RIGHT_PANEL_START_POSX 5
 #define RIGHT_PANEL_START_POSY 8
@@ -74,7 +76,7 @@ void UserInfoInterface::Update()
 {
 	if (UIManager::GetSingleton()->GetIsShowInventory() == false && UIManager::GetSingleton()->GetIsShowSaveLoad() == false)
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_CONTROL))
+		if (Input::GetButtonDown(VK_CONTROL))
 		{
 			if (UIManager::GetSingleton()->GetIsShowUserInfo() == false)
 			{
@@ -118,14 +120,14 @@ void UserInfoInterface::Update()
 
 	if (UIManager::GetSingleton()->GetIsShowUserInfo())
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+		if (Input::GetButtonDown(VK_DOWN))
 		{
 			if (selectState == SelectState::Inventory)
 			{
 				selectState = SelectState::Load;
 			}
 		}
-		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
+		else if (Input::GetButtonDown(VK_UP))
 		{
 			if (selectState == SelectState::Load)
 			{
@@ -133,7 +135,7 @@ void UserInfoInterface::Update()
 			}
 		}
 
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LSHIFT))
+		if (Input::GetButtonDown(VK_LSHIFT))
 		{
 			if (selectState == SelectState::Inventory)
 			{

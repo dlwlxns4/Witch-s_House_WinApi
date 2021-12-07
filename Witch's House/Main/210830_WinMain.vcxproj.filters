@@ -120,6 +120,9 @@
     <ClCompile Include="SaveLoadInterface.cpp">
       <Filter>2D Framework\Manager\GameObejct\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -223,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="SaveLoadInterface.h">
       <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

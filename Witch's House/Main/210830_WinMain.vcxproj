@@ -157,6 +157,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="InventoryInterface.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Layer.cpp" />
@@ -191,10 +192,12 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageHelper.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="InventoryInterface.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Managers.h" />
     <ClInclude Include="MapScene.h" />
     <ClInclude Include="ParallaxObj.h" />
     <ClInclude Include="PhysicsManager.h" />

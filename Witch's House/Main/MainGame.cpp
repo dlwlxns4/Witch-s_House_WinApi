@@ -3,12 +3,13 @@
 
 #include "Camera.h"
 
+#include "Input.h"
+
 float g_cameraPosX;
 float g_cameraPosY;
 
 HRESULT MainGame::Init()
 {
-	KeyManager::GetSingleton()->Init();
 	ImageManager::GetSingleton()->Init();
 	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
@@ -18,7 +19,7 @@ HRESULT MainGame::Init()
 
 	SceneManager::GetSingleton()->ChangeScene("TilemapToolScene");
 
-
+	Input::Init(g_hWnd);
 
 	srand((unsigned int)time(nullptr));
 
@@ -34,6 +35,8 @@ HRESULT MainGame::Init()
 
 void MainGame::Update()
 {
+	Input::Update();
+
 	TimerManager::GetSingleton()->Update();
 
 	SceneManager::GetSingleton()->Update();
@@ -78,7 +81,6 @@ void MainGame::Release()
 
 	ImageManager::GetSingleton()->Release();
 
-	KeyManager::GetSingleton()->Release();
 
 	SceneManager::GetSingleton()->Release();
 

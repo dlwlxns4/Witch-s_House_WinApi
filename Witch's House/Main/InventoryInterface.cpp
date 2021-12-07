@@ -2,6 +2,8 @@
 #include "ImageHelper.h"
 #include "Image.h"
 
+#include "Input.h"
+
 #define INVENTORY_START_POSY 9
 
 HRESULT InventoryInterface::Init()
@@ -36,7 +38,7 @@ void InventoryInterface::Update()
 
 	if (UIManager::GetSingleton()->GetIsShowInventory() == true)
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_CONTROL))
+		if (Input::GetButton(VK_CONTROL))
 		{
 			ftn.SourceConstantAlpha = 0;
 			UIManager::GetSingleton()->SetIsShowInventory(false);

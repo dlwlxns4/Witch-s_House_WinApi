@@ -1,6 +1,8 @@
 #include "PhysicsManager.h"
 #include "Camera.h"
 
+#include "Input.h"
+
 void PhysicsManager::Render(HDC hdc)
 {
 	HBRUSH myBrush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
@@ -26,7 +28,7 @@ void PhysicsManager::Render(HDC hdc)
 		}
 	}
 
-	if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_SPACE))
+	if (Input::GetButtonDown(VK_SPACE))
 	{
 		showCollider = showCollider == true ? false : true;
 	}

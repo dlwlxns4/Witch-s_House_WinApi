@@ -2,6 +2,8 @@
 #include "ImageHelper.h"
 #include "Image.h"
 
+#include "Input.h"
+
 #define SAVE_LOAD_COUNTS 4
 
 #define STR_INFO_POSX 22
@@ -48,7 +50,7 @@ void SaveLoadInterface::Update()
 
 	if (UIManager::GetSingleton()->GetIsShowSaveLoad() == true)
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_UP))
+		if (Input::GetButtonDown(VK_UP))
 		{
 			selectNum--;
 			if (selectNum < 0)
@@ -56,7 +58,7 @@ void SaveLoadInterface::Update()
 				selectNum = 3;
 			}
 		}
-		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
+		else if (Input::GetButtonDown(VK_DOWN))
 		{
 			selectNum++;
 			if (selectNum > 3)
@@ -65,7 +67,7 @@ void SaveLoadInterface::Update()
 			}
 		}
 
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_CONTROL))
+		if (Input::GetButtonDown(VK_CONTROL))
 		{
 			UIManager::GetSingleton()->SetIsShowSaveLoad(false);
 			UIManager::GetSingleton()->SetIsShowUserInfo(true);

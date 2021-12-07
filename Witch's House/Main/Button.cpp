@@ -6,6 +6,8 @@
 #include "Layer.h"
 #include "TileObj.h"
 
+#include "Input.h"
+
 bool g_isBtnActive;
 HRESULT Button::Init()
 {
@@ -46,11 +48,11 @@ void Button::Update()
 	// 마우스 커서가 충돌영역에 들어갔는지
 	if (PtInRect(&shape, g_ptMouse))
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+		if (Input::GetButtonDown(VK_LBUTTON))
 		{
 			state = Button_State::Down;
 		}
-		else if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON) && state == Button_State::Down)
+		else if (Input::GetButtonUp(VK_LBUTTON) && state == Button_State::Down)
 		{
 			state = Button_State::Up;
 

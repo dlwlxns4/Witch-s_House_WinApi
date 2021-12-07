@@ -14,6 +14,8 @@
 #include "AllTypeObj.h"
 #include "ChatInterface.h"
 
+#include "Input.h"
+
 vector<string> mapName;
 vector<Image*> vecSampleImage;
 
@@ -149,13 +151,13 @@ void TilemapToolScene::Update()
 	if (PtInRect(&(sampleArea), g_ptMouse))
 	{
 
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+		if (Input::GetButton(VK_LBUTTON))
 		{
 			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
 		}
 
-		if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LBUTTON))
+		if (Input::GetButtonUp(VK_LBUTTON))
 		{
 			selectPos.clear();
 
@@ -184,7 +186,7 @@ void TilemapToolScene::Update()
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
-			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+			if (Input::GetButtonDown(VK_LBUTTON))
 			{
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
 				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
@@ -203,7 +205,7 @@ void TilemapToolScene::Update()
 					}
 				}
 			}
-			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+			else if (Input::GetButtonDown(VK_RBUTTON))
 			{
 
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
@@ -219,7 +221,7 @@ void TilemapToolScene::Update()
 			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
 
-			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+			if (Input::GetButtonDown(VK_LBUTTON))
 			{
 				if (playerObj == nullptr)
 				{
@@ -233,7 +235,7 @@ void TilemapToolScene::Update()
 					playerObj->SetTilePos(startPosX, startPosY);
 				}
 			}
-			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+			else if (Input::GetButtonDown(VK_RBUTTON))
 			{
 
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
@@ -246,7 +248,7 @@ void TilemapToolScene::Update()
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
 
-			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+			if (Input::GetButtonDown(VK_LBUTTON))
 			{
 				if (parallaxObj == nullptr)
 				{
@@ -258,7 +260,7 @@ void TilemapToolScene::Update()
 				{
 				}
 			}
-			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+			else if (Input::GetButtonDown(VK_RBUTTON))
 			{
 
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX ;
@@ -270,7 +272,7 @@ void TilemapToolScene::Update()
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
-			if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LBUTTON))
+			if (Input::GetButtonDown(VK_LBUTTON))
 			{
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
 				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
@@ -282,7 +284,7 @@ void TilemapToolScene::Update()
 				vecLayer[currLayer]->PushGameObject(trigger);
 
 			}
-			else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RBUTTON))
+			else if (Input::GetButtonDown(VK_RBUTTON))
 			{
 
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX + 1;
@@ -301,27 +303,27 @@ void TilemapToolScene::Update()
 	//}
 
 	//타일맵 카메라 이동
-	if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
+	if (Input::GetButtonDown('A'))
 	{
 		if (g_cameraPosX > 0)
 			g_cameraPosX--;
 		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('D'))
+	if (Input::GetButtonDown('D'))
 	{
 		if (g_cameraPosX < 100)
 			g_cameraPosX++;
 		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('W'))
+	if (Input::GetButtonDown('W'))
 	{
 		if (g_cameraPosY > 0)
 			g_cameraPosY--;
 		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
-	if (KeyManager::GetSingleton()->IsStayKeyDown('S'))
+	if (Input::GetButtonDown('S'))
 	{
 		if (g_cameraPosY < 100)
 			g_cameraPosY++;
@@ -330,7 +332,7 @@ void TilemapToolScene::Update()
 	}
 
 	//샘플 맵 이동
-	if (KeyManager::GetSingleton()->IsStayKeyDown('X'))
+	if (Input::GetButton('X'))
 	{
 		if (mapIndex < mapName.size() - 1)
 		{
@@ -354,7 +356,7 @@ void TilemapToolScene::Update()
 			}
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsStayKeyDown('Z'))
+	else if (Input::GetButton('Z'))
 	{
 		if (mapIndex > 0)
 		{
@@ -381,7 +383,7 @@ void TilemapToolScene::Update()
 		}
 	}
 
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('T'))
+	if (Input::GetButtonDown('T'))
 	{
 		int state = (int)tileState;
 		state--;
@@ -390,7 +392,7 @@ void TilemapToolScene::Update()
 			tileState = (TileState)state;
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown('Y'))
+	else if (Input::GetButtonDown('Y'))
 	{
 		int state = (int)tileState;
 		state++;
@@ -399,7 +401,7 @@ void TilemapToolScene::Update()
 			tileState = (TileState)state;
 		}
 	}
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('V'))
+	if (Input::GetButtonDown('V'))
 	{
 		if (mapIndex < mapName.size() - 1)
 		{
@@ -424,7 +426,7 @@ void TilemapToolScene::Update()
 			}
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown('C'))
+	else if (Input::GetButtonDown('C'))
 	{
 		if (mapIndex > 0)
 		{
@@ -455,14 +457,14 @@ void TilemapToolScene::Update()
 	layerAddBtn->Update();
 
 	//레이어 이동
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('1'))
+	if (Input::GetButtonDown('1'))
 	{
 		if (currLayer > 0)
 		{
 			currLayer--;
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown('2'))
+	else if (Input::GetButtonDown('2'))
 	{
 		if (currLayer < vecLayer.size() - 1)
 		{
@@ -471,7 +473,7 @@ void TilemapToolScene::Update()
 	}
 
 	// Find TriggerTile
-	if (KeyManager::GetSingleton()->IsOnceKeyUp('P'))
+	if (Input::GetButtonDown('P'))
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
@@ -483,7 +485,7 @@ void TilemapToolScene::Update()
 
 
 	//Insert UI
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
+	if (Input::GetButtonDown('U'))
 	{
 		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetChatInterface());
 		vecLayer[vecLayer.size() - 1]->PushGameObject(UIManager::GetSingleton()->GetUserInfoInterface());
@@ -492,28 +494,28 @@ void TilemapToolScene::Update()
 	}
 
 	// Give Reference
-	if (KeyManager::GetSingleton()->IsOnceKeyDown('M'))
+	if (Input::GetButtonDown('M'))
 	{
 		if (TriggerObjForId != nullptr)
 		{
 			TriggerObjForId->addReferenceID_1();
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_OEM_COMMA))
+	else if (Input::GetButtonDown(VK_OEM_COMMA))
 	{
 		if (TriggerObjForId != nullptr)
 		{
 			TriggerObjForId->addReferenceID_10();
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_OEM_PERIOD))
+	else if (Input::GetButtonDown(VK_OEM_PERIOD))
 	{
 		if (TriggerObjForId != nullptr)
 		{
 			TriggerObjForId->addReferenceID_100();
 		}
 	}
-	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_OEM_2))
+	else if (Input::GetButtonDown(VK_OEM_2))
 	{
 		if (TriggerObjForId != nullptr)
 		{
