@@ -76,22 +76,25 @@ void UserInfoInterface::Update()
 {
 	if (UIManager::GetSingleton()->GetIsShowInventory() == false && UIManager::GetSingleton()->GetIsShowSaveLoad() == false)
 	{
-		if (Input::GetButtonDown(VK_CONTROL))
+		if (GameManager::GetSingleton()->GetPlayerState() != PlayerState::Chat)
 		{
-			if (UIManager::GetSingleton()->GetIsShowUserInfo() == false)
+			if (Input::GetButtonDown(VK_CONTROL))
 			{
-				UIManager::GetSingleton()->SetIsShowUserInfo(true);
-				GameManager::GetSingleton()->SetPlayerState(PlayerState::ShowUI);
-			}
-			else
-			{
-				UIManager::GetSingleton()->SetIsShowUserInfo(false);
-				GameManager::GetSingleton()->SetPlayerState(PlayerState::None);
-			}
+				if (UIManager::GetSingleton()->GetIsShowUserInfo() == false)
+				{
+					UIManager::GetSingleton()->SetIsShowUserInfo(true);
+					GameManager::GetSingleton()->SetPlayerState(PlayerState::ShowUI);
+				}
+				else
+				{
+					UIManager::GetSingleton()->SetIsShowUserInfo(false);
+					GameManager::GetSingleton()->SetPlayerState(PlayerState::None);
+				}
 
-			
 
-			ftn.SourceConstantAlpha = 0;
+
+				ftn.SourceConstantAlpha = 0;
+			}
 		}
 	}
 
@@ -149,7 +152,7 @@ void UserInfoInterface::Update()
 			}
 		}
 
-		
+
 	}
 }
 

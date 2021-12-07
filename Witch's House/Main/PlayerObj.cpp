@@ -148,7 +148,7 @@ void PlayerObj::Action()
 	if (Input::GetButtonDown(VK_LSHIFT))
 	{
 		GameObject* trigger = PhysicsManager::GetSingleton()->GetOwner(rayCast.first, rayCast.second);
-		if (trigger != nullptr)
+		if (trigger != nullptr && GameManager::GetSingleton()->GetPlayerState() != PlayerState::ShowUI)
 		{
 			cout << ((TriggerObj*)trigger)->GetReferenceID() << endl;
 			TalkManager::GetSingleton()->FindChat(((TriggerObj*)trigger)->GetReferenceID());
@@ -157,7 +157,7 @@ void PlayerObj::Action()
 			{
 				GameManager::GetSingleton()->SetPlayerState(PlayerState::Chat);
 			}
-			else if (GameManager::GetSingleton()->GetPlayerState() == PlayerState::ShowUI)
+			else if (GameManager::GetSingleton()->GetPlayerState() == PlayerState::Chat)
 			{
 				GameManager::GetSingleton()->SetPlayerState(PlayerState::None);
 			}
