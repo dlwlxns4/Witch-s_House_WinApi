@@ -22,6 +22,9 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
+
+		GameObject::Write(os);
+
 		for (size_t i = 0; i < vecGameObject.size(); ++i)
 		{
 			vecGameObject[i]->Write(os);

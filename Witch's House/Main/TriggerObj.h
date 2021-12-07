@@ -50,6 +50,8 @@ public:
 	 
 	virtual void Write(ostream& os) const override
 	{
+		GameObject::Write(os);
+
 		os << tile.collider.left;
 		os << tile.collider.top;
 		os << tile.collider.right;

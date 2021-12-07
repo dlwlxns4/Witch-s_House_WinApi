@@ -25,6 +25,7 @@ vector<Image*> vecSampleImage;
 
 
 vector<Layer*> vecLayer;
+
 vector<TileObj*> vecTileObj;
 PlayerObj* playerObj = nullptr;
 ParallaxObj* parallaxObj = nullptr;
@@ -660,7 +661,7 @@ void TilemapToolScene::Save(int saveIndex)
 
 	//쓰기
 	DWORD writtenByte;
-	if (WriteFile(hFile,                                    //파일 핸들
+	if (WriteFile(hFile,                                //파일 핸들
 		tileInfo,                                       // 메모리 시작 주소
 		sizeof(tagTile) * TILE_COUNT_X * TILE_COUNT_Y,  // 메모리 크기
 		&writtenByte,                                   // 실제 쓰여진 파일 용량
