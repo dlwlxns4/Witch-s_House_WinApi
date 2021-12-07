@@ -47,5 +47,23 @@ public:
 	void addReferenceID_1000() { referenceID += 1000; }
 
 	int GetReferenceID() { return referenceID; }
+	 
+	virtual void Write(ostream& os) const override
+	{
+		os << tile.collider.left;
+		os << tile.collider.top;
+		os << tile.collider.right;
+		os << tile.collider.bottom;
+
+		os << tile.frameX;
+		os << tile.frameY;
+		os << tile.mapIndex;
+
+		os << tile.rc.left;
+		os << tile.rc.top;
+		os << tile.rc.right;
+		os << tile.rc.bottom;
+
+	}
 };
 

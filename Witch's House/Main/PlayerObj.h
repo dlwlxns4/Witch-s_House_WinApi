@@ -71,5 +71,22 @@ public:
 	}
 	void CameraMove();
 	void MoveInit();
+
+	virtual void Write(ostream& os) const override
+	{
+		os << referenceID;
+		os << tilePosX;
+		os << tilePosY;
+		os << (int)direction;
+		os << (int)state;
+		os << moveDelay;
+		os << moveDistance;
+		os << walkImage;
+		os << isRightFoot;
+		os << rayCast.first;
+		os << rayCast.second;
+		os << pastPosX;
+		os << pastPosY;
+	}
 };
 

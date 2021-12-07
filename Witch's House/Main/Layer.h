@@ -3,7 +3,7 @@
 #include "Config.h"
 
 #pragma once
-class Layer : public GameEntity
+class Layer : public GameObject
 {
 private:
 	vector<GameObject*> vecGameObject;
@@ -19,5 +19,13 @@ public:
 	virtual void Release();
 
 	void PushGameObject(GameObject* gameObject);
+
+	virtual void Write(ostream& os) const override
+	{
+		for (size_t i = 0; i < vecGameObject.size(); ++i)
+		{
+			vecGameObject[i]->Write(os);
+		}
+	}
 };
 

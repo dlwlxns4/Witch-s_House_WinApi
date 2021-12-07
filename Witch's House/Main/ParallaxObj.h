@@ -20,5 +20,17 @@ public:
 	virtual void Update();
 	virtual void Render(HDC hdc);
 	virtual void Release();
+
+	virtual void Write(ostream& os) const override
+	{
+		os << ftn.AlphaFormat;
+		os << ftn.BlendFlags;
+		os << ftn.BlendOp;
+		os << ftn.SourceConstantAlpha;
+
+		os << renderPosX;
+		os << renderPosY;
+		os << renderDelayTime;
+	}
 };
 

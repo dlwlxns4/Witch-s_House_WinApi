@@ -151,7 +151,7 @@ void TilemapToolScene::Update()
 	if (PtInRect(&(sampleArea), g_ptMouse))
 	{
 
-		if (Input::GetButton(VK_LBUTTON))
+		if (Input::GetButtonDown(VK_LBUTTON))
 		{
 			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE;
@@ -293,14 +293,6 @@ void TilemapToolScene::Update()
 		}
 	}
 
-	//if (KeyManager::GetSingleton()->IsOnceKeyUp('S'))
-	//{
-	//	Save();
-	//}
-	//if (KeyManager::GetSingleton()->IsOnceKeyUp('L'))
-	//{
-	//	Load();
-	//}
 
 	//타일맵 카메라 이동
 	if (Input::GetButtonDown('A'))
@@ -528,6 +520,14 @@ void TilemapToolScene::Update()
 		vecLayer[i]->Update();
 	}
 
+	if (Input::GetButtonDown('K'))
+	{
+		Save();
+	}
+	//if (keymanager::getsingleton()->isoncekeyup('l'))
+	//{
+	//	load();
+	//}
 
 }
 
@@ -649,6 +649,7 @@ void TilemapToolScene::Save(int saveIndex)
 {
 	string filePath = "Save/saveMapData" + to_string(saveIndex) + ".map";
 
+	cout << vecLayer[0];
 
 	HANDLE hFile = CreateFile(filePath.c_str(),
 		GENERIC_WRITE,                  //읽기, 쓰기 타입
