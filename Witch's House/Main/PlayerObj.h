@@ -74,6 +74,8 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
+
+		GameObject::Write(os);
 		os << referenceID;
 		os << tilePosX;
 		os << tilePosY;

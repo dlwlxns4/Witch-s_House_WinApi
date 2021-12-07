@@ -23,6 +23,8 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
+
+		GameObject::Write(os);
 		os << ftn.AlphaFormat;
 		os << ftn.BlendFlags;
 		os << ftn.BlendOp;
