@@ -31,24 +31,32 @@ public:
 
 	virtual void Write(ostream& os) const
 	{
-		os << pos.x;
-		os << pos.y;
-		os << shape.left;
-		os << shape.top;
-		os << shape.right;
-		os << shape.bottom;
+		os << pos.x << endl;
+		os << pos.y << endl;
+		os << shape.left << endl;
+		os << shape.top << endl;
+		os << shape.right << endl;
+		os << shape.bottom << endl;
 
-		os << moveSpeed;
-		os << bodySize;
+		os << moveSpeed << endl;
+		os << bodySize << endl;
 
-		os << img;
 	}
-	
-	ostream& operator<<(ostream& os)
+
+	virtual void Read(istream& is)
 	{
-		this->Write(os);
-		return os;
+		is >> pos.x
+			>> pos.y
+			>> shape.left
+			>> shape.top
+			>> shape.right
+			>> shape.bottom
+
+			>> moveSpeed
+			>> bodySize;
 	}
 };
 
+ostream& operator<<(ostream& os, const GameObject& obj);
 
+istream& operator>>(istream& is,  GameObject& obj);

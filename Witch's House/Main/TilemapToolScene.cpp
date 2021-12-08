@@ -16,6 +16,8 @@
 
 #include "Input.h"
 
+#include <fstream>
+
 vector<string> mapName;
 vector<Image*> vecSampleImage;
 
@@ -48,7 +50,7 @@ HRESULT TilemapToolScene::Init()
 			mapName.push_back(p2.path().string());
 			cout << p2.path().string() << endl;
 
-			Mat img = OpencvHelper::ReadImage(p2.path().string(), 1); 
+			Mat img = OpencvHelper::ReadImage(p2.path().string(), 1);
 			vecSampleImage.push_back(ImageManager::GetSingleton()->AddImage(p2.path().string().c_str(), img.cols, img.rows, img.cols / TILE_SIZE, img.rows / TILE_SIZE, true, RGB(255, 0, 255)));
 		}
 	}
@@ -264,7 +266,7 @@ void TilemapToolScene::Update()
 			else if (Input::GetButtonDown(VK_RBUTTON))
 			{
 
-				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX ;
+				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
 				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
 			}
 		}
@@ -296,27 +298,27 @@ void TilemapToolScene::Update()
 
 
 	//타일맵 카메라 이동
-	if (Input::GetButtonDown('A'))
+	if (Input::GetButton('A'))
 	{
 		if (g_cameraPosX > 0)
 			g_cameraPosX--;
 		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 	}
-	if (Input::GetButtonDown('D'))
+	if (Input::GetButton('D'))
 	{
 		if (g_cameraPosX < 100)
 			g_cameraPosX++;
 		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
-	if (Input::GetButtonDown('W'))
+	if (Input::GetButton('W'))
 	{
 		if (g_cameraPosY > 0)
 			g_cameraPosY--;
 		cout << g_cameraPosX << " " << g_cameraPosY << endl;
 
 	}
-	if (Input::GetButtonDown('S'))
+	if (Input::GetButton('S'))
 	{
 		if (g_cameraPosY < 100)
 			g_cameraPosY++;
@@ -470,12 +472,11 @@ void TilemapToolScene::Update()
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
-			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX ;
+			startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
 			startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
 			TriggerObjForId = FindTriggerObj(startPosX, startPosY);
 		}
 	}
-
 
 	//Insert UI
 	if (Input::GetButtonDown('U'))
@@ -525,17 +526,15 @@ void TilemapToolScene::Update()
 	{
 		Save();
 	}
-	//if (keymanager::getsingleton()->isoncekeyup('l'))
-	//{
-	//	load();
-	//}
 
+	if (Input::GetButtonDown('L'))
+	{
+		Load();
+	}
 }
 
 void TilemapToolScene::Render(HDC hdc)
 {
-
-
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 
@@ -553,15 +552,10 @@ void TilemapToolScene::Render(HDC hdc)
 	}
 
 
-
-
-
-
 	for (int i = 0; i < vecLayer.size(); ++i)
 	{
 		vecLayer[i]->Render(hdc);
 	}
-
 
 
 	// 샘플 영역
@@ -646,32 +640,7 @@ void TilemapToolScene::Release()
 	SAFE_DELETE(layerAddBtn);
 }
 
-void TilemapToolScene::Save(int saveIndex)
-{
-	string filePath = "Save/saveMapData" + to_string(saveIndex) + ".map";
 
-	cout << vecLayer[0];
-
-	HANDLE hFile = CreateFile(filePath.c_str(),
-		GENERIC_WRITE,                  //읽기, 쓰기 타입
-		0, NULL,                        //공유, 보안 모드
-		CREATE_ALWAYS,                  //파일을 만들거나 읽을 때 옵션
-		FILE_ATTRIBUTE_NORMAL,          //파일 속성(읽기 전용, 숨김 등등)
-		NULL);                          //
-
-	//쓰기
-	DWORD writtenByte;
-	if (WriteFile(hFile,                                //파일 핸들
-		tileInfo,                                       // 메모리 시작 주소
-		sizeof(tagTile) * TILE_COUNT_X * TILE_COUNT_Y,  // 메모리 크기
-		&writtenByte,                                   // 실제 쓰여진 파일 용량
-		NULL) == false)
-	{
-		MessageBox(g_hWnd, "맵 데이터 저장에 실패했습니다.", "에러", MB_OK);
-	}
-
-	CloseHandle(hFile);
-}
 
 const string TilemapToolScene::TileStateToString(TileState e)
 {
@@ -690,26 +659,49 @@ const string TilemapToolScene::TileStateToString(TileState e)
 	}
 }
 
-void TilemapToolScene::Load(int loadIndex)
+void TilemapToolScene::Save(int saveIndex)
 {
-	string filePath = "Save/saveMapData" + to_string(loadIndex) + ".map";
+	string filePath = "Save/MapData" + to_string(saveIndex) + ".txt";
 
-	HANDLE hFile = CreateFile(filePath.c_str(),
-		GENERIC_READ,                  //읽기, 쓰기 타입
-		0, NULL,                        //공유, 보안 모드
-		OPEN_EXISTING,                  //파일을 만들거나 읽을 때 옵션
-		FILE_ATTRIBUTE_NORMAL,          //파일 속성(읽기 전용, 숨김 등등)
-		NULL);                          //
+	ofstream writeFile(filePath.data());
 
-	//읽기
-
-	DWORD readByte;
-	if (ReadFile(hFile, tileInfo, sizeof(tagTile) * TILE_COUNT_X * TILE_COUNT_Y, &readByte, NULL) == false)
+	if (writeFile.is_open())
 	{
-		MessageBox(g_hWnd, "맵 데이터 로드에 실패했습니다.", "에러", MB_OK);
+		writeFile << vecLayer.size() << endl;
+		for (size_t i = 0; i < vecLayer.size(); ++i)
+		{
+			writeFile << *(vecLayer[i]) << endl;
+		}
 	}
 
-	CloseHandle(hFile);
+	cout << "세이브 완료" << endl;
+	writeFile.close();
+}
+
+void TilemapToolScene::Load(int loadIndex)
+{
+	string filePath = "Save/MapData" + to_string(loadIndex) + ".txt";
+
+	ifstream openFile(filePath.data());
+
+	if (openFile.is_open())
+	{
+		openFile >> maxLayer;
+		vecLayer.clear();
+		vecLayer.reserve(maxLayer);
+
+		vecTileObj.clear();
+
+		for (int i = 0; i < maxLayer; ++i)
+		{
+			vecLayer.push_back(new Layer);
+
+			openFile >> *(vecLayer[i]);
+		}
+	}
+
+	cout << "Load완료" << endl;
+	openFile.close();
 }
 
 TriggerObj* TilemapToolScene::FindTriggerObj(int mousePosX, int mousePosY /*int *renderPosX, int *renderPosY*/)//뒤의 두개는 아웃파라미터
@@ -725,3 +717,5 @@ TriggerObj* TilemapToolScene::FindTriggerObj(int mousePosX, int mousePosY /*int 
 
 	return nullptr;
 }
+
+

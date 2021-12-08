@@ -1,9 +1,9 @@
-#include "GameObject.h"
+#pragma once
+
 #include "GameEntity.h"
 #include "Config.h"
 
-#pragma once
-class Layer : public GameObject
+class Layer : public GameEntity
 {
 private:
 	vector<GameObject*> vecGameObject;
@@ -20,15 +20,10 @@ public:
 
 	void PushGameObject(GameObject* gameObject);
 
-	virtual void Write(ostream& os) const override
-	{
-
-		GameObject::Write(os);
-
-		for (size_t i = 0; i < vecGameObject.size(); ++i)
-		{
-			vecGameObject[i]->Write(os);
-		}
-	}
+	friend ostream& operator<<(ostream& os, const Layer& layer);
+	friend istream& operator>>(istream& is, const Layer& layer);
 };
 
+ostream& operator<<(ostream& os, const Layer& layer);
+
+istream& operator>>(istream& is, const Layer& layer);

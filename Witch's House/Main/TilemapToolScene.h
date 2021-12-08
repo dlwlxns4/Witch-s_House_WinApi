@@ -79,3 +79,4 @@ public:
 	void Load(int loadIndex=0);
 	TriggerObj* FindTriggerObj(int mousePosX, int mousePosY);
 };
+

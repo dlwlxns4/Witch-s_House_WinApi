@@ -4,6 +4,8 @@
 #include "CommonFunction.h"
 #include "MainGame.h"
 
+#include "Timer.h"
+
 #ifdef _DEBUG
 #include <crtdbg.h>
 #endif
@@ -26,6 +28,8 @@ MainGame	g_mainGame;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 	WPARAM wParam, LPARAM lParam);
 
+void Render();
+
 int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstance,
 	_In_ LPSTR _lpszCmdParam, _In_ int nCmdShow)
 {
@@ -37,7 +41,7 @@ int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstanc
 	//_CrtSetBreakAlloc(379);
 	//_CrtSetBreakAlloc(481);
 	//_CrtSetBreakAlloc(805);
-	
+
 
 	// 윈도우를 생성하기 위한 기본 셋팅
 	g_hInstance = _hInstance;
@@ -74,11 +78,30 @@ int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstanc
 
 	// 메시지 큐에 있는 메시지 처리
 	MSG message;
-	while (GetMessage(&message, 0, 0, 0))
+
+	while (TRUE)
 	{
-		TranslateMessage(&message);
-		DispatchMessage(&message);
+		if (PeekMessage(&message, nullptr, NULL, NULL, PM_REMOVE))
+		{
+			if (message.message == WM_QUIT)
+			{
+				break;
+			}
+
+			TranslateMessage(&message);
+			DispatchMessage(&message);
+		}
+		else
+		{
+			if (Timer::CanUpdate())
+			{
+				g_mainGame.Update();
+				Render();
+			}
+
+		}
 	}
+
 
 	// 메인게임 해제
 	g_mainGame.Release();
@@ -88,37 +111,9 @@ int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstanc
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	HDC hdc;
-	PAINTSTRUCT ps;
 
 	switch (iMessage)
 	{
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_RETURN:
-			//isUpdate = !isUpdate;
-			break;
-		}
-		break;
-	case WM_TIMER:
-		g_mainGame.Update();
-
-		break;
-	case WM_PAINT:		// 윈도우 화면이 다시 그려지는 경우 발생하는 메시지
-		hdc = BeginPaint(g_hWnd, &ps);
-
-		//RECT rect;
-		//SetMapMode(hdc, MM_ANISOTROPIC);
-		//SetWindowExtEx(hdc, WIN_SIZE_X, WIN_SIZE_Y, NULL);
-		//GetClientRect(g_hWnd, &rect);
-		//SetViewportExtEx(hdc, rect.right, rect.bottom, NULL);
-
-		g_mainGame.Render(hdc);
-
-		EndPaint(g_hWnd, &ps);
-		break;
-
 	case WM_MOUSEMOVE:
 		g_ptMouse.x = LOWORD(lParam);
 		g_ptMouse.y = HIWORD(lParam);
@@ -129,4 +124,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	}
 
 	return DefWindowProc(hWnd, iMessage, wParam, lParam);
+}
+
+void Render()
+{
+	PAINTSTRUCT ps;
+	HDC hdc;
+	hdc = BeginPaint(g_hWnd, &ps);
+
+	g_mainGame.Render(hdc);
+	EndPaint(g_hWnd, &ps);
 }

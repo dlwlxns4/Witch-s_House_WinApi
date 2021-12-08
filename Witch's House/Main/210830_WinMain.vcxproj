@@ -173,7 +173,6 @@
     <ClCompile Include="TileObj.cpp" />
     <ClCompile Include="TilemapToolScene.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TriggerObj.cpp" />
     <ClCompile Include="UIManager.cpp" />
@@ -211,7 +210,6 @@
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="TilemapToolScene.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="TimerManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TriggerObj.h" />
     <ClInclude Include="UIManager.h" />

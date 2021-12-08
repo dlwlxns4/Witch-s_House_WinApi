@@ -36,7 +36,6 @@ using namespace std;
 enum class MoveDir { Left = 2, Right = 6, Up = 0, Down = 4 };
 enum class TankType { Player, Normal, Speed, Rapid, Defensive };
 
-#include "TimerManager.h"
 #include "ImageManager.h"
 #include "SceneManager.h"
 #include "TalkManager.h"

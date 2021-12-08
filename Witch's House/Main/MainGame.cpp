@@ -8,10 +8,11 @@
 float g_cameraPosX;
 float g_cameraPosY;
 
+
+
 HRESULT MainGame::Init()
 {
 	ImageManager::GetSingleton()->Init();
-	TimerManager::GetSingleton()->Init();
 	SceneManager::GetSingleton()->Init();
 	TalkManager::GetSingleton()->Init();
 	UIManager::GetSingleton()->Init();
@@ -37,7 +38,6 @@ void MainGame::Update()
 {
 	Input::Update();
 
-	TimerManager::GetSingleton()->Update();
 
 	SceneManager::GetSingleton()->Update();
 
@@ -63,7 +63,6 @@ void MainGame::Render(HDC hdc)
 	SceneManager::GetSingleton()->Render(hBackBufferDC);
 	//fps Ç¥½Ã.
 #ifdef _DEBUG
-	TimerManager::GetSingleton()->Render(hBackBufferDC);
 #endif
 
 	backBuffer->Render(hdc);
@@ -77,7 +76,6 @@ void MainGame::Release()
 {
 	SAFE_RELEASE(backBuffer);
 
-	TimerManager::GetSingleton()->Release();
 
 	ImageManager::GetSingleton()->Release();
 

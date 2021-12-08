@@ -47,25 +47,26 @@ public:
 	void addReferenceID_1000() { referenceID += 1000; }
 
 	int GetReferenceID() { return referenceID; }
-	 
+
 	virtual void Write(ostream& os) const override
 	{
 		GameObject::Write(os);
 
-		os << tile.collider.left;
-		os << tile.collider.top;
-		os << tile.collider.right;
-		os << tile.collider.bottom;
+		os << tile.collider.left << "\t";
+		os << tile.collider.top << "\t";
+		os << tile.collider.right << "\t";
+		os << tile.collider.bottom << "\t";
 
-		os << tile.frameX;
-		os << tile.frameY;
-		os << tile.mapIndex;
 
-		os << tile.rc.left;
-		os << tile.rc.top;
-		os << tile.rc.right;
-		os << tile.rc.bottom;
+		os << tile.frameX << "\t";
+		os << tile.frameY << "\t";
+		os << tile.mapIndex << "\t";
 
+
+		os << tile.rc.left << "\t";
+		os << tile.rc.top << "\t";
+		os << tile.rc.right << "\t";
+		os << tile.rc.bottom << "\t";
 	}
 };
 
