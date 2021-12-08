@@ -78,5 +78,7 @@ public:
 	const string TileStateToString(TileState e);
 	void Load(int loadIndex=0);
 	TriggerObj* FindTriggerObj(int mousePosX, int mousePosY);
+
+	void LayerRelease();
 };
 

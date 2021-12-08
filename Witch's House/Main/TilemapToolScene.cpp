@@ -688,6 +688,7 @@ void TilemapToolScene::Load(int loadIndex)
 	if (openFile.is_open())
 	{
 		openFile >> maxLayer;
+		this->LayerRelease();
 		vecLayer.clear();
 		vecLayer.reserve(maxLayer);
 		vecTileObj.clear();
@@ -719,6 +720,15 @@ TriggerObj* TilemapToolScene::FindTriggerObj(int mousePosX, int mousePosY /*int 
 	}
 
 	return nullptr;
+}
+
+void TilemapToolScene::LayerRelease()
+{
+	for (auto iter : vecLayer)
+	{
+		iter->Release();
+		SAFE_DELETE(iter);
+	}
 }
 
 
