@@ -23,9 +23,9 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
-		GameObject::Write(os);
+		os << 3 << "\t"; // tileType;
 
-		os << 1 << endl; // tileType;
+		GameObject::Write(os);
 
 		os << ftn.AlphaFormat << endl;
 		os << ftn.BlendFlags << endl;
@@ -39,7 +39,6 @@ public:
 
 	virtual void Read(istream& is) override
 	{
-
 		GameObject::Read(is);
 
 		is>> ftn.AlphaFormat

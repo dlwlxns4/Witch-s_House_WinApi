@@ -13,13 +13,21 @@
 
 HRESULT PlayerObj::Init()
 {
-	return E_NOTIMPL;
+	Mat charImg = OpencvHelper::ReadImage("Image/Character/$vivi.bmp");
+	ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
+	this->img = ImageManager::GetSingleton()->FindImage("Image/Character/$vivi.bmp");
+	
+	direction = Direction::Down;
+	state = PlayerActionState::None;
+	return S_OK;
 }
 
 HRESULT PlayerObj::Init(int posX, int posY)
 {
+
 	Mat charImg = OpencvHelper::ReadImage("Image/Character/$vivi.bmp");
-	this->img = ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
+	ImageManager::GetSingleton()->AddImage("Image/Character/$vivi.bmp", charImg.cols, charImg.rows, charImg.cols / PLAYER_SIZE_X, charImg.rows / PLAYER_SIZE_Y, true, RGB(255, 0, 255));
+	this->img = ImageManager::GetSingleton()->FindImage("Image/Character/$vivi.bmp");
 	tilePosX = (float)posX;
 	tilePosY = (float)posY;
 

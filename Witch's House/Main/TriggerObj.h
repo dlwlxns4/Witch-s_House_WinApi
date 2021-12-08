@@ -50,6 +50,8 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
+		os << 2 << "\t"; // tileType;
+
 		GameObject::Write(os);
 
 		os << tile.collider.left << "\t";
@@ -67,6 +69,27 @@ public:
 		os << tile.rc.top << "\t";
 		os << tile.rc.right << "\t";
 		os << tile.rc.bottom << "\t";
+	}
+
+	virtual void Read(istream& is) override
+	{
+		GameObject::Read(is);
+
+		is >> tile.collider.left
+			>> tile.collider.top
+			>> tile.collider.right
+			>> tile.collider.bottom
+			
+			
+			>> tile.frameX
+			>> tile.frameY
+			>> tile.mapIndex
+			
+
+			>> tile.rc.left
+			>> tile.rc.top
+			>> tile.rc.right
+			>> tile.rc.bottom;
 	}
 };
 

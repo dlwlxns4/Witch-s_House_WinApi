@@ -74,21 +74,36 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
+		os << 1 << "\t"; // tileType;
 
 		GameObject::Write(os);
-		os << referenceID << endl;
-		os << tilePosX << endl;
-		os << tilePosY << endl;
-		os << (int)direction << endl;
-		os << (int)state << endl;
-		os << moveDelay << endl;
-		os << moveDistance << endl;
-		os << walkImage << endl;
-		os << isRightFoot << endl;
-		os << rayCast.first << endl;
-		os << rayCast.second << endl;
-		os << pastPosX << endl;
-		os << pastPosY << endl;
+		os << referenceID << "\t";
+		os << tilePosX << "\t";
+		os << tilePosY << "\t";
+		os << moveDelay << "\t";
+		os << moveDistance << "\t";
+		os << walkImage << "\t";
+		os << isRightFoot << "\t";
+		os << rayCast.first << "\t";
+		os << rayCast.second << "\t";
+		os << pastPosX << "\t";
+		os << pastPosY << "\t";
+	}
+
+	virtual void Read(istream& is) override
+	{
+		GameObject::Read(is);
+		is >> referenceID
+			>> tilePosX
+			>> tilePosY
+			>> moveDelay
+			>> moveDistance
+			>> walkImage
+			>> isRightFoot
+			>> rayCast.first
+			>> rayCast.second
+			>> pastPosX
+			>> pastPosY;
 	}
 };
 

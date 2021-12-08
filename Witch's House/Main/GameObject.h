@@ -31,16 +31,15 @@ public:
 
 	virtual void Write(ostream& os) const
 	{
-		os << pos.x << endl;
-		os << pos.y << endl;
-		os << shape.left << endl;
-		os << shape.top << endl;
-		os << shape.right << endl;
-		os << shape.bottom << endl;
+		os << pos.x << "\t";
+		os << pos.y << "\t";
+		os << shape.left << "\t";
+		os << shape.top << "\t";
+		os << shape.right << "\t";
+		os << shape.bottom << "\t";
 
-		os << moveSpeed << endl;
-		os << bodySize << endl;
-
+		os << moveSpeed << "\t";
+		os << bodySize << "\t";
 	}
 
 	virtual void Read(istream& is)

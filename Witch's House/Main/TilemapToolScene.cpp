@@ -671,6 +671,7 @@ void TilemapToolScene::Save(int saveIndex)
 		for (size_t i = 0; i < vecLayer.size(); ++i)
 		{
 			writeFile << *(vecLayer[i]) << endl;
+			writeFile << -1 <<endl;
 		}
 	}
 
@@ -689,13 +690,13 @@ void TilemapToolScene::Load(int loadIndex)
 		openFile >> maxLayer;
 		vecLayer.clear();
 		vecLayer.reserve(maxLayer);
-
 		vecTileObj.clear();
+		currLayer = 0;
 
 		for (int i = 0; i < maxLayer; ++i)
 		{
 			vecLayer.push_back(new Layer);
-
+	
 			openFile >> *(vecLayer[i]);
 		}
 	}

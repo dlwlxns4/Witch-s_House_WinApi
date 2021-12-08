@@ -38,10 +38,10 @@ public:
 
 	virtual void Write(ostream& os) const override
 	{
+		os << 0 << "\t"; // tileType;
 
 		GameObject::Write(os);
 
-		os << 0 << "\t"; // tileType;
 
 		for (int i = 0; i < MAP_SIZE_X; ++i)
 		{
@@ -62,6 +62,7 @@ public:
 				os << tile[i][j].rc.bottom << "\t";
 			}
 		}
+		os << endl;
 	}
 
 	virtual void Read(istream& is) override
