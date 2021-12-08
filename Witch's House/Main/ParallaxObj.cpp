@@ -4,13 +4,15 @@
 
 HRESULT ParallaxObj::Init()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT ParallaxObj::Init(const char* filePath)
 {
 	Mat parallaxImage = OpencvHelper::ReadImage(filePath, 1);
-	this->img = ImageManager::GetSingleton()->AddImage(filePath, TILE_SIZE * (TILE_COUNT_X) * 2, TILE_SIZE * (TILE_COUNT_Y) * 2, 1, 1, true, RGB(255, 0, 255));
+	ImageManager::GetSingleton()->AddImage(filePath, TILE_SIZE * (TILE_COUNT_X) * 2, TILE_SIZE * (TILE_COUNT_Y) * 2, 1, 1, true, RGB(255, 0, 255));
+	this->img = ImageManager::GetSingleton()->FindImage(filePath);
+	this->filePath = filePath;
 
 	ftn.AlphaFormat = 0;
 	ftn.BlendFlags = 0;
@@ -68,4 +70,11 @@ void ParallaxObj::Render(HDC hdc)
 
 void ParallaxObj::Release()
 {
+}
+
+void ParallaxObj::SetImage()
+{
+	Mat parallaxImage = OpencvHelper::ReadImage(filePath, 1);
+	ImageManager::GetSingleton()->AddImage(this->filePath.c_str(), TILE_SIZE * (TILE_COUNT_X) * 2, TILE_SIZE * (TILE_COUNT_Y) * 2, 1, 1, true, RGB(255, 0, 255));
+	this->img = ImageManager::GetSingleton()->FindImage(filePath.c_str());
 }

@@ -90,8 +90,8 @@ istream& operator>>(istream& is, const Layer& layer)
 			case 3:
 			{
 				ParallaxObj* parallaxObj = new ParallaxObj;
-				parallaxObj->Init();
 				is >> *parallaxObj;
+				parallaxObj->SetImage();
 				vecLayer[vecLayer.size() - 1]->PushGameObject(parallaxObj);
 				break;
 			}

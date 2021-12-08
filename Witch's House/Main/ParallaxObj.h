@@ -6,6 +6,7 @@ class ParallaxObj : public GameObject
 {
 	BLENDFUNCTION ftn = {};
 
+	string filePath = "";
 
 	int renderPosX = 0;
 	int renderPosY = 0;
@@ -21,6 +22,8 @@ public:
 	virtual void Render(HDC hdc);
 	virtual void Release();
 
+	void SetImage();
+
 	virtual void Write(ostream& os) const override
 	{
 		os << 3 << "\t"; // tileType;
@@ -31,6 +34,8 @@ public:
 		os << ftn.BlendFlags << endl;
 		os << ftn.BlendOp << endl;
 		os << ftn.SourceConstantAlpha << endl;
+		
+		os << filePath << endl;
 
 		os << renderPosX << endl;
 		os << renderPosY << endl;
@@ -41,11 +46,13 @@ public:
 	{
 		GameObject::Read(is);
 
-		is>> ftn.AlphaFormat
+		is >> ftn.AlphaFormat
 			>> ftn.BlendFlags
 			>> ftn.BlendOp
 			>> ftn.SourceConstantAlpha
-			
+
+			>> filePath
+
 			>> renderPosX
 			>> renderPosY
 			>> renderDelayTime;
