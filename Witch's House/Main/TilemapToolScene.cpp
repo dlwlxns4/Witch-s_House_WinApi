@@ -693,6 +693,8 @@ void TilemapToolScene::Load(int loadIndex)
 		vecTileObj.clear();
 		currLayer = 0;
 
+		PhysicsManager::GetSingleton()->Init();
+
 		for (int i = 0; i < maxLayer; ++i)
 		{
 			vecLayer.push_back(new Layer);

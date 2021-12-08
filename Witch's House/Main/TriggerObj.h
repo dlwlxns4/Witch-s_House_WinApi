@@ -19,11 +19,12 @@ public:
 	virtual void Update();
 	void SetTile(int posX, int posY, int frameX, int frameY, int mapIndex)
 	{
+		this->SetPos({ (float)posX, (float)posY });
 		SetRect(&(tile.rc),
-			posX * TILE_SIZE,
-			posY * TILE_SIZE,
-			posX * TILE_SIZE + TILE_SIZE,
-			posY * TILE_SIZE + TILE_SIZE
+			(int)this->pos.x * TILE_SIZE,
+			(int)this->pos.y * TILE_SIZE,
+			(int)this->pos.x * TILE_SIZE + TILE_SIZE,
+			(int)this->pos.y * TILE_SIZE + TILE_SIZE
 		);
 		tile.frameX = frameX;
 		tile.frameY = frameY;
@@ -31,6 +32,19 @@ public:
 
 		PhysicsManager::GetSingleton()->AddCollider(&(tile.rc), posX, posY);
 		PhysicsManager::GetSingleton()->SetOwner(this, posX, posY);
+	}
+	void SetTile()
+	{
+		SetRect(&(tile.rc),
+			(int)this->pos.x * TILE_SIZE,
+			(int)this->pos.y * TILE_SIZE,
+			(int)this->pos.x * TILE_SIZE + TILE_SIZE,
+			(int)this->pos.y * TILE_SIZE + TILE_SIZE
+		);
+
+		PhysicsManager::GetSingleton()->AddCollider(&(tile.rc), this->pos.x, this->pos.y);
+		PhysicsManager::GetSingleton()->SetOwner(this, this->pos.x, this->pos.y);
+		
 	}
 	bool ComparePos(int mousePosX, int mousePosY)
 	{
@@ -79,12 +93,12 @@ public:
 			>> tile.collider.top
 			>> tile.collider.right
 			>> tile.collider.bottom
-			
-			
+
+
 			>> tile.frameX
 			>> tile.frameY
 			>> tile.mapIndex
-			
+
 
 			>> tile.rc.left
 			>> tile.rc.top

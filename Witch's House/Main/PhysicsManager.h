@@ -42,5 +42,6 @@ public:
 		return owners[posY][posX];
 	}
 
+	void Init();
 };
 

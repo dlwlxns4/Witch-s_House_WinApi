@@ -60,6 +60,10 @@ public:
 
 		PhysicsManager::GetSingleton()->AddCollider(&(shape), posX, posY);
 	}
+	void SetTile()
+	{
+		PhysicsManager::GetSingleton()->AddCollider(&(shape), tilePosX, tilePosY);
+	}
 	void ReposRect()
 	{
 		SetRect(&(shape),

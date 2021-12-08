@@ -76,6 +76,7 @@ istream& operator>>(istream& is, const Layer& layer)
 				PlayerObj* playerObj = new PlayerObj;
 				playerObj->Init();
 				is >> *playerObj;
+				playerObj->SetTile();
 				vecLayer[vecLayer.size() - 1]->PushGameObject(playerObj);
 				break;
 			}
@@ -84,6 +85,7 @@ istream& operator>>(istream& is, const Layer& layer)
 				TriggerObj* triggerObj = new TriggerObj;
 				triggerObj->Init();
 				is >> *triggerObj;
+				triggerObj->SetTile();
 				vecLayer[vecLayer.size() - 1]->PushGameObject(triggerObj);
 				break;
 			}

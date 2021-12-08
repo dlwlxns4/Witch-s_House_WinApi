@@ -37,3 +37,15 @@ void PhysicsManager::Render(HDC hdc)
 	DeleteObject(myBrush);
 
 }
+
+void PhysicsManager::Init()
+{
+	for (int i = (int)g_cameraPosY; i < (int)g_cameraPosY + TILE_COUNT_Y; ++i)
+	{
+		for (int j = (int)g_cameraPosX; j < (int)g_cameraPosX + TILE_COUNT_X; ++j)
+		{
+			owners[i][j] = nullptr;
+			collider[i][j] = nullptr;
+		}
+	}
+}
