@@ -129,6 +129,9 @@ void PlayerObj::MoveHelper()
 	tilePosX += HALFQUARTER * dx[(int)direction];
 	tilePosY += HALFQUARTER * dy[(int)direction];
 
+	//rayCast.first += dx[(int)direction];
+	//rayCast.second += dy[(int)direction];
+
 	//카메라 이동
 	if (dx[(int)direction] == -1 && g_cameraPosX > 0)
 	{
@@ -171,6 +174,33 @@ void PlayerObj::Action()
 			}
 		}
 	}
+}
+
+void PlayerObj::SetTilePos(int posX, int posY)
+{
+	//위치
+	tilePosX = (float)posX; tilePosY = (float)posY;
+	pastPosX = posX, pastPosY = posY;
+
+	//콜라이더
+	SetRect(&(shape),
+		posX * TILE_SIZE,
+		posY * TILE_SIZE,
+		(posX + 1) * TILE_SIZE,
+		(posY + 1) * TILE_SIZE
+	);
+
+	PhysicsManager::GetSingleton()->AddCollider(&(shape), posX, posY);
+}
+
+void PlayerObj::ReposRect()
+{
+	SetRect(&(shape),
+		(int)tilePosX * TILE_SIZE,
+		(int)tilePosY * TILE_SIZE,
+		(int)(tilePosX + 1) * TILE_SIZE,
+		(int)(tilePosY + 1) * TILE_SIZE
+	);
 }
 
 void PlayerObj::CameraMove()

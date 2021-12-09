@@ -1,13 +1,16 @@
 #pragma once
 // ------------------------------------------------
-// 통나무
+// 나무
 // ------------------------------------------------
 
 #define TALK_LOG_ID		0
-#define TALK_LOG_FOUND		10
-
+#define TALK_WITHER_TREE_ID 10
+#define TALK_OVERGROUN_TREE_ID 20
 
 // -----------------------------------------------
-// 책
+// 풀
 // -----------------------------------------------
-#define TALK_BOOK_NORMAL	12
+#define TALK_ROUGH_GRASS_ID	30
+
+
+

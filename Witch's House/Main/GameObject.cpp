@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Component.h"
 
 ostream& operator<<(ostream& os, const GameObject& obj)
 {		
@@ -16,4 +17,31 @@ istream& operator>>(istream& is, GameObject& obj)
 	// TODO: 여기에 return 문을 삽입합니다.
 }
 
+void GameObject::AddComponent(Component* component)
+{
+}
 
+HRESULT GameObject::Init()
+{
+	//for (Component* comp : _components)
+	//{
+	//	comp->Init();
+	//}
+	return S_OK;
+}
+
+void GameObject::Update()
+{
+	//for (Component* comp : _components)
+	//{
+	//	comp->Update();
+	//}
+}
+
+void GameObject::Render(HDC hdc)
+{
+}
+
+void GameObject::Release()
+{
+}

@@ -3,6 +3,7 @@
 
 #include "GameEntity.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -12,6 +13,9 @@ class GameObject : public GameEntity
 protected:
 	POINTFLOAT pos = {};
 	RECT shape = {};
+
+	vector<class Component*> _components;
+
 	float moveSpeed = 0.0f;
 	int bodySize = 0;
 
@@ -28,6 +32,12 @@ public:
 	inline RECT GetShape() { return this->shape; }
 	inline RECT* GetShapeAddress() { return &this->shape; }
 
+	void AddComponent(Component* component);
+
+	virtual HRESULT Init() override;
+	virtual void Update() override;
+	virtual void Render(HDC hdc) override;
+	virtual void Release() override;
 
 	virtual void Write(ostream& os) const
 	{

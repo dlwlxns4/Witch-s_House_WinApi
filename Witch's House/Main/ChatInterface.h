@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "ImageHelper.h"
 
+// ChatUI
 class ChatInterface : public GameObject
 {
 private:

@@ -22,9 +22,6 @@ HRESULT MainGame::Init()
 
 	Input::Init(g_hWnd);
 
-	srand((unsigned int)time(nullptr));
-
-	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
 
 	backBuffer = new Image;
 	int maxSizeX = WIN_SIZE_X > TILEMAPTOOL_SIZE_X ? WIN_SIZE_X : TILEMAPTOOL_SIZE_X;
@@ -38,10 +35,13 @@ void MainGame::Update()
 {
 	Input::Update();
 
-
+	if (Input::GetButton('A'))
+	{
+		cout << "@" << endl;
+	}
 	SceneManager::GetSingleton()->Update();
 
-	InvalidateRect(g_hWnd, NULL, false);
+	//InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render(HDC hdc)
@@ -76,11 +76,7 @@ void MainGame::Release()
 {
 	SAFE_RELEASE(backBuffer);
 
-
 	ImageManager::GetSingleton()->Release();
 
-
 	SceneManager::GetSingleton()->Release();
-
-	KillTimer(g_hWnd, 0);
 }

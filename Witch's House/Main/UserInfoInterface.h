@@ -9,18 +9,14 @@ class UserInfoInterface : public GameObject
 {
 private:
 	Image* leftPanel = nullptr;
-
 	Image* rightPanel = nullptr;
-
 	Image* opacityPanel = nullptr;
 	Image* portrait = nullptr;
-
 	Image* healthBar = nullptr;
 
 	//------------------------
 	Image* selectPaenl = nullptr;
 	bool isTransparency = true;
-
 	//--------------------------
 
 	string name = "ºñ¿Ã¶ó";

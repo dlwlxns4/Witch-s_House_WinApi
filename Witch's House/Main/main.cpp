@@ -16,7 +16,7 @@
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #endif
 
-// 전역변수
+// 전역변수 --> 분리 필요
 POINT		g_ptMouse;
 HINSTANCE	g_hInstance;
 HWND		g_hWnd;
@@ -28,7 +28,7 @@ MainGame	g_mainGame;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 	WPARAM wParam, LPARAM lParam);
 
-void Render();
+void Render(); // -> ?
 
 int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstance,
 	_In_ LPSTR _lpszCmdParam, _In_ int nCmdShow)
@@ -93,10 +93,13 @@ int APIENTRY WinMain(_In_ HINSTANCE _hInstance, _In_opt_ HINSTANCE _hPrevInstanc
 		}
 		else
 		{
+			cout << "!" << endl;
+
 			if (Timer::CanUpdate())
 			{
+				cout << "!" << endl;
 				g_mainGame.Update();
-				Render();
+				Render(); // g_mainGame.Render();
 			}
 
 		}
@@ -128,10 +131,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 
 void Render()
 {
-	PAINTSTRUCT ps;
-	HDC hdc;
-	hdc = BeginPaint(g_hWnd, &ps);
 
+	HDC hdc = GetDC(g_hWnd);
 	g_mainGame.Render(hdc);
-	EndPaint(g_hWnd, &ps);
+	ReleaseDC(g_hWnd, hdc);
 }

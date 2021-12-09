@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="ParallaxObj.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PlayerObj.cpp" />
+    <ClCompile Include="QuestData.cpp" />
     <ClCompile Include="SaveLoadInterface.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TalkManager.cpp" />
@@ -184,6 +186,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonFunction.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameManager.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="ParallaxObj.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PlayerObj.h" />
+    <ClInclude Include="QuestData.h" />
     <ClInclude Include="ReferenceId.h" />
     <ClInclude Include="SaveLoadInterface.h" />
     <ClInclude Include="SceneManager.h" />
@@ -211,6 +215,7 @@
     <ClInclude Include="TilemapToolScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="TriggerComponent.h" />
     <ClInclude Include="TriggerObj.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UserInfoInterface.h" />

@@ -189,7 +189,7 @@ void TilemapToolScene::Update()
 	{
 		if (PtInRect(&(sampleArea), g_ptMouse))
 		{
-			if (Input::GetButtonDown(VK_LBUTTON))
+			if (Input::GetButton(VK_LBUTTON))
 			{
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
 				startPosY = (g_ptMouse.y - sampleArea.top) / TILE_SIZE + (int)g_cameraPosY;
@@ -208,7 +208,7 @@ void TilemapToolScene::Update()
 					}
 				}
 			}
-			else if (Input::GetButtonDown(VK_RBUTTON))
+			else if (Input::GetButton(VK_RBUTTON))
 			{
 
 				startPosX = (g_ptMouse.x - sampleArea.left) / TILE_SIZE + (int)g_cameraPosX;
@@ -447,6 +447,10 @@ void TilemapToolScene::Update()
 
 		}
 	}
+	else if (Input::GetButton('`'))
+	{
+		cout << "@" << endl;
+	}
 
 	//¹öÆ°
 	layerAddBtn->Update();
@@ -616,9 +620,10 @@ void TilemapToolScene::Render(HDC hdc)
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 170, TEXT("CurrLayerMove : 1(-) 2(+)"), 22);
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 150, TEXT("SampleImageMove : z(-) x(+) c(-) v(+)"), 37);
 	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 130, TEXT("TileState : t(-) y(+)"), 21);
-	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 130, TEXT("SelectTriggerObj : p"), 20);
-	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 110, TEXT("Add ReferenceId : m(1) ,(10) .(100) /(1000)"), 43);
-	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 90, TEXT("Add UI : U"), 10);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 110, TEXT("SelectTriggerObj : p"), 20);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 90, TEXT("Add ReferenceId : m(1) ,(10) .(100) /(1000)"), 43);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 70, TEXT("Add UI : U"), 10);
+	TextOut(hdc, 30, TILEMAPTOOL_SIZE_Y - 50, TEXT("Add TileObj : `"), 15);
 
 
 

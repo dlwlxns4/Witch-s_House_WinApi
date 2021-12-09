@@ -4,9 +4,10 @@
 
 HRESULT TriggerObj::Init()
 {
+	//TriggerComponent* 
 	return S_OK;
 }
-
+//
 void TriggerObj::Render(HDC hdc)
 {
 	vecSampleImage[tile.mapIndex]->Render(hdc,

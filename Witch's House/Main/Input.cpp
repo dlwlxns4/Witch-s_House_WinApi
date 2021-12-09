@@ -1,4 +1,5 @@
 #include "Input.h"
+#include <iostream>
 
 bool Input::_currentKeyStates[256] = { false };
 bool Input::_prevKeyStates[256] = { false };

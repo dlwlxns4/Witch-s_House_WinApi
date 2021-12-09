@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -28,14 +20,23 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{706cb441-4046-4339-a016-95a5dfe9d76c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2D Framework\Manager\Button">
-      <UniqueIdentifier>{930f6dc6-4f66-4eff-8585-d254f184e8a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2D Framework\Manager\GameObejct">
+    <Filter Include="2D Framework\GameObejct">
       <UniqueIdentifier>{ea3499d7-4897-49d2-8bb9-0c456ffa51aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2D Framework\Manager\GameObejct\UI">
+    <Filter Include="2D Framework\GameObejct\UI">
       <UniqueIdentifier>{29475def-fce7-4032-bc45-915d3b8d6c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D Framework\GameObejct\Button">
+      <UniqueIdentifier>{930f6dc6-4f66-4eff-8585-d254f184e8a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D Framework\GameObejct\TileObj">
+      <UniqueIdentifier>{179f8ab3-ee4f-4830-bef7-ee838a2a2dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{996a7333-8ebe-44ef-b634-16531a9347f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D Framework\Component">
+      <UniqueIdentifier>{bede1039-30ce-4398-a3ec-86048d151d58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,25 +71,7 @@
       <Filter>MainGame</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>2D Framework\Manager\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="TriggerObj.cpp">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClCompile>
-    <ClCompile Include="Layer.cpp">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClCompile>
-    <ClCompile Include="TileObj.cpp">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerObj.cpp">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClCompile>
-    <ClCompile Include="ParallaxObj.cpp">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
+      <Filter>2D Framework\GameObejct\Button</Filter>
     </ClCompile>
     <ClCompile Include="TalkManager.cpp">
       <Filter>2D Framework\Manager</Filter>
@@ -103,31 +86,49 @@
       <Filter>2D Framework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="ChatInterface.cpp">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClCompile>
     <ClCompile Include="UserInfoInterface.cpp">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClCompile>
     <ClCompile Include="InventoryInterface.cpp">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClCompile>
     <ClCompile Include="SaveLoadInterface.cpp">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallaxObj.cpp">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerObj.cpp">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClCompile>
+    <ClCompile Include="TileObj.cpp">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerObj.cpp">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestData.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>2D Framework\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonFunction.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GameEntity.h">
       <Filter>2D Framework</Filter>
     </ClInclude>
@@ -161,44 +162,14 @@
     <ClInclude Include="TitleScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Tilemap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>2D Framework\Manager\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageHelper.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TileObj.h">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClInclude>
-    <ClInclude Include="TriggerObj.h">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClInclude>
-    <ClInclude Include="Layer.h">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerObj.h">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
-    </ClInclude>
-    <ClInclude Include="ParallaxObj.h">
-      <Filter>2D Framework\Manager\GameObejct</Filter>
+      <Filter>2D Framework\GameObejct\Button</Filter>
     </ClInclude>
     <ClInclude Include="TalkManager.h">
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsManager.h">
       <Filter>2D Framework\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ReferenceId.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AllTypeObj.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="MapScene.h">
       <Filter>MainGame\Scene</Filter>
@@ -207,25 +178,70 @@
       <Filter>2D Framework\Manager</Filter>
     </ClInclude>
     <ClInclude Include="ChatInterface.h">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClInclude>
     <ClInclude Include="UserInfoInterface.h">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClInclude>
     <ClInclude Include="InventoryInterface.h">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClInclude>
     <ClInclude Include="SaveLoadInterface.h">
-      <Filter>2D Framework\Manager\GameObejct\UI</Filter>
+      <Filter>2D Framework\GameObejct\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Managers.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Layer.h">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallaxObj.h">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerObj.h">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClInclude>
+    <ClInclude Include="TileObj.h">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerObj.h">
+      <Filter>2D Framework\GameObejct\TileObj</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>소스 파일</Filter>
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="AllTypeObj.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonFunction.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageHelper.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestData.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceId.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>2D Framework\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerComponent.h">
+      <Filter>2D Framework\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

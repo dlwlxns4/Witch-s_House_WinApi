@@ -85,11 +85,13 @@ void Button::Update()
 
 void Button::AddLayer()
 {
-	TileObj* tileObject = new TileObj;
-	tileObject->Init();
-	vecTileObj.push_back(tileObject);
+	//TileObj* tileObject = new TileObj;
+	//tileObject->Init();
+	//vecTileObj.push_back(tileObject);
+	//vecLayer.push_back(new Layer);
+	//vecLayer[vecLayer.size() - 1]->PushGameObject(vecTileObj[vecTileObj.size() - 1]);
+
 	vecLayer.push_back(new Layer);
-	vecLayer[vecLayer.size() - 1]->PushGameObject(vecTileObj[vecTileObj.size() - 1]);
 
 }
 void Button::Render(HDC hdc)

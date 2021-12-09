@@ -44,35 +44,9 @@ public:
 	void Move();
 	void MoveHelper();
 	void Action();
-	void SetTilePos(int posX, int posY)
-	{
-		//위치
-		tilePosX = (float)posX; tilePosY = (float)posY;
-		pastPosX = posX, pastPosY = posY;
-
-		//콜라이더
-		SetRect(&(shape),
-			posX * TILE_SIZE,
-			posY * TILE_SIZE,
-			(posX + 1) * TILE_SIZE,
-			(posY + 1) * TILE_SIZE
-		);
-
-		PhysicsManager::GetSingleton()->AddCollider(&(shape), posX, posY);
-	}
-	void SetTile()
-	{
-		PhysicsManager::GetSingleton()->AddCollider(&(shape), tilePosX, tilePosY);
-	}
-	void ReposRect()
-	{
-		SetRect(&(shape),
-			(int)tilePosX * TILE_SIZE,
-			(int)tilePosY * TILE_SIZE,
-			(int)(tilePosX + 1) * TILE_SIZE,
-			(int)(tilePosY + 1) * TILE_SIZE
-		);
-	}
+	void SetTilePos(int posX, int posY);
+	void SetTile(){	PhysicsManager::GetSingleton()->AddCollider(&(shape), tilePosX, tilePosY);}
+	void ReposRect();
 	void CameraMove();
 	void MoveInit();
 
@@ -81,6 +55,7 @@ public:
 		os << 1 << "\t"; // tileType;
 
 		GameObject::Write(os);
+
 		os << referenceID << "\t";
 		os << tilePosX << "\t";
 		os << tilePosY << "\t";
