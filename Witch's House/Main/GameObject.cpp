@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include <algorithm>
 
 ostream& operator<<(ostream& os, const GameObject& obj)
 {		
@@ -19,24 +20,38 @@ istream& operator>>(istream& is, GameObject& obj)
 
 void GameObject::AddComponent(Component* component)
 {
+	this->_components.push_back(component);
+	sort(_components.begin(), _components.end(),
+		[](const Component* lhs, const Component* rhs)
+		{
+			return lhs->GetOrder() < rhs->GetOrder();
+		});
 }
 
 HRESULT GameObject::Init()
 {
-	//for (Component* comp : _components)
-	//{
-	//	comp->Init();
-	//}
+	for (Component* comp : _components)
+	{
+		comp->Init();
+	}
 	return S_OK;
 }
 
 void GameObject::Update()
 {
-	//for (Component* comp : _components)
-	//{
-	//	comp->Update();
-	//}
+	for (Component* comp : _components)
+	{
+		comp->Update();
+	}
 }
+
+
+
+void GameObject::RemoveComponent(Component* component)
+{
+	remove(_components.begin(), _components.end(), component);
+}
+
 
 void GameObject::Render(HDC hdc)
 {

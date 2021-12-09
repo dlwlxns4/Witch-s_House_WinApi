@@ -37,8 +37,8 @@ public:
 
 	virtual HRESULT Init();
 	HRESULT Init(int posX, int posY);
-	virtual void Update();
-	virtual void Render(HDC hdc);
+	virtual void Update() override;
+	virtual void Render(HDC hdc) override;
 	virtual void Release();
 
 	void Move();

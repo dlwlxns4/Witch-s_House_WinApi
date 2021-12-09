@@ -44,7 +44,6 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
-    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -52,7 +51,6 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -167,6 +165,7 @@
     <ClCompile Include="MapScene.cpp" />
     <ClCompile Include="ParallaxObj.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="PlayerMoveComponent.cpp" />
     <ClCompile Include="PlayerObj.cpp" />
     <ClCompile Include="QuestData.cpp" />
     <ClCompile Include="SaveLoadInterface.cpp" />
@@ -203,6 +202,7 @@
     <ClInclude Include="MapScene.h" />
     <ClInclude Include="ParallaxObj.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="PlayerMoveComponent.h" />
     <ClInclude Include="PlayerObj.h" />
     <ClInclude Include="QuestData.h" />
     <ClInclude Include="ReferenceId.h" />

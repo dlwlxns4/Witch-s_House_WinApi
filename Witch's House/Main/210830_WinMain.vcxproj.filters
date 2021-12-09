@@ -38,6 +38,9 @@
     <Filter Include="2D Framework\Component">
       <UniqueIdentifier>{bede1039-30ce-4398-a3ec-86048d151d58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2D Framework\Component\Player">
+      <UniqueIdentifier>{72728eff-c27e-4f5e-9bc9-4745b9cff2fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEntity.cpp">
@@ -126,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>2D Framework\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveComponent.cpp">
+      <Filter>2D Framework\Component\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="TriggerComponent.h">
       <Filter>2D Framework\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveComponent.h">
+      <Filter>2D Framework\Component\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

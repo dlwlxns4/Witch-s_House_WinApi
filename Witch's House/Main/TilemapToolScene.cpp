@@ -41,6 +41,7 @@ using namespace cv;
 HRESULT TilemapToolScene::Init()
 {
 	string dir2 = "Image/Graphics/";
+	
 	for (auto& p : filesystem::directory_iterator(dir2))
 	{
 		string inFolder = p.path().string() + '/';
@@ -231,11 +232,10 @@ void TilemapToolScene::Update()
 					playerObj = new PlayerObj;
 					playerObj->Init(startPosX, startPosY);
 					vecLayer[currLayer]->PushGameObject(playerObj);
-					playerObj->SetTilePos(startPosX, startPosY);
 				}
 				else
 				{
-					playerObj->SetTilePos(startPosX, startPosY);
+					playerObj->Init(startPosX, startPosY);
 				}
 			}
 			else if (Input::GetButtonDown(VK_RBUTTON))
